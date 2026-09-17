@@ -1,5 +1,58 @@
 # Changelog
 
+## 9.0.2 — 2026-09-16
+
+- fix: Step 6's GUI and Flatpak lines rendered as one run-on paragraph in Markdown; now two paragraphs
+- fix: the print HTML no longer emits empty class attributes on untagged blocks
+- docs: grammar in the Steam Deck note and in the §15 sentence about the forum
+- test: final line-by-line pass over all four files; 24 fish blocks re-parsed, 30 run checks re-passed, HTML and PDF rebuilt
+
+## 9.0.1 — 2026-09-16
+
+- fix: §7 credits the early-crash fix correctly — taskset for the Windows build under Proton; the config.ini reports are mostly native
+- fix: Step 1 says what the S: link should target, with Proton's fallback when the library root is not writable
+- fix: the disk-write-error row states the issue's closure date and workaround instead of assuming a client fix
+- fix: the NVIDIA row no longer says "at launch"; the reports do not
+- fix: "Unknown arg" applies to verbs newer than the packaged Winetricks, not to vcrun2008
+- fix: the fsync lever is attributed to the forum report that used it
+- fix: §3's opening sentence no longer contradicts the CachyOS-only pacman line
+- fix: Step 1 no longer calls every disk write error a client bug
+- docs: the Debian block names nvidia-driver-libs:i386 for the proprietary driver
+- docs: Steam Deck note on the read-only root and the grep substitution for rg
+- docs: Steam directory found through ~/.steam/root, as the steam-installer package documents; Debian/Ubuntu row covers older installs
+- docs: the Debian/Ubuntu Steam directory is sourced from the steam-installer package itself
+- docs: Sources split into three tables; the Path reference page no longer ends half empty
+- docs: revision line names the Proton 11.0 source; "app ID" and "Protontricks" spelled one way in prose
+- docs: 9.0.0's test note overstated the PDF check — the rebuilt 8.0.0 PDF matched text for text, not byte for byte
+- test: all 24 fish blocks re-parsed and the 30 run checks re-passed; HTML and PDF rebuilt
+
+## 9.0.0 — 2026-09-16
+
+- feat: new §3 installs Steam and Protontricks on Ubuntu 26.04 and 24.04, Debian 13, Fedora 44 and Steam Deck
+- feat: §3 gives the default Steam library for native, Debian/Ubuntu, Flatpak and Snap Steam
+- feat: install vcrun2008 and corefonts into the prefix; the VP DLL imports the VC++ 2008 runtime
+- feat: Flatpak Protontricks aliases let every later command run unchanged
+- feat: print the exact Z:\ wizard path from $CIV5_GAME, identical in bash
+- feat: find the library that holds Civ V from libraryfolders.vdf, identical in bash
+- feat: early random crashes and the MaxSimultaneousThreads fix from ProtonDB reports
+- feat: troubleshooting splits into setup and in-game tables with ten new rows
+- feat: civ5vp-installer 0.1.6 download with sha256 and the author's local-build warning
+- feat: name civ5vp-installer as a modpack builder in §10
+- fix: Proton 11.0 and Experimental create S: by default; the launch option is for 10.0 and older
+- fix: the shell table promised three constructs, listed four and lacked the for loop
+- fix: the pacman line gains --needed and the ripgrep, rsync and zip this guide calls
+- fix: "Invalid file magic number" now names the Protontricks 1.12.0 floor
+- fix: civ5vp-installer also writes the game cache, per its README
+- fix: four table rows ran into their right border
+- fix: the PDF no longer strands a lead-in line or heading at a page foot
+- docs: the forum command's WINEPREFIX and WINE_DISABLE_NICE have no effect; say so
+- docs: renumber sections for the new §3 and update every § reference
+- docs: thread 702075 page 2 read in full; sources and limits updated
+- docs: Proton references move from proton_9.0 to proton_11.0
+- docs: split Sources into mod and Linux tables so each fits a printed page
+- test: all 24 fish blocks parse; 30 run checks pass under fish 3.7.0 with stubbed tools
+- test: print HTML and PDF rebuilt after reproducing the 8.0.0 build byte-identically
+
 ## 8.0.0 — 2026-09-12
 
 - feat: document the options file's Class legend and that Class 3 costs overhead unused
