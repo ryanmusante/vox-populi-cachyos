@@ -1,5 +1,26 @@
 # Changelog
 
+## 9.0.3 — 2026-09-19
+
+- fix: a Steam Linux Runtime entry makes Protontricks stop with "Proton installation could not be found!", not a winetricks environment error
+- fix: the Flatpak sandbox message is "does not appear to have access to the following directories"; "library folder not found" does not exist
+- fix: the manual uninstall list gains the added `MinorCivSounds_VoxPopuli.xml`; Steam's verify restores the package but leaves added files
+- fix: §1, Step 8 and the troubleshooting row say the wizard blocks any folder without `Assets\DLC` and all ten DLC folders
+- fix: Step 8 names the second command, not the third, as the pass/fail test, and says what Community Patch only leaves in the game folder
+- fix: `(3a) VP - EUI Compatibility Files` and `(3b) 43 Civs Community Patch` are written out in full in the §1 and §6 tables
+- fix: the `S:` fallback also applies when the library root and `steamapps` sit on different filesystems
+- fix: the Contents line no longer parses as a one-item ordered list
+- fix: the 39-line command appendix may break across PDF pages instead of leaving the page before it two-fifths empty
+- docs: the first "configuring game data" pass may crash once, per the opening post of thread 702075; troubleshooting row added
+- docs: Info Addict carries the modpack maintainer's memory-crash warning
+- docs: §10 names the open 5.4.x multiplayer desync report, Community-Patch-DLL #13349
+- docs: Proton #8327 is closed as not planned; the troubleshooting row says so
+- docs: the path reference lists the added city-state sound XML
+- docs: thread 702075 page 2 now runs to 2026-09-16; release, MPPatch and thread checks re-dated 2026-09-19
+- docs: Sources name Protontricks 1.14.1 `cli/command.py` and `gui.py` for the two corrected messages
+- test: all 24 fish blocks re-parsed and 30 run checks passed under fish 3.7.0 against a stubbed Steam tree
+- test: the 9.0.2 print HTML was reproduced byte for byte and its PDF text for text before 9.0.3 was built
+
 ## 9.0.2 — 2026-09-16
 
 - fix: Step 6's GUI and Flatpak lines rendered as one run-on paragraph in Markdown; now two paragraphs

@@ -2,7 +2,7 @@
 
 **Civilization V + Vox Populi via Steam and Proton**
 
-Revision 9.0.2 · 2026-09-16 · Verified against Vox Populi 5.4.6 (stable), Protontricks 1.14.1-1 and the Proton 11.0 source, on CachyOS with native Steam; Ubuntu, Debian, Fedora and Steam Deck in §3.
+Revision 9.0.3 · 2026-09-19 · Verified against Vox Populi 5.4.6 (stable), Protontricks 1.14.1-1 and the Proton 11.0 source, on CachyOS with native Steam; Ubuntu, Debian, Fedora and Steam Deck in §3.
 
 **Every command block below is fish**, the default login shell on CachyOS. Since the July 2025 snapshot the CachyOS installer also offers zsh or bash, and most other distributions default to bash; in bash or zsh, translate these five constructs:
 
@@ -26,7 +26,7 @@ The same guide is also here as `vox-populi-cachyos.pdf` (print-ready, US Letter)
 
 ## Contents
 
-1. [How it works](#1-how-it-works) · 2. [Requirements](#2-requirements) · 3. [Other distributions](#3-other-distributions) · 4. [Stage A — game under Proton](#4-stage-a--game-under-proton) · 5. [Stage B — install Vox Populi](#5-stage-b--install-vox-populi) · 6. [Stage C — first run](#6-stage-c--first-run) · 7. [Settings and stability](#7-settings-and-stability) · 8. [Adding other mods](#8-adding-other-mods) · 9. [Optional tuning](#9-optional-tuning) · 10. [Multiplayer](#10-multiplayer) · 11. [Updating](#11-updating) · 12. [Uninstalling](#12-uninstalling) · 13. [Troubleshooting](#13-troubleshooting) · 14. [Alternative installer](#14-alternative-installer) · 15. [Bug reporting](#15-bug-reporting) · 16. [Command appendix](#16-command-appendix) · 17. [Path reference](#17-path-reference) · 18. [Sources](#18-sources) · 19. [Limits](#19-limits)
+1\. [How it works](#1-how-it-works) · 2. [Requirements](#2-requirements) · 3. [Other distributions](#3-other-distributions) · 4. [Stage A — game under Proton](#4-stage-a--game-under-proton) · 5. [Stage B — install Vox Populi](#5-stage-b--install-vox-populi) · 6. [Stage C — first run](#6-stage-c--first-run) · 7. [Settings and stability](#7-settings-and-stability) · 8. [Adding other mods](#8-adding-other-mods) · 9. [Optional tuning](#9-optional-tuning) · 10. [Multiplayer](#10-multiplayer) · 11. [Updating](#11-updating) · 12. [Uninstalling](#12-uninstalling) · 13. [Troubleshooting](#13-troubleshooting) · 14. [Alternative installer](#14-alternative-installer) · 15. [Bug reporting](#15-bug-reporting) · 16. [Command appendix](#16-command-appendix) · 17. [Path reference](#17-path-reference) · 18. [Sources](#18-sources) · 19. [Limits](#19-limits)
 
 ---
 
@@ -44,10 +44,12 @@ The same guide is also here as `vox-populi-cachyos.pdf` (print-ready, US Letter)
 ├────────────────────────┼──────────────────────────────┼─────────────────────────────────┤
 │ Select Destination     │ {userdocs}\My Games\         │ MODS\(1) Community Patch        │
 │ Location               │ Sid Meier's Civilization 5   │ MODS\(2) Vox Populi             │
-│ — the Documents path   │                              │ MODS\(3a) VP - EUI Compat Files │
-│                        │ Under Proton:                │ MODS\(3b) 43 Civs Community …   │
-│ LEAVE THIS ALONE       │ C:\users\steamuser\          │ MODS\(4a) Squads for VP         │
-│                        │ Documents\… (in the prefix)  │ MODS\(5) Modpack Maker for VP   │
+│ — the Documents path   │                              │ MODS\(3a) VP - EUI              │
+│                        │ Under Proton:                │   Compatibility Files           │
+│ LEAVE THIS ALONE       │ C:\users\steamuser\          │ MODS\(3b) 43 Civs Community     │
+│                        │ Documents\… (in the prefix)  │   Patch                         │
+│                        │                              │ MODS\(4a) Squads for VP         │
+│                        │                              │ MODS\(5) Modpack Maker for VP   │
 │                        │                              │ Text\VPUI_tips_en_us.xml        │
 ├────────────────────────┼──────────────────────────────┼─────────────────────────────────┤
 │ Select the             │ Whatever you browse to. Must │ Assets\DLC\VPUI                 │
@@ -62,7 +64,7 @@ The same guide is also here as `vox-populi-cachyos.pdf` (print-ready, US Letter)
 
 The Documents default is already correct — it resolves inside the prefix, where the Windows build reads mods from. The Civilization V folder page auto-fills only if a Windows-style Steam path already exists inside the prefix, which on a clean prefix it does not; the field arrives blank.
 
-> **CRITICAL** — Aim that page at the real Linux install and nothing ever needs copying. Aim it inside the prefix and the UI assets land where the game will never read them. This is why some guides require a copy step and others do not.
+> **CRITICAL** — Aim that page at the real Linux install and nothing ever needs copying. The wizard refuses any folder that lacks an `Assets\DLC` child or any of the ten DLC folders, so on a clean prefix a wrong path is blocked rather than installed. A Windows-style game tree already inside the prefix — a copied install, for example — passes that test, and the UI assets then land where the game will never read them. This is why some guides require a copy step and others do not.
 
 **Every DLC must be installed, not merely owned.** The wizard checks for `DLC_01`–`DLC_07`, `DLC_Deluxe`, `Expansion`, `Expansion2` and blocks installation if any is missing. In practice that is the Complete Edition set on Civ V 1.0.3.279; the installer's information page names the Mongols, Spain & Inca, Polynesia, Denmark and Korea leader packs, Wonders of the Ancient World, Gods & Kings and Brave New World. Of the folder names, `DLC_Deluxe` is the Babylon pack, `Expansion` is Gods & Kings and `Expansion2` is Brave New World.
 
@@ -210,11 +212,11 @@ protontricks --version
 
 Steam → right-click **Sid Meier's Civilization V** → **Properties → Compatibility** → tick **Force the use of a specific Steam Play compatibility tool** → Proton Experimental or the newest numbered Proton. Steam replaces the native build with the Windows depots; let it finish. A download that stops with a disk write error may be a Steam client bug — see §13.
 
-> **WARNING** — The same dropdown lists Steam Linux Runtime entries. They are not Proton: no Wine prefix is set up, and `protontricks-launch` fails with a winetricks environment error.
+> **WARNING** — The same dropdown lists Steam Linux Runtime entries. They are not Proton: no Wine prefix is set up, and `protontricks-launch` stops with "Proton installation could not be found!"; its log adds that the active compatibility tool is not a Proton installation.
 
 CachyOS alternatives (install, restart Steam): `proton-cachyos-slr`, `proton-cachyos-native`, or `protonup-qt` / `protonplus` for Proton-GE. Prefer `-slr`: it is a Proton build packaged to run inside the Steam Linux Runtime container, which is not the same thing as the bare *Steam Linux Runtime* entries warned about above.
 
-`S:` drive: Proton 11.0 and Proton Experimental map `S:` to the game's Steam library by default — their launch script turns `gamedrive` on for every game. On Proton 10.0 or older, set the launch option `PROTON_SET_GAME_DRIVE=1 %command%` for the same effect. The drive shortens the browse in Step 7. Verify after Step 3 with `ls -l "$CIV5_LIB/steamapps/compatdata/8930/pfx/dosdevices"`: `s:` should point at the library root, the folder that holds `steamapps` (when that root is not writable, Proton points it at `steamapps` itself and the wizard path becomes `S:\common\…`); if no `s:` appears, use the `Z:` path instead.
+`S:` drive: Proton 11.0 and Proton Experimental map `S:` to the game's Steam library by default — their launch script turns `gamedrive` on for every game. On Proton 10.0 or older, set the launch option `PROTON_SET_GAME_DRIVE=1 %command%` for the same effect. The drive shortens the browse in Step 7. Verify after Step 3 with `ls -l "$CIV5_LIB/steamapps/compatdata/8930/pfx/dosdevices"`: `s:` should point at the library root, the folder that holds `steamapps` (when that root is not writable, or sits on a different filesystem from `steamapps`, Proton points it at `steamapps` itself and the wizard path becomes `S:\common\…`); if no `s:` appears, use the `Z:` path instead.
 
 ### Step 2 · Confirm every DLC
 
@@ -264,7 +266,7 @@ alias --save protontricks 'flatpak run com.github.Matoking.protontricks'
 alias --save protontricks-launch 'flatpak run --command=protontricks-launch com.github.Matoking.protontricks'
 ```
 
-The two aliases let every later command in this guide run unchanged; in bash, the Protontricks README appends the same two aliases to `~/.bashrc`. Flatpak Protontricks is sandboxed to the Steam directory; without an override covering the `.exe` you are launching, it fails with "library folder not found". Separately, if *Steam itself* is the Flatpak, every path in §17 moves under `~/.var/app/com.valvesoftware.Steam/`.
+The two aliases let every later command in this guide run unchanged; in bash, the Protontricks README appends the same two aliases to `~/.bashrc`. Flatpak Protontricks is sandboxed to the Steam directory; without an override covering the `.exe` you are launching, it reports that it "does not appear to have access to the following directories" and prints the exact `flatpak override` command to run. Separately, if *Steam itself* is the Flatpak, every path in §17 moves under `~/.var/app/com.valvesoftware.Steam/`.
 
 </details>
 
@@ -353,7 +355,7 @@ ls "$CIV5_GAME/Assets/DLC" | rg -i 'VPUI|UI_bc1'        # VPUI, + UI_bc1 for EUI
 ls "$CIV5_PFX/Program Files (x86)/Steam/steamapps/common/Sid Meier's Civilization V/Assets/DLC" 2>/dev/null
 ```
 
-The third command must print nothing — that is the pass/fail test for Step 7. If it lists `VPUI` or `UI_bc1`, re-run the installer with the correct path. Fallback if you would rather not:
+The second command is the pass/fail test for Step 7: a Vox Populi variant shows `VPUI`, plus `UI_bc1` with EUI. Community Patch only installs neither; there, look for `Expansion2/Sounds/XML/MinorCivSounds_VoxPopuli.xml` under the same `Assets/DLC` instead. The third must print nothing; on a clean prefix that tree does not exist, so output means a game tree inside the prefix took the files. If it lists `VPUI` or `UI_bc1`, re-run the installer with the correct path. Fallback if you would rather not:
 
 ```fish
 rsync -a --dry-run \
@@ -361,7 +363,7 @@ rsync -a --dry-run \
   "$CIV5_GAME/Assets/"
 ```
 
-Inspect, then re-run without `--dry-run`. Note there is no `Assets/DLC/Vox Populi` folder — the installer creates `VPUI` and, for EUI variants, `UI_bc1`.
+Inspect, then re-run without `--dry-run`. Note there is no `Assets/DLC/Vox Populi` folder — the installer creates `VPUI` for the Vox Populi variants and, with EUI, `UI_bc1`.
 
 ---
 
@@ -369,7 +371,7 @@ Inspect, then re-run without `--dry-run`. Note there is no `Assets/DLC/Vox Popul
 
 1. Launch Civ V from Steam.
 2. Main menu → **MODS**; accept the prompt about DLC being disabled and the game restarting.
-3. The first entry into the mods menu runs a long "configuring game data" pass — from under a minute to 5–15 minutes. Not a hang.
+3. The first entry into the mods menu runs a long "configuring game data" pass — from under a minute to 5–15 minutes. Not a hang. The opening post of thread 702075 reports that this first pass may crash once and works after a relaunch.
 4. Enable the VP mods the installer placed in `MODS`.
 5. Press **NEXT**, never **Back**.
 6. **Single Player → Set Up Game.**
@@ -379,8 +381,8 @@ Inspect, then re-run without `--dry-run`. Note there is no `Assets/DLC/Vox Popul
 ```
 ┌──────────────────────────────┬─────────────────────────────────────────────────────┐
 │ (2) Vox Populi               │ Requires (1) Community Patch                        │
-│ (3a) VP - EUI Compat Files   │ MUST be enabled on any EUI install, or VP will not  │
-│                              │ function                                            │
+│ (3a) VP - EUI Compatibility  │ MUST be enabled on any EUI install, or VP will not  │
+│   Files                      │ function                                            │
 │ (3b) 43 Civs Community Patch │ Only for 43-civ variants                            │
 │ (4a) Squads for VP           │ Optional QoL — RTS-style control groups on          │
 │                              │ CTRL+number                                         │
@@ -444,7 +446,7 @@ Late-game turn times are AI-bound, not GPU-bound. Treat graphics settings as a m
 rm -rf "$CIV5_DOCS/cache" "$CIV5_DOCS/ModUserData"
 ```
 
-Check the CivFanatics "MODS compatible with Vox Populi (VP)" thread before adding anything; VP reworks most systems, so mods that touch game components are often only partly compatible. Reported working on Linux under Proton: Community Events, Improved City View (Gazebo's version), most of WHoward's Pick'N'Mix, and Info Addict (which needs an extra patch alongside EUI).
+Check the CivFanatics "MODS compatible with Vox Populi (VP)" thread before adding anything; VP reworks most systems, so mods that touch game components are often only partly compatible. Reported working on Linux under Proton: Community Events, Improved City View (Gazebo's version), most of WHoward's Pick'N'Mix, and Info Addict (which needs an extra patch alongside EUI). The modpack thread's maintainer warns that Info Addict is known to cause crashes from memory overflow; weigh it against §7.
 
 ---
 
@@ -530,6 +532,8 @@ VP cannot be played in multiplayer through the MODS menu; it must be packaged as
 
 Remove with `rm -rf "$CIV5_GAME/Assets/DLC/VP_MODPACK" "$CIV5_DOCS/cache"`.
 
+An open upstream report, Community-Patch-DLL #13349 (2026-09-05), describes a multiplayer desync on 5.4.x that its reporter suspects lies in pathfinding. Check its state before starting a long multiplayer game.
+
 MPPatch, which would allow modded multiplayer without modpacks, has had no release since December 2023, and a forum report describes crashes when combined with VP plus EUI. Modpacks remain the supported route.
 
 ---
@@ -560,11 +564,12 @@ rm -rf "$CIV5_DOCS/MODS/(1) Community Patch" \
        "$CIV5_GAME/Assets/DLC/VPUI" \
        "$CIV5_GAME/Assets/DLC/UI_bc1" \
        "$CIV5_GAME/Assets/DLC/VP_MODPACK" \
+       "$CIV5_GAME/Assets/DLC/Expansion2/Sounds/XML/MinorCivSounds_VoxPopuli.xml" \
        "$CIV5_DOCS/cache" "$CIV5_DOCS/ModUserData" \
        "$CIV5_DOCS/Text/VPUI_tips_en_us.xml"
 ```
 
-Then verify game files in Steam to restore the stock `Expansion2` package and sound XML.
+Then verify game files in Steam to restore the stock `Expansion2.Civ5Pkg`. Verification re-downloads changed files but leaves added ones in place, which is why the sound XML the installer adds is in the list above.
 
 **Full prefix reset** (destroys in-prefix saves — back up first): `rm -rf "$CIV5_LIB/steamapps/compatdata/8930"`
 
@@ -589,9 +594,10 @@ Ordered by when the failure appears. **Setup and install:**
 │ protontricks does not list Civ V       │ Prefix absent. Launch once via Proton (Step 3).              │
 │ protontricks: "Found multiple Steam    │ Native and Flatpak or Snap Steam both exist. Put             │
 │ directories"                           │ STEAM_DIR=<the right one> in front of the command.           │
-│ protontricks-launch: winetricks        │ Compat tool is a Steam Linux Runtime entry, not Proton.      │
-│ environment error                      │ Re-select a real Proton build (Step 1).                      │
-│ Flatpak: "library folder not found"    │ flatpak override --user --filesystem=<path> …protontricks    │
+│ "Proton installation could not be      │ Compat tool is a Steam Linux Runtime entry, not Proton.      │
+│ found!"                                │ Re-select a real Proton build (Step 1).                      │
+│ Flatpak: "does not appear to have      │ Run the flatpak override --user --filesystem=… command the   │
+│ access to the following directories"   │ message prints, then restart Protontricks (Step 4).          │
 │ "Invalid file magic number"            │ Protontricks older than 1.12.0 cannot read the current       │
 │                                        │ appinfo.vdf. Upgrade, or use the Flatpak (§3).               │
 │ "Unknown option --no-bwrap"            │ Protontricks options go BEFORE the app ID.                   │
@@ -618,10 +624,12 @@ Ordered by when the failure appears. **Setup and install:**
 ┌────────────────────────────────────────┬──────────────────────────────────────────────────────────────┐
 │ Symptom                                │ Cause and fix                                                │
 ├────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│ Crash during the first configuring     │ The thread-702075 opening post saw this once; relaunch and   │
+│ game data pass                         │ enter MODS again (§6).                                       │
 │ VP absent from the in-game mod list    │ Documents page was changed; mods are outside the prefix.     │
 │                                        │ Re-run with the default Documents path.                      │
-│ Missing textures, broken UI            │ Civ V folder page pointed inside the prefix. Re-run, or copy │
-│                                        │ across per Step 8.                                           │
+│ Missing textures, broken UI            │ Civ V folder page pointed at a game tree inside the prefix.  │
+│                                        │ Re-run, or copy across per Step 8.                           │
 │ EUI works, no other VP features        │ Back was pressed in MODS, or (3a) is not enabled on an EUI   │
 │                                        │ install. Re-enable all mods, press NEXT.                     │
 │ Mods stale, duplicated or missing      │ rm -rf cache/ and ModUserData/ (§8). Then look for Workshop  │
@@ -635,7 +643,7 @@ Ordered by when the failure appears. **Setup and install:**
 │                                        │ keep $CIV5_GAME/crashlogs for a report (§15).                │
 │ Crackling audio                        │ One ProtonDB report: PULSE_LATENCY_MSEC=60 %command%.        │
 │ Multiplayer crashes after turn 1       │ Cache not cleared before launch by every player (§10).       │
-│ DX9 starts despite choosing DX11       │ Known Proton report #8327. Not a VP fault.                   │
+│ DX9 starts despite choosing DX11       │ Proton report #8327, closed as not planned. Not a VP fault.  │
 │ DX11 hangs after a few minutes         │ A January 2026 ProtonDB report ran stable with the launch    │
 │                                        │ option -dx9; another saw grey screen areas under DX9.        │
 └────────────────────────────────────────┴──────────────────────────────────────────────────────────────┘
@@ -759,6 +767,8 @@ ls "$CIV5_PFX/Program Files (x86)/Steam/steamapps/common/Sid Meier's Civilizatio
 │                            │ game executable in $CIV5_GAME                          │
 │ VP UI · EUI · modpack      │ $CIV5_GAME/Assets/DLC/VPUI · UI_bc1 · VP_MODPACK       │
 │ Replaced BNW package       │ $CIV5_GAME/Assets/DLC/Expansion2/Expansion2.Civ5Pkg    │
+│ Added city-state sound XML │ $CIV5_GAME/Assets/DLC/Expansion2/Sounds/XML/           │
+│                            │ MinorCivSounds_VoxPopuli.xml                           │
 │ Steam library, other       │ §3, second table                                       │
 │ packagings                 │                                                        │
 │ civ5vp-installer data      │ ~/.local/share/civ5vp-installer                        │
@@ -796,7 +806,7 @@ ls "$CIV5_PFX/Program Files (x86)/Steam/steamapps/common/Sid Meier's Civilizatio
 │ Report-writing guidance, Lua API, group      │ Community-Patch-DLL wiki                     │
 │ movement page                                │                                              │
 │ 5.4.6 stable, asset name, sha256             │ GitHub releases + release feed, 2026-08-31;  │
-│                                              │ still the newest release on 2026-09-16       │
+│                                              │ still the newest release on 2026-09-19       │
 │ Game-core DLL imports MSVCR90 and MSVCP90    │ CvGameCore_Expansion2.dll, both 5.4.6        │
 │                                              │ variants, PE import table                    │
 │ Modpack: Ctrl-Shift-M, cache rules, removal  │ (5) Modpack Maker modinfo, ModpackMaker.lua  │
@@ -807,8 +817,10 @@ ls "$CIV5_PFX/Program Files (x86)/Steam/steamapps/common/Sid Meier's Civilizatio
 
 ```
 ┌──────────────────────────────────────────────┬──────────────────────────────────────────────┐
-│ Prebuilt modpacks incl. Linux/Proton build;  │ CivFanatics modpack thread 685164            │
-│ MP autosave and log-collection guidance      │                                              │
+│ Prebuilt modpacks incl. Linux/Proton build;  │ CivFanatics modpack thread 685164; posts     │
+│ MP autosave and log-collection guidance;     │ #721 (2026-09-05) and #732 (2026-09-19) for  │
+│ open 5.4.x desync report; Info Addict memory │ the last two, with Community-Patch-DLL       │
+│ warning                                      │ issue #13349                                 │
 │ Late-game CTD from 32-bit memory; Leader     │ CivFanatics "Welcome to the Community Patch  │
 │ Scene Quality, yield icons, maps and         │ sub — Start Here" thread 701813              │
 │ resolution; beta vs stable naming            │                                              │
@@ -818,16 +830,17 @@ ls "$CIV5_PFX/Program Files (x86)/Steam/steamapps/common/Sid Meier's Civilizatio
 │ Linux mod handling: DLL exclusivity,         │ CivFanatics thread 702075 (schubman,         │
 │ Workshop unreliability under Proton, MODS    │ 2026-02-13 → 2026-03-19), now stickied       │
 │ location, cache + ModUserData, known-good    │                                              │
-│ mods; Documents-path warning; launch first   │                                              │
+│ mods; Documents-path warning; launch first;  │                                              │
+│ first configure pass may crash once          │                                              │
 │ Runtime-library report and its variables;    │ Thread 702075 page 2, posts #21–#23          │
-│ Debian/Ubuntu Steam path in use              │ (2026-09-13 → 2026-09-15)                    │
+│ Debian/Ubuntu Steam path in use              │ (2026-09-13 → 2026-09-16)                    │
 │ Achievements via VP's own option; native     │ bmaupin/civ5-cheevos-with-mods README,       │
 │ Linux map-achievement breakage               │ citing Community-Patch-DLL issue #12965      │
 │ Steam Linux Runtime breaks Protontricks      │ TeaDrinkingProgrammer guide issue #3         │
 │ Alternative installer: 0.1.6, asset, sha256, │ Alpakinator/civ5vp-installer README,         │
 │ data dir, local-build warning                │ CHANGELOG, v0.1.6 assets; CivFanatics        │
 │                                              │ thread 704249                                │
-│ MPPatch last release Dec 2023                │ Lymia/MPPatch release feed, 2026-09-16       │
+│ MPPatch last release Dec 2023                │ Lymia/MPPatch release feed, 2026-09-19       │
 │ Original copy-the-Assets workaround          │ TeaDrinkingProgrammer GitHub guide           │
 └──────────────────────────────────────────────┴──────────────────────────────────────────────┘
 ```
@@ -842,9 +855,10 @@ ls "$CIV5_PFX/Program Files (x86)/Steam/steamapps/common/Sid Meier's Civilizatio
 │ Protontricks CLI, option order, prefix       │ Matoking/protontricks README +               │
 │ warning, Flatpak overrides and aliases,      │ TROUBLESHOOTING.md; flathub manifest docs    │
 │ distro-package advice, cabextract error      │                                              │
-│ 1.12.0 appinfo.vdf floor; Steam directory    │ protontricks CHANGELOG.md, steam.py,         │
-│ discovery incl. Flatpak, Snap, STEAM_DIR;    │ util.py, data/scripts/wine_launch.sh         │
-│ WINEPREFIX override; fsync default           │                                              │
+│ 1.12.0 appinfo.vdf floor; Steam directory    │ protontricks 1.14.1 CHANGELOG.md, steam.py,  │
+│ discovery incl. Flatpak, Snap, STEAM_DIR;    │ util.py, cli/command.py, gui.py,             │
+│ WINEPREFIX override; fsync default; the      │ data/scripts/wine_launch.sh                  │
+│ not-Proton and Flatpak-access messages       │                                              │
 │ vcrun2008 and corefonts contents, skip if    │ Winetricks/winetricks src/winetricks         │
 │ installed, -q, cabextract requirement        │ (20260125)                                   │
 │ WINE_DISABLE_NICE read nowhere               │ ValveSoftware/wine proton_11.0 and           │
@@ -871,7 +885,7 @@ ls "$CIV5_PFX/Program Files (x86)/Steam/steamapps/common/Sid Meier's Civilizatio
 
 ## 19. Limits
 
-- **Thread 702075 page 1 is still not readable verbatim** — CivFanatics serves automated fetchers only its metadata, so the opening post's content here comes from indexed excerpts; page 2 (posts #21–#23) was read in full on 2026-09-16. Everything structural is taken from the Vox Populi source tree instead, which is why this document contradicts the thread on the `Assets/DLC` folder name and treats the copy step as avoidable.
+- **Thread 702075 page 1 is still not readable verbatim** — a fetch of that page returns only its metadata, so the opening post's content here comes from indexed excerpts; page 2 (posts #21–#23) was read in full, last on 2026-09-19. Everything structural is taken from the Vox Populi source tree instead, which is why this document contradicts the thread on the `Assets/DLC` folder name and treats the copy step as avoidable.
 - **The `S:` default was read from Proton's source, not observed.** Proton 11.0 and Experimental enable `gamedrive` for every game in their launch script, and the `s:` link lives in the prefix's `dosdevices`, where a later `protontricks-launch` should still find it. The Step 1 check settles it, and `Z:` always works.
 - **The runtime-library step rests on one forum report and the DLL's import table.** It was not reproduced on a clean prefix here; it is cheap, and Winetricks skips anything already installed.
 - **§3 was checked against package indexes and upstream documentation, not run** on Ubuntu, Debian, Fedora or a Steam Deck. Versions move; the Protontricks 1.12.0 floor is what matters.
