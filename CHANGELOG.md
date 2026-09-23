@@ -1,5 +1,11 @@
 # Changelog
 
+## 9.0.6 — 2026-09-22
+
+- fix: §14 uses `CIV5VP_SUM`, leaving Step 5's `CIV5_SUM` intact; §9.2 gains a check; §16 lists Step 3's `ls "$CIV5_DOCS"`
+- docs: bash uses the Protontricks README's `alias` lines, not `alias --save`; §2 names the `rm -rf` blocks that print `STOP`; US spelling
+- docs: backticks out of the §2 table; CTD defined at first use; `Ctrl` and `[Wizard]` labels consistent; the print HTML ends in a newline
+
 ## 9.0.5 — 2026-09-19
 
 - docs: prose tightened throughout and this changelog condensed; no command, path or procedure changed
@@ -9,7 +15,7 @@
 
 - fix: downloads verified with `sha256sum -c` and fetched with `curl -fL`; §14 starts the installer in a second block, after the check
 - fix: the §8 and §12 `rm -rf` blocks print `STOP` when the §2 variables are unset; §2 says they last one terminal session
-- fix: Step 1 gains a check and Step 8's is labelled; the two wizard steps are checked by Step 8
+- fix: Step 1 gains a check and Step 8's is labeled; the two wizard steps are checked by Step 8
 - fix: `MinorCivSounds_VoxPopuli.xml` in full in §1; Flatpak override argument quoted; continuation lines use four spaces
 - docs: ripgrep ships with CachyOS; Sources name Community-Patch-DLL #13364 and the CachyOS installer package list
 

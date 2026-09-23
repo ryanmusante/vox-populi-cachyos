@@ -2,7 +2,7 @@
 
 **Civilization V + Vox Populi via Steam and Proton**
 
-Revision 9.0.5 · 2026-09-19 · Vox Populi 5.4.6 (stable) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.
+Revision 9.0.6 · 2026-09-22 · Vox Populi 5.4.6 (stable) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.
 
 **Every command block below is fish**, the default login shell on CachyOS. In bash or zsh, translate these five constructs:
 
@@ -81,7 +81,7 @@ The Documents default is already correct: it resolves inside the prefix, where t
 ```
 ┌──────────────┬────────────────────────────────────────────────────────────────────────┐
 │ Game         │ Civilization V 1.0.3.279, all expansions and all DLC installed         │
-│ Steam        │ Native Steam (multilib `steam`); data dir ~/.local/share/Steam,        │
+│ Steam        │ Native Steam (multilib steam); data dir ~/.local/share/Steam,          │
 │              │ also reachable through ~/.steam/root. Other distributions: §3          │
 │ Compat tool  │ Proton Experimental or newest numbered Proton (11.0 at this revision); │
 │              │ proton-cachyos-slr OK. NOT "Steam Linux Runtime" — that is not Proton  │
@@ -95,7 +95,7 @@ The Documents default is already correct: it resolves inside the prefix, where t
 └──────────────┴────────────────────────────────────────────────────────────────────────┘
 ```
 
-Set these once per terminal session; every command below uses them. `set -g` dies with the shell: in a new terminal run the four lines again, or the `rm -rf` lines in §8, §10 and §12 find nothing and say nothing.
+Set these once per terminal session; every command below uses them. `set -g` dies with the shell: in a new terminal run the four lines again, or the `rm -rf` lines in §8, §10 and §12 find nothing — §8 and §12 print `STOP` first, §10 says nothing.
 
 ```fish
 set -g CIV5_LIB  "$HOME/.local/share/Steam"
@@ -274,7 +274,7 @@ alias --save protontricks 'flatpak run com.github.Matoking.protontricks'
 alias --save protontricks-launch 'flatpak run --command=protontricks-launch com.github.Matoking.protontricks'
 ```
 
-The two aliases let every later command run unchanged; in bash, append the same two to `~/.bashrc`, as the Protontricks README does. Flatpak Protontricks sees only the Steam directory: without an override covering the `.exe`, it says it "does not appear to have access to the following directories" and prints the `flatpak override` command to run. If *Steam itself* is the Flatpak, every path in §17 moves under `~/.var/app/com.valvesoftware.Steam/`.
+The two aliases let every later command run unchanged; in bash, add the Protontricks README's two `alias` lines to `~/.bashrc` instead (`alias --save` is fish-only). Flatpak Protontricks sees only the Steam directory: without an override covering the `.exe`, it says it "does not appear to have access to the following directories" and prints the `flatpak override` command to run. If *Steam itself* is the Flatpak, every path in §17 moves under `~/.var/app/com.valvesoftware.Steam/`.
 
 </details>
 
@@ -381,7 +381,7 @@ Inspect, then re-run without `--dry-run`. There is no `Assets/DLC/Vox Populi` fo
 
 1. Launch Civ V from Steam.
 2. Main menu → **MODS**; accept the prompt about DLC being disabled and the game restarting.
-3. The first entry into the mods menu runs a "configuring game data" pass of up to 5–15 minutes — not a hang. Thread 702075's opening post reports it may crash once and work after a relaunch.
+3. The first entry into the mods menu runs a "configuring game data" pass of 5–15 minutes — not a hang. Thread 702075's opening post reports it may crash once and work after a relaunch.
 4. Enable the VP mods the installer placed in `MODS`.
 5. Press **NEXT**, never **Back**.
 6. **Single Player → Set Up Game.**
@@ -395,7 +395,7 @@ Inspect, then re-run without `--dry-run`. There is no `Assets/DLC/Vox Populi` fo
 │   Files                      │ function                                            │
 │ (3b) 43 Civs Community Patch │ Only for 43-civ variants                            │
 │ (4a) Squads for VP           │ Optional QoL — RTS-style control groups on          │
-│                              │ CTRL+number                                         │
+│                              │ Ctrl+number                                         │
 │ (5) Modpack Maker for VP     │ Leave off for normal play; builds modpacks (§10)    │
 └──────────────────────────────┴─────────────────────────────────────────────────────┘
 ```
@@ -420,7 +420,7 @@ Inspect, then re-run without `--dry-run`. There is no `Assets/DLC/Vox Populi` fo
 
 The single-player figures are what the install thread and the bug-report form ask for; the modpack thread asks for 500 in multiplayer. Either way the aim is a save from the turn *before* a problem, which needs frequent autosaves that are not rotated away.
 
-**Late-game crashes are a memory problem, not a Vox Populi bug.** Civ V is 32-bit, and the project attributes most late-game CTDs to address-space exhaustion. Mitigations, most important first: Leader Scene Quality on Minimum; yield icons off from the Industrial era (or avoid zooming far out); standard or small maps; a lower in-game resolution — ultrawide and 4K panels are the demanding case.
+**Late-game crashes are a memory problem, not a Vox Populi bug.** Civ V is 32-bit, and the project attributes most late-game CTDs (crashes to desktop) to address-space exhaustion. Mitigations, most important first: Leader Scene Quality on Minimum; yield icons off from the Industrial era (or avoid zooming far out); standard or small maps; a lower in-game resolution — ultrawide and 4K panels are the demanding case.
 
 Proton helps here: `PROTON_FORCE_LARGE_ADDRESS_AWARE` is **on by default**, giving the 32-bit executable a 4 GB address space instead of 2 GB. Leave it alone.
 
@@ -512,8 +512,10 @@ Use `ENABLE_ACHIEVEMENTS` rather than the executable-patching method used for ot
 set stamp (date +%Y%m%d)
 set dest "$HOME/civ5-backup-$stamp"
 mkdir -p "$dest"
-rsync -a "$CIV5_DOCS/Saves" "$CIV5_DOCS/MODS" "$dest"/
+rsync -a "$CIV5_DOCS/Saves" "$CIV5_DOCS/MODS" "$dest/"
 ```
+
+**Check:** `ls "$dest"` prints `MODS` and `Saves`.
 
 Saves live inside the Wine prefix, so a full prefix reset destroys them too.
 
@@ -659,7 +661,7 @@ Ordered by when the failure appears. **Setup and install:**
 │ Multiplayer crashes after turn 1       │ Cache not cleared before launch by every player (§10).       │
 │ DX9 starts despite choosing DX11       │ Proton report #8327, closed as not planned. Not a VP fault.  │
 │ DX11 hangs after a few minutes         │ A January 2026 ProtonDB report ran stable with the launch    │
-│                                        │ option -dx9; another saw grey screen areas under DX9.        │
+│                                        │ option -dx9; another saw gray screen areas under DX9.        │
 └────────────────────────────────────────┴──────────────────────────────────────────────────────────────┘
 ```
 
@@ -671,10 +673,10 @@ Ordered by when the failure appears. **Setup and install:**
 
 ```fish
 mkdir -p "$HOME/Downloads"
-set -g CIV5_SUM a0b59eb445d23bc9a5206ec0f592a7f81c4cfd40a5f2e0d823737bacbd271baa
+set -g CIV5VP_SUM a0b59eb445d23bc9a5206ec0f592a7f81c4cfd40a5f2e0d823737bacbd271baa
 curl -fL -o "$HOME/Downloads/civ5vp-installer-linux-x86_64" \
     https://github.com/Alpakinator/civ5vp-installer/releases/download/v0.1.6/civ5vp-installer-linux-x86_64
-echo "$CIV5_SUM  $HOME/Downloads/civ5vp-installer-linux-x86_64" | sha256sum -c -
+echo "$CIV5VP_SUM  $HOME/Downloads/civ5vp-installer-linux-x86_64" | sha256sum -c -
 ```
 
 **Check:** the last line ends in `OK`; the digest is that of v0.1.6 (2026-09-15). Only then make the file executable and start it:
@@ -744,6 +746,7 @@ end
 
 # [Steam] launch once, reach the main menu, quit
 ls "$CIV5_PFX"
+ls "$CIV5_DOCS"
 ls -l "$CIV5_LIB/steamapps/compatdata/8930/pfx/dosdevices"
 protontricks --version
 protontricks -s civilization
@@ -757,7 +760,7 @@ curl -fL -o "$HOME/Downloads/Vox.Populi.5.4.6.exe" \
 echo "$CIV5_SUM  $HOME/Downloads/Vox.Populi.5.4.6.exe" | sha256sum -c -
 
 echo "Z:$CIV5_GAME" | tr / "\\\\"
-# Documents page unchanged; Civ V folder browsed to S:\ or the Z:\ path above
+# [Wizard] Documents page unchanged; Civ V folder browsed to S:\ or the Z:\ path above
 protontricks-launch --appid 8930 "$HOME/Downloads/Vox.Populi.5.4.6.exe"
 
 ls "$CIV5_DOCS/MODS"
@@ -806,7 +809,7 @@ ls "$CIV5_PFX/Program Files (x86)/Steam/steamapps/common/Sid Meier's Civilizatio
 
 ```
 ┌──────────────────────────────────────────────┬──────────────────────────────────────────────┐
-│ Installer behaviour: two-path wizard, setup  │ LoneGazebo/Community-Patch-DLL —             │
+│ Installer behavior: two-path wizard, setup   │ LoneGazebo/Community-Patch-DLL —             │
 │ types, DLC gate, cache and legacy-folder     │ VPSetupData.iss, scripts/release.py,         │
 │ deletion, mod folders rewritten on install,  │ Opener.rtf                                   │
 │ Uninstallable=no, Expansion2.Civ5Pkg swap,   │                                              │
