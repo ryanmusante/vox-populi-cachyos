@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.3.2 — 2026-09-24
+
+- docs: wording and path-style consistency pass; the GPU Texture Decode row, which recommended nothing, is dropped
+
 ## 10.3.1 — 2026-09-24
 
 - fix: build tool hardened — WeasyPrint API instead of a subprocess, atomic writes, input validation, documented functions; the guide is unchanged

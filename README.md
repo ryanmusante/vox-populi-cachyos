@@ -2,7 +2,7 @@
 
 **Civilization V + Vox Populi via Steam and Proton**
 
-Revision 10.3.1 · 2026-09-24 · Vox Populi 5.4.6 (stable) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.
+Revision 10.3.2 · 2026-09-24 · Vox Populi 5.4.6 (stable) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.
 
 No terminal is needed: the work happens in Steam, the Protontricks and Winetricks windows, the installer's wizard and your file manager. Every step that writes to disk ends in a check; the two wizard steps, 6 and 7, are checked by Step 8. `WARNING` marks a common failure, `CRITICAL` a step that decides whether this works at all.
 
@@ -74,7 +74,7 @@ The Documents default is already correct: it resolves inside the prefix, where t
 │ Language     │ Game language English (Steam → Properties → Language). VP's text       │
 │              │ exists in English only; other languages show missing or stale entries  │
 │ Tooling      │ extra/protontricks 1.14.1-1 with yad (its game list) and zenity (the   │
-│              │ Winetricks windows); it pulls winetricks, which pulls wine, cabextract │
+│              │ Winetricks windows); it pulls winetricks, wine and cabextract          │
 │ Disk         │ Full re-download of the Windows depots, plus ~105 MB installer         │
 │ Conflicts    │ No Workshop subscriptions to Community Patch, More Luxuries,           │
 │              │ City-State Diplomacy, Civ IV Diplomatic Features; no mod shipping its  │
@@ -99,7 +99,7 @@ Every path below is inside one of three folders. Steam → right-click **Sid Mei
 
 ## 3. Other distributions
 
-From Step 1 on, three things differ elsewhere — how Steam is installed, where its default library sits, and whether the distribution's own Protontricks is recent enough. **Protontricks 1.12.0 is the floor**: older releases cannot read the current Steam client's `appinfo.vdf` and stop with "Invalid file magic number".
+From Step 1 on, other distributions differ in three things — how Steam is installed, where its default library sits, and whether their own Protontricks is recent enough. **Protontricks 1.12.0 is the floor**: older releases cannot read the current Steam client's `appinfo.vdf` and stop with "Invalid file magic number".
 
 ```
 ┌──────────────────────┬──────────────────────────────┬──────────────────────────────────┐
@@ -154,7 +154,7 @@ CachyOS alternatives (install the package, restart Steam): `proton-cachyos-slr`,
 
 Steam → Properties → **DLC** → tick everything.
 
-**Check:** `Assets/DLC` in the game folder holds all ten — `DLC_01` to `DLC_07`, `DLC_Deluxe`, `Expansion` and `Expansion2`. A missing one stops the installer at Step 7.
+**Check:** `Assets/DLC` in the game folder holds all ten — `DLC_01`–`DLC_07`, `DLC_Deluxe`, `Expansion` and `Expansion2`. A missing one stops the installer at Step 7.
 
 ### Step 3 · Launch once, reach the main menu, quit
 
@@ -201,7 +201,7 @@ Right-click `Vox.Populi.5.4.6.exe` → **Open With → Protontricks Launcher** �
 │ ★ │ Setup Type / Components  │ Choose one variant — table below                     │
 │ ★ │ Select the Civilization  │ Type S:\steamapps\common\Sid Meier's Civilization V  │
 │   │ V folder                 │ or the Z:\ form of the game folder, given below      │
-│   │ Start Menu folder        │ May be skipped; irrelevant under Proton, Next        │
+│   │ Start Menu folder        │ Irrelevant under Proton — Next                       │
 │   │ Ready to Install         │ CHECK "Civilization V path" shows the S:\ or Z:\     │
 │   │                          │ path, not C:\Program Files (x86)\…                   │
 │   │ Installing · Finished    │ Wait, Finish                                         │
@@ -281,7 +281,7 @@ The single-player figures are what the install thread and the bug-report form as
 
 **Early, random crashes are a different problem.** ProtonDB reports tie them to thread count. Under Proton the reported fix is the launch option `taskset -c 0-7 %command%` (**Properties → General → Launch Options**), which pins the game to eight threads; one reporter instead raised `MaxSimultaneousThreads` in the Documents folder's `config.ini` (default 8) to the machine's thread count, and another found that 24 stopped the game starting. Reports that edit that key under `~/.local/share/Aspyr` concern the native build; Proton never reads that file.
 
-Late-game turn times are AI-bound, not GPU-bound. Treat graphics settings as a memory lever rather than a frame-rate one, and cap the frame rate at the panel's refresh rate with V-Sync.
+Late-game turn times are AI-bound, not GPU-bound. Treat graphics settings as a memory lever rather than a frame-rate one, and cap the frame rate at the panel's refresh rate with VSync.
 
 ### Configuration files and performance-first settings
 
@@ -322,7 +322,6 @@ Performance-first values for Options → Video, with the key behind each option 
 │ · Terrain Detail Level       │ TerrainDetailLevel       │                             │
 │ Texture Quality              │ TextureQuality           │ High, unless late-game      │
 │                              │                          │ crashes point at memory     │
-│ GPU Texture Decode           │ —                        │ Leave as set                │
 └──────────────────────────────┴──────────────────────────┴─────────────────────────────┘
 ```
 
@@ -426,9 +425,9 @@ VP cannot be played in multiplayer through the MODS menu; it must be packaged as
 │ Every player must use byte-identical modpacks                                      │
 │ Every player must delete cache BEFORE EVERY LAUNCH, or the game will most likely   │
 │   crash after the first turn                                                       │
-│ Do not hand-edit Assets\DLC\VP_MODPACK — rebuild instead                           │
+│ Do not hand-edit Assets/DLC/VP_MODPACK — rebuild instead                           │
 │ Saves do not record which modpack was used; a mismatch crashes                     │
-│ Multiplayer autosaves live in Saves\multi\auto — collect them for desync reports   │
+│ Multiplayer autosaves live in Saves/multi/auto — collect them for desync reports   │
 └────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -601,8 +600,8 @@ The project wiki adds guidance on writing a report, a full changelog, a Lua API 
 │                            │ Database Changes/NewCustomModOptions.xml               │
 │ Cache · per-mod user data  │ Documents folder/cache · Documents folder/ModUserData  │
 │ Logs · logging switches    │ Documents folder/Logs · Documents folder/config.ini    │
-│ Saves (single · multi)     │ Documents folder/Saves · Documents folder/Saves/multi/ │
-│                            │ auto                                                   │
+│ Saves (single · multi)     │ Documents folder/Saves ·                               │
+│                            │ Documents folder/Saves/multi/auto                      │
 │ EUI tooltip text           │ Documents folder/Text/VPUI_tips_en_us.xml              │
 │ Real game install          │ <library>/steamapps/common/Sid Meier's Civilization V  │
 │ Crash artifacts            │ Game folder/crashlogs, and CvMiniDump_*.dmp beside the │

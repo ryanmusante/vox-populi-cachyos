@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
-<title>Vox Populi on CachyOS — Revision 10.3.1</title>
+<title>Vox Populi on CachyOS — Revision 10.3.2</title>
 <style>
 @page {
   size: letter;
   margin: 0.7in 0.55in 0.75in 0.55in;
   @top-left   { content: "Vox Populi on CachyOS"; font: 8pt "DejaVu Sans"; color: #444; }
-  @top-right  { content: "Revision 10.3.1 · 2026-09-24"; font: 8pt "DejaVu Sans"; color: #444; }
+  @top-right  { content: "Revision 10.3.2 · 2026-09-24"; font: 8pt "DejaVu Sans"; color: #444; }
   @bottom-center {
     content: "Page " counter(page) " of " counter(pages); font: 8pt "DejaVu Sans"; color: #444;
   }
@@ -76,7 +76,7 @@ nav.toc a::after { content: leader(". ") target-counter(attr(href), page); }
 <body>
 <h1>Vox Populi on CachyOS</h1>
 <p class="subtitle">Civilization V + Vox Populi via Steam and Proton</p>
-<p class="revline">Revision 10.3.1 · 2026-09-24 · Vox Populi 5.4.6 (stable) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.</p>
+<p class="revline">Revision 10.3.2 · 2026-09-24 · Vox Populi 5.4.6 (stable) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.</p>
 <p>No terminal is needed: the work happens in Steam, the Protontricks and Winetricks windows, the installer's wizard and your file manager. Every step that writes to disk ends in a check; the two wizard steps, 6 and 7, are checked by Step 8. <code>WARNING</code> marks a common failure, <code>CRITICAL</code> a step that decides whether this works at all.</p>
 <p>The same guide is also here as <code>vox-populi-cachyos.pdf</code> (print-ready, US Letter) and <code>vox-populi-cachyos-print.html</code>.</p>
 <hr>
@@ -145,7 +145,7 @@ nav.toc a::after { content: leader(". ") target-counter(attr(href), page); }
 │ Language     │ Game language English (Steam → Properties → Language). VP's text       │
 │              │ exists in English only; other languages show missing or stale entries  │
 │ Tooling      │ extra/protontricks 1.14.1-1 with yad (its game list) and zenity (the   │
-│              │ Winetricks windows); it pulls winetricks, which pulls wine, cabextract │
+│              │ Winetricks windows); it pulls winetricks, wine and cabextract          │
 │ Disk         │ Full re-download of the Windows depots, plus ~105 MB installer         │
 │ Conflicts    │ No Workshop subscriptions to Community Patch, More Luxuries,           │
 │              │ City-State Diplomacy, Civ IV Diplomatic Features; no mod shipping its  │
@@ -164,7 +164,7 @@ nav.toc a::after { content: leader(". ") target-counter(attr(href), page); }
 </code></pre>
 <hr>
 <h2 id="sec-3">3. Other distributions</h2>
-<p class="lead">From Step 1 on, three things differ elsewhere — how Steam is installed, where its default library sits, and whether the distribution's own Protontricks is recent enough. <strong>Protontricks 1.12.0 is the floor</strong>: older releases cannot read the current Steam client's <code>appinfo.vdf</code> and stop with "Invalid file magic number".</p>
+<p class="lead">From Step 1 on, other distributions differ in three things — how Steam is installed, where its default library sits, and whether their own Protontricks is recent enough. <strong>Protontricks 1.12.0 is the floor</strong>: older releases cannot read the current Steam client's <code>appinfo.vdf</code> and stop with "Invalid file magic number".</p>
 <pre class="mid"><code>┌──────────────────────┬──────────────────────────────┬──────────────────────────────────┐
 │ Distribution         │ Steam                        │ Protontricks                     │
 ├──────────────────────┼──────────────────────────────┼──────────────────────────────────┤
@@ -203,7 +203,7 @@ nav.toc a::after { content: leader(". ") target-counter(attr(href), page); }
 <p><strong>Check:</strong> the game folder holds <code>CivilizationV_DX11.exe</code> among other <code>.exe</code> files. No <code>.exe</code> at all, and a <code>Civ5XP</code> binary instead, means Steam is still serving the native build.</p>
 <h3>Step 2 · Confirm every DLC</h3>
 <p>Steam → Properties → <strong>DLC</strong> → tick everything.</p>
-<p><strong>Check:</strong> <code>Assets/DLC</code> in the game folder holds all ten — <code>DLC_01</code> to <code>DLC_07</code>, <code>DLC_Deluxe</code>, <code>Expansion</code> and <code>Expansion2</code>. A missing one stops the installer at Step 7.</p>
+<p><strong>Check:</strong> <code>Assets/DLC</code> in the game folder holds all ten — <code>DLC_01</code>–<code>DLC_07</code>, <code>DLC_Deluxe</code>, <code>Expansion</code> and <code>Expansion2</code>. A missing one stops the installer at Step 7.</p>
 <h3>Step 3 · Launch once, reach the main menu, quit</h3>
 <p>This creates the prefix, <code>compatdata/8930/pfx</code>, without which Protontricks cannot see the game, and builds Civ V's Documents tree inside it. Launch from the Steam library window: the modpack thread reports that a desktop shortcut or the tray icon starts the DirectX 9 build without the launcher. When the Firaxis launcher appears, choose DirectX 10/11; the DX9 executable may start regardless (Proton #8327), which does not affect Vox Populi.</p>
 <p><strong>Check:</strong> the Documents folder exists and holds <code>Logs</code>, <code>Saves</code> and <code>config.ini</code> among others.</p>
@@ -231,7 +231,7 @@ sha256  31679423e55d7f64ba9693d8252d9e29f824fd9f8da043af547470068f98ba8a
 │ ★ │ Setup Type / Components  │ Choose one variant — table below                     │
 │ ★ │ Select the Civilization  │ Type S:\steamapps\common\Sid Meier's Civilization V  │
 │   │ V folder                 │ or the Z:\ form of the game folder, given below      │
-│   │ Start Menu folder        │ May be skipped; irrelevant under Proton, Next        │
+│   │ Start Menu folder        │ Irrelevant under Proton — Next                       │
 │   │ Ready to Install         │ CHECK &quot;Civilization V path&quot; shows the S:\ or Z:\     │
 │   │                          │ path, not C:\Program Files (x86)\…                   │
 │   │ Installing · Finished    │ Wait, Finish                                         │
@@ -291,7 +291,7 @@ sha256  31679423e55d7f64ba9693d8252d9e29f824fd9f8da043af547470068f98ba8a
 <p>The single-player figures are what the install thread and the bug-report form ask for; the modpack thread asks for 500 in multiplayer. Either way the aim is a save from the turn <em>before</em> a problem, which needs frequent autosaves that are not rotated away.</p>
 <p><strong>Late-game crashes are a memory problem, not a Vox Populi bug.</strong> Civ V is 32-bit, and the project attributes most late-game CTDs (crashes to desktop) to address-space exhaustion. Mitigations, most important first: Leader Scene Quality on Minimum; yield icons off from the Industrial era (or avoid zooming far out); standard or small maps; a lower in-game resolution — ultrawide and 4K panels are the demanding case. Proton helps: <code>PROTON_FORCE_LARGE_ADDRESS_AWARE</code> is <strong>on by default</strong>, giving the 32-bit executable a 4 GB address space instead of 2 GB. Leave it alone. Upstream's open September 2026 reports fit the same picture — #13344 (crash, likely out of memory) and the draft fix #13372 for intermittent crashes when loading huge maps.</p>
 <p><strong>Early, random crashes are a different problem.</strong> ProtonDB reports tie them to thread count. Under Proton the reported fix is the launch option <code>taskset -c 0-7 %command%</code> (<strong>Properties → General → Launch Options</strong>), which pins the game to eight threads; one reporter instead raised <code>MaxSimultaneousThreads</code> in the Documents folder's <code>config.ini</code> (default 8) to the machine's thread count, and another found that 24 stopped the game starting. Reports that edit that key under <code>~/.local/share/Aspyr</code> concern the native build; Proton never reads that file.</p>
-<p>Late-game turn times are AI-bound, not GPU-bound. Treat graphics settings as a memory lever rather than a frame-rate one, and cap the frame rate at the panel's refresh rate with V-Sync.</p>
+<p>Late-game turn times are AI-bound, not GPU-bound. Treat graphics settings as a memory lever rather than a frame-rate one, and cap the frame rate at the panel's refresh rate with VSync.</p>
 <h3>Configuration files and performance-first settings</h3>
 <p class="lead">The game keeps its settings as plain-text <code>.ini</code> files in the Documents folder (§2) — under Proton, inside the prefix. Edit them with the game closed; the in-game menus write to the same files, and deleting them resets every setting to default at the next start.</p>
 <pre class="mid"><code>┌──────────────────────────┬────────────────────────────────────────────────────────────┐
@@ -325,7 +325,6 @@ sha256  31679423e55d7f64ba9693d8252d9e29f824fd9f8da043af547470068f98ba8a
 │ · Terrain Detail Level       │ TerrainDetailLevel       │                             │
 │ Texture Quality              │ TextureQuality           │ High, unless late-game      │
 │                              │                          │ crashes point at memory     │
-│ GPU Texture Decode           │ —                        │ Leave as set                │
 └──────────────────────────────┴──────────────────────────┴─────────────────────────────┘
 </code></pre>
 <p>Three things only the files can do: <code>MinimizeGrayTiles = 1</code> in the graphics file stops the gray tiles that appear while scrolling on weaker GPUs (the official Steam FAQ's fix); <code>SkipIntroVideo = 1</code> in <code>UserSettings.ini</code> skips the opening movie, as the in-game <em>Skip Intro</em> option does; and <code>FullScreen</code>, <code>WindowResX</code> and <code>WindowResY</code> under <code>[UserSettings]</code> in the graphics file recover a game that opens at a size the screen cannot show — the DX11 build needs at least 768 pixels of height. For wall-clock time rather than frame rate, Options → Game: <strong>Quick Combat</strong> and <strong>Quick Movement</strong> on.</p>
@@ -403,9 +402,9 @@ sha256  31679423e55d7f64ba9693d8252d9e29f824fd9f8da043af547470068f98ba8a
 │ Every player must use byte-identical modpacks                                      │
 │ Every player must delete cache BEFORE EVERY LAUNCH, or the game will most likely   │
 │   crash after the first turn                                                       │
-│ Do not hand-edit Assets\DLC\VP_MODPACK — rebuild instead                           │
+│ Do not hand-edit Assets/DLC/VP_MODPACK — rebuild instead                           │
 │ Saves do not record which modpack was used; a mismatch crashes                     │
-│ Multiplayer autosaves live in Saves\multi\auto — collect them for desync reports   │
+│ Multiplayer autosaves live in Saves/multi/auto — collect them for desync reports   │
 └────────────────────────────────────────────────────────────────────────────────────┘
 </code></pre>
 <p>Remove a modpack by deleting <code>Assets/DLC/VP_MODPACK</code> and <code>cache</code>.</p>
@@ -538,8 +537,8 @@ sha256  a0b59eb445d23bc9a5206ec0f592a7f81c4cfd40a5f2e0d823737bacbd271baa
 │                            │ Database Changes/NewCustomModOptions.xml               │
 │ Cache · per-mod user data  │ Documents folder/cache · Documents folder/ModUserData  │
 │ Logs · logging switches    │ Documents folder/Logs · Documents folder/config.ini    │
-│ Saves (single · multi)     │ Documents folder/Saves · Documents folder/Saves/multi/ │
-│                            │ auto                                                   │
+│ Saves (single · multi)     │ Documents folder/Saves ·                               │
+│                            │ Documents folder/Saves/multi/auto                      │
 │ EUI tooltip text           │ Documents folder/Text/VPUI_tips_en_us.xml              │
 │ Real game install          │ &lt;library&gt;/steamapps/common/Sid Meier's Civilization V  │
 │ Crash artifacts            │ Game folder/crashlogs, and CvMiniDump_*.dmp beside the │
