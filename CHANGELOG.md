@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.3.3 — 2026-09-24
+
+- fix: checked against the 5.4.6 source tree — the installer's full cleanup list, the blocked mods from the modinfo files, the DLC message naming the missing packs, the bug form's required fields; Squads' unverified Ctrl+number binding dropped
+
 ## 10.3.2 — 2026-09-24
 
 - docs: wording and path-style consistency pass; the GPU Texture Decode row, which recommended nothing, is dropped

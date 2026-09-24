@@ -2,7 +2,7 @@
 
 **Civilization V + Vox Populi via Steam and Proton**
 
-Revision 10.3.2 · 2026-09-24 · Vox Populi 5.4.6 (stable) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.
+Revision 10.3.3 · 2026-09-24 · Vox Populi 5.4.6 (stable) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.
 
 No terminal is needed: the work happens in Steam, the Protontricks and Winetricks windows, the installer's wizard and your file manager. Every step that writes to disk ends in a check; the two wizard steps, 6 and 7, are checked by Step 8. `WARNING` marks a common failure, `CRITICAL` a step that decides whether this works at all.
 
@@ -48,13 +48,13 @@ The same guide is also here as `vox-populi-cachyos.pdf` (print-ready, US Letter)
 └────────────────────────┴──────────────────────────────┴─────────────────────────────────┘
 ```
 
-The Documents default is already correct: it resolves inside the prefix, where the Windows build reads mods. The Civilization V folder page fills itself in only when a Windows-style Steam path exists inside the prefix; on a clean prefix it arrives blank.
+The Documents default is already correct: it resolves inside the prefix, where the Windows build reads mods. The Civilization V folder page arrives blank; pressing Next with it empty fills it from the registry or `C:\Program Files (x86)\Steam\…` only if such a tree exists inside the prefix, which a clean prefix has not.
 
 > **CRITICAL** — Aim that page at the real Linux install and nothing needs copying. The wizard refuses a folder without `Assets\DLC` and all ten DLC folders, so on a clean prefix a wrong path is blocked, not installed. A game tree already inside the prefix — a copied install, say — passes that test, and the UI assets land where the game never reads them; that is why some guides need a copy step.
 
 **Every DLC must be installed, not merely owned.** The wizard blocks unless `DLC_01`–`DLC_07`, `DLC_Deluxe` (Babylon), `Expansion` (Gods & Kings) and `Expansion2` (Brave New World) all exist — in practice the Complete Edition on Civ V 1.0.3.279.
 
-**It cleans up after itself.** Before writing it deletes the prefix `cache`, the current VP mod folders and the legacy CBP/CBO/CSD folders. Clear nothing by hand, and expect any edit inside a VP mod folder to be lost at the next install or update.
+**It cleans up after itself.** Before writing it deletes the prefix `cache` and `Text\VPUI_tips_en_us.xml`, the game folder's `VPUI`, `UI_bc1`, `Expansion2.Civ5Pkg` and the sound XML, the current VP mod folders, and every legacy folder name back to the CBP/CBO/CSD era — including `(4) Civ IV Diplomatic Features`, `(5) More Luxuries`, the `(6x)` compatibility files and `(7a) Promotion Icons for VP` / `(7b) UI - Promotion Tree for VP`. Clear nothing by hand, and expect any edit inside a VP mod folder to be lost at the next install or update.
 
 **There is no uninstaller entry** (`Uninstallable=no`). Removal is the **Uninstall all** setup type in the same `.exe`.
 
@@ -76,9 +76,10 @@ The Documents default is already correct: it resolves inside the prefix, where t
 │ Tooling      │ extra/protontricks 1.14.1-1 with yad (its game list) and zenity (the   │
 │              │ Winetricks windows); it pulls winetricks, wine and cabextract          │
 │ Disk         │ Full re-download of the Windows depots, plus ~105 MB installer         │
-│ Conflicts    │ No Workshop subscriptions to Community Patch, More Luxuries,           │
-│              │ City-State Diplomacy, Civ IV Diplomatic Features; no mod shipping its  │
-│              │ own DLL                                                                │
+│ Conflicts    │ The mods block, by modinfo: More Luxuries, CSD for VP, Civ IV          │
+│              │ Diplomatic Features (both), Artificial Unintelligence, Bridges and     │
+│              │ Canals, standalone Squads for VP — no Workshop copies of them; and     │
+│              │ no other mod that ships its own DLL                                    │
 └──────────────┴────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -251,8 +252,8 @@ If `<library>/steamapps/compatdata/8930/pfx/drive_c/Program Files (x86)/Steam/st
 │ (3a) VP - EUI Compatibility  │ MUST be enabled on any EUI install, or VP will not  │
 │   Files                      │ function                                            │
 │ (3b) 43 Civs Community Patch │ Only for 43-civ variants                            │
-│ (4a) Squads for VP           │ Optional QoL — RTS-style control groups on          │
-│                              │ Ctrl+number                                         │
+│ (4a) Squads for VP           │ Optional QoL — RTS-style control groups and group   │
+│                              │ movement                                            │
 │ (5) Modpack Maker for VP     │ Leave off for normal play; builds modpacks (§10)    │
 └──────────────────────────────┴─────────────────────────────────────────────────────┘
 ```
@@ -501,8 +502,8 @@ Ordered by when the failure appears. **Setup and install:**
 │ "warning: 64-bit WINEPREFIX"           │ Expected. Civ V is 32-bit. Ignore.                           │
 │ Wizard never appears                   │ Wayland focus or a broken Proton build. Check other windows, │
 │                                        │ then try Proton Experimental or proton-cachyos-slr.          │
-│ "You don't have all required DLCs"     │ Missing DLC under the chosen path. Enable every DLC in Steam │
-│                                        │ and repeat the Step 2 check.                                 │
+│ "You don't have all required DLCs"     │ The message names the missing packs. Enable every DLC in     │
+│                                        │ Steam and repeat the Step 2 check.                           │
 │ "did not provide the correct path"     │ Chosen folder has no Assets\DLC child. Point at the game     │
 │                                        │ root, not Assets or DLC.                                     │
 └────────────────────────────────────────┴──────────────────────────────────────────────────────────────┘
@@ -564,7 +565,7 @@ Packs built by versions before 0.1.6 can show raw text keys for loading tips and
 
 ## 15. Bug reporting
 
-Vox Populi bugs go to the project's GitHub issue tracker, not the forum; errors in this guide go to this repository's tracker. Upstream's bug form is the only route (blank issues are disabled). It requires the mod version and installed components — the setup type from Step 7 — and asks for three attachments:
+Vox Populi bugs go to the project's GitHub issue tracker, not the forum; errors in this guide go to this repository's tracker. Upstream's bug form is the only route (blank issues are disabled). It requires the mod version, the installed components — the setup type from Step 7 — and a description, and asks for three attachments:
 
 ```
 ┌────────────────────────┬─────────────────────────────────────────────────────────┐
@@ -627,9 +628,9 @@ The project wiki adds guidance on writing a report, a full changelog, a Lua API 
 │ Installer behavior: two-path wizard, setup   │ LoneGazebo/Community-Patch-DLL —             │
 │ types, DLC gate, cleanup, Uninstallable=no,  │ VPSetupData.iss, scripts/release.py,         │
 │ Expansion2.Civ5Pkg swap, savegame rule       │ Opener.rtf                                   │
-│ Mod dependencies, EUI rules, VPUI/UI_bc1;    │ (1)/(2)/(3a) INSTRUCTIONS.txt and MANUAL     │
-│ Squads is QoL; modpack rules and removal     │ INSTALL.txt; (4a) and (5) modinfo;           │
-│                                              │ ModpackMaker.lua                             │
+│ Mod dependencies and blocked mods, EUI       │ the six modinfo files; (1)/(2)/(3a)          │
+│ rules, VPUI/UI_bc1; Squads is QoL; modpack   │ INSTRUCTIONS.txt and MANUAL INSTALL.txt;     │
+│ rules and removal; cleanup list              │ ModpackMaker.lua; VPSetupData.iss            │
 │ CustomModOptions rules, Class legend, Events │ (1) Community Patch/Database Changes/        │
 │ overhead, the four toggles                   │ NewCustomModOptions.xml                      │
 │ 1.0.3.279 + all DLC; logging keys; minidump  │ VP README.md, DEVELOPMENT.md,                │
