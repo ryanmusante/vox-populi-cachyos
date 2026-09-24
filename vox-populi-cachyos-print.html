@@ -1,23 +1,31 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
-<title>Vox Populi on CachyOS — Revision 10.2.0</title>
+<title>Vox Populi on CachyOS — Revision 10.3.1</title>
 <style>
 @page {
   size: letter;
   margin: 0.7in 0.55in 0.75in 0.55in;
   @top-left   { content: "Vox Populi on CachyOS"; font: 8pt "DejaVu Sans"; color: #444; }
-  @top-right  { content: "Revision 10.2.0 · 2026-09-24"; font: 8pt "DejaVu Sans"; color: #444; }
-  @bottom-center { content: "Page " counter(page) " of " counter(pages); font: 8pt "DejaVu Sans"; color: #444; }
+  @top-right  { content: "Revision 10.3.1 · 2026-09-24"; font: 8pt "DejaVu Sans"; color: #444; }
+  @bottom-center {
+    content: "Page " counter(page) " of " counter(pages); font: 8pt "DejaVu Sans"; color: #444;
+  }
 }
 @page :first { @top-left { content: none } @top-right { content: none } }
 
-html { font-family: "DejaVu Sans", "Liberation Sans", sans-serif; font-size: 9.6pt; line-height: 1.38; color: #000; }
+html {
+  font-family: "DejaVu Sans", "Liberation Sans", sans-serif;
+  font-size: 9.6pt; line-height: 1.38; color: #000;
+}
 body { margin: 0; }
 h1 { font-size: 22pt; margin: 0 0 4pt 0; letter-spacing: -0.01em; }
 .subtitle { font-size: 12.5pt; margin: 0 0 10pt 0; }
 .revline { font-size: 9pt; color: #333; margin: 0 0 6pt 0; }
 .conv { font-size: 9pt; color: #333; margin: 0 0 14pt 0; }
-h2 { font-size: 14pt; margin: 20pt 0 6pt 0; padding-bottom: 3pt; border-bottom: 1.2pt solid #000; break-after: avoid; }
+h2 {
+  font-size: 14pt; margin: 20pt 0 6pt 0; padding-bottom: 3pt;
+  border-bottom: 1.2pt solid #000; break-after: avoid;
+}
 h3 { font-size: 11pt; margin: 13pt 0 4pt 0; break-after: avoid; }
 h4 { font-size: 9.8pt; margin: 10pt 0 3pt 0; break-after: avoid; }
 p { margin: 0 0 6pt 0; orphans: 3; widows: 3; }
@@ -68,7 +76,7 @@ nav.toc a::after { content: leader(". ") target-counter(attr(href), page); }
 <body>
 <h1>Vox Populi on CachyOS</h1>
 <p class="subtitle">Civilization V + Vox Populi via Steam and Proton</p>
-<p class="revline">Revision 10.2.0 · 2026-09-24 · Vox Populi 5.4.6 (stable) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.</p>
+<p class="revline">Revision 10.3.1 · 2026-09-24 · Vox Populi 5.4.6 (stable) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.</p>
 <p>No terminal is needed: the work happens in Steam, the Protontricks and Winetricks windows, the installer's wizard and your file manager. Every step that writes to disk ends in a check; the two wizard steps, 6 and 7, are checked by Step 8. <code>WARNING</code> marks a common failure, <code>CRITICAL</code> a step that decides whether this works at all.</p>
 <p>The same guide is also here as <code>vox-populi-cachyos.pdf</code> (print-ready, US Letter) and <code>vox-populi-cachyos-print.html</code>.</p>
 <hr>
@@ -284,6 +292,43 @@ sha256  31679423e55d7f64ba9693d8252d9e29f824fd9f8da043af547470068f98ba8a
 <p><strong>Late-game crashes are a memory problem, not a Vox Populi bug.</strong> Civ V is 32-bit, and the project attributes most late-game CTDs (crashes to desktop) to address-space exhaustion. Mitigations, most important first: Leader Scene Quality on Minimum; yield icons off from the Industrial era (or avoid zooming far out); standard or small maps; a lower in-game resolution — ultrawide and 4K panels are the demanding case. Proton helps: <code>PROTON_FORCE_LARGE_ADDRESS_AWARE</code> is <strong>on by default</strong>, giving the 32-bit executable a 4 GB address space instead of 2 GB. Leave it alone. Upstream's open September 2026 reports fit the same picture — #13344 (crash, likely out of memory) and the draft fix #13372 for intermittent crashes when loading huge maps.</p>
 <p><strong>Early, random crashes are a different problem.</strong> ProtonDB reports tie them to thread count. Under Proton the reported fix is the launch option <code>taskset -c 0-7 %command%</code> (<strong>Properties → General → Launch Options</strong>), which pins the game to eight threads; one reporter instead raised <code>MaxSimultaneousThreads</code> in the Documents folder's <code>config.ini</code> (default 8) to the machine's thread count, and another found that 24 stopped the game starting. Reports that edit that key under <code>~/.local/share/Aspyr</code> concern the native build; Proton never reads that file.</p>
 <p>Late-game turn times are AI-bound, not GPU-bound. Treat graphics settings as a memory lever rather than a frame-rate one, and cap the frame rate at the panel's refresh rate with V-Sync.</p>
+<h3>Configuration files and performance-first settings</h3>
+<p class="lead">The game keeps its settings as plain-text <code>.ini</code> files in the Documents folder (§2) — under Proton, inside the prefix. Edit them with the game closed; the in-game menus write to the same files, and deleting them resets every setting to default at the next start.</p>
+<pre class="mid"><code>┌──────────────────────────┬────────────────────────────────────────────────────────────┐
+│ config.ini               │ Debugging, logging (§15), audio switches and startup       │
+│                          │ parameters — MaxSimultaneousThreads (above) lives here     │
+│ UserSettings.ini         │ User options with no menu entry: SkipIntroVideo,           │
+│                          │ NoBasicHelp, DisableAdvisorSpeech, AutoWorkersDontReplace  │
+│ GraphicsSettingsDX11.ini │ Everything from Options → Video for the DX11 build:        │
+│                          │ resolution, fullscreen, VSync, MSAA, the detail levels     │
+│ GraphicsSettingsDX9.ini  │ The same for the DX9 build — each build keeps its own      │
+└──────────────────────────┴────────────────────────────────────────────────────────────┘
+</code></pre>
+<p class="lead">Performance-first values for Options → Video, with the key behind each option in <code>GraphicsSettingsDX11.ini</code>. Anti-aliasing and terrain tessellation are the items forum benchmarks single out; the rest are ordinary detail levels. Nothing here shortens late-game AI turns — that is CPU time, see above.</p>
+<pre class="mid"><code>┌──────────────────────────────┬──────────────────────────┬─────────────────────────────┐
+│ Options → Video              │ Key                      │ Performance-first           │
+├──────────────────────────────┼──────────────────────────┼─────────────────────────────┤
+│ Anti-Aliasing                │ MSAASamples              │ Off (1). Costliest item;    │
+│                              │                          │ DX11 AA can also black out  │
+│                              │                          │ the screen                  │
+│ VSync                        │ WaitForVSync             │ On (1). Caps at the refresh │
+│                              │                          │ rate, steadies frame times  │
+│ Leader Scene Quality         │ —                        │ Minimum — memory, above     │
+│ Terrain Tessellation Level   │ TerrainTessLevel,        │ Low. On a weak GPU also set │
+│                              │ BicubicTerrainTessSubdiv │ BicubicTerrainTessSubdiv 0  │
+│ Shadow Detail · Terrain      │ ShadowLevel,             │ Low                         │
+│ Shadow Quality               │ TerrainShadowQuality     │                             │
+│ Water Quality · reflections  │ TerrainWaterQuality,     │ Low · off                   │
+│                              │ ReflectionLevel          │                             │
+│ High Detail Strategic View   │ HDStrategicView          │ Off (0)                     │
+│ Overlay Detail · Fog of War  │ OverlayLevel, FOWLevel,  │ Low                         │
+│ · Terrain Detail Level       │ TerrainDetailLevel       │                             │
+│ Texture Quality              │ TextureQuality           │ High, unless late-game      │
+│                              │                          │ crashes point at memory     │
+│ GPU Texture Decode           │ —                        │ Leave as set                │
+└──────────────────────────────┴──────────────────────────┴─────────────────────────────┘
+</code></pre>
+<p>Three things only the files can do: <code>MinimizeGrayTiles = 1</code> in the graphics file stops the gray tiles that appear while scrolling on weaker GPUs (the official Steam FAQ's fix); <code>SkipIntroVideo = 1</code> in <code>UserSettings.ini</code> skips the opening movie, as the in-game <em>Skip Intro</em> option does; and <code>FullScreen</code>, <code>WindowResX</code> and <code>WindowResY</code> under <code>[UserSettings]</code> in the graphics file recover a game that opens at a size the screen cannot show — the DX11 build needs at least 768 pixels of height. For wall-clock time rather than frame rate, Options → Game: <strong>Quick Combat</strong> and <strong>Quick Movement</strong> on.</p>
 <hr>
 <h2 id="sec-8">8. Adding other mods</h2>
 <pre class="mid"><code>┌────────────────────────────────────────────────────────────────────────────────────┐
@@ -575,6 +620,10 @@ sha256  a0b59eb445d23bc9a5206ec0f592a7f81c4cfd40a5f2e0d823737bacbd271baa
 │ depot folders                                │ #13436                                       │
 │ Early-crash thread fix; NVIDIA, DX9/DX11     │ ProtonDB public data export, 2026-09-01:     │
 │ and audio reports                            │ 196 reports for app 8930                     │
+│ INI files, sections and keys; gray-tile fix; │ PCGamingWiki &quot;Sid Meier's Civilization V&quot;;   │
+│ resolution recovery; tessellation cost;      │ Steam FAQ thread for app 8930; CivFanatics   │
+│ SkipIntroVideo; INI reset                    │ 384886, 382624, 381059, 386447, 644343,      │
+│                                              │ 505112, 472949; Steam discussion threads     │
 └──────────────────────────────────────────────┴──────────────────────────────────────────────┘
 </code></pre>
 <hr>
@@ -584,6 +633,7 @@ sha256  a0b59eb445d23bc9a5206ec0f592a7f81c4cfd40a5f2e0d823737bacbd271baa
 <li><strong>The <code>S:</code> default was read from Proton's source, not observed</strong>; the wizard refuses a wrong path, and <code>Z:</code> always works.</li>
 <li><strong>The runtime-library step rests on one forum report and the DLL's import table</strong>; it was not reproduced on a clean prefix. It is cheap, and Winetricks skips what is installed.</li>
 <li><strong>The window routes were read from Protontricks' and Winetricks' sources</strong>, and the file-manager steps describe KDE's Dolphin; other file managers put checksums and the executable bit elsewhere.</li>
+<li><strong>The performance-first values order options by the cost forum benchmarks reported</strong> (2010–2013 threads, Windows); none were measured under Proton, and the numeric levels behind most detail keys are not documented beyond the samples those threads posted.</li>
 <li><strong>The popular-mod roster is thread views on the two most recently active pages of the Mods Repository on 2026-09-24</strong>, and each mod's one-line description comes from its title, opening lines or download page, not from testing under Proton.</li>
 <li><strong>The English-language requirement is a community FAQ item</strong> (thread 528034, the modpack thread, the German language pack), not an upstream statement; the library-window launch tip is a 2023 modpack-thread report.</li>
 <li><strong>§3 was checked against package indexes and upstream documentation, not run</strong> on any of those systems; the Protontricks 1.12.0 floor is what matters.</li>

@@ -1,5 +1,13 @@
 # Changelog
 
+## 10.3.1 — 2026-09-24
+
+- fix: build tool hardened — WeasyPrint API instead of a subprocess, atomic writes, input validation, documented functions; the guide is unchanged
+
+## 10.3.0 — 2026-09-24
+
+- feat: §7 gains "Configuration files and performance-first settings" — the four .ini files, the key behind each Video option with a performance-first value, and the file-only fixes
+
 ## 10.2.0 — 2026-09-24
 
 - feat: §8 gains "Popular mods from CivFanatics" — where the Mods Repository is, the ten most-viewed mods, and the five-step install of a downloaded mod

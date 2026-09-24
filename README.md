@@ -2,7 +2,7 @@
 
 **Civilization V + Vox Populi via Steam and Proton**
 
-Revision 10.2.0 · 2026-09-24 · Vox Populi 5.4.6 (stable) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.
+Revision 10.3.1 · 2026-09-24 · Vox Populi 5.4.6 (stable) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.
 
 No terminal is needed: the work happens in Steam, the Protontricks and Winetricks windows, the installer's wizard and your file manager. Every step that writes to disk ends in a check; the two wizard steps, 6 and 7, are checked by Step 8. `WARNING` marks a common failure, `CRITICAL` a step that decides whether this works at all.
 
@@ -282,6 +282,51 @@ The single-player figures are what the install thread and the bug-report form as
 **Early, random crashes are a different problem.** ProtonDB reports tie them to thread count. Under Proton the reported fix is the launch option `taskset -c 0-7 %command%` (**Properties → General → Launch Options**), which pins the game to eight threads; one reporter instead raised `MaxSimultaneousThreads` in the Documents folder's `config.ini` (default 8) to the machine's thread count, and another found that 24 stopped the game starting. Reports that edit that key under `~/.local/share/Aspyr` concern the native build; Proton never reads that file.
 
 Late-game turn times are AI-bound, not GPU-bound. Treat graphics settings as a memory lever rather than a frame-rate one, and cap the frame rate at the panel's refresh rate with V-Sync.
+
+### Configuration files and performance-first settings
+
+The game keeps its settings as plain-text `.ini` files in the Documents folder (§2) — under Proton, inside the prefix. Edit them with the game closed; the in-game menus write to the same files, and deleting them resets every setting to default at the next start.
+
+```
+┌──────────────────────────┬────────────────────────────────────────────────────────────┐
+│ config.ini               │ Debugging, logging (§15), audio switches and startup       │
+│                          │ parameters — MaxSimultaneousThreads (above) lives here     │
+│ UserSettings.ini         │ User options with no menu entry: SkipIntroVideo,           │
+│                          │ NoBasicHelp, DisableAdvisorSpeech, AutoWorkersDontReplace  │
+│ GraphicsSettingsDX11.ini │ Everything from Options → Video for the DX11 build:        │
+│                          │ resolution, fullscreen, VSync, MSAA, the detail levels     │
+│ GraphicsSettingsDX9.ini  │ The same for the DX9 build — each build keeps its own      │
+└──────────────────────────┴────────────────────────────────────────────────────────────┘
+```
+
+Performance-first values for Options → Video, with the key behind each option in `GraphicsSettingsDX11.ini`. Anti-aliasing and terrain tessellation are the items forum benchmarks single out; the rest are ordinary detail levels. Nothing here shortens late-game AI turns — that is CPU time, see above.
+
+```
+┌──────────────────────────────┬──────────────────────────┬─────────────────────────────┐
+│ Options → Video              │ Key                      │ Performance-first           │
+├──────────────────────────────┼──────────────────────────┼─────────────────────────────┤
+│ Anti-Aliasing                │ MSAASamples              │ Off (1). Costliest item;    │
+│                              │                          │ DX11 AA can also black out  │
+│                              │                          │ the screen                  │
+│ VSync                        │ WaitForVSync             │ On (1). Caps at the refresh │
+│                              │                          │ rate, steadies frame times  │
+│ Leader Scene Quality         │ —                        │ Minimum — memory, above     │
+│ Terrain Tessellation Level   │ TerrainTessLevel,        │ Low. On a weak GPU also set │
+│                              │ BicubicTerrainTessSubdiv │ BicubicTerrainTessSubdiv 0  │
+│ Shadow Detail · Terrain      │ ShadowLevel,             │ Low                         │
+│ Shadow Quality               │ TerrainShadowQuality     │                             │
+│ Water Quality · reflections  │ TerrainWaterQuality,     │ Low · off                   │
+│                              │ ReflectionLevel          │                             │
+│ High Detail Strategic View   │ HDStrategicView          │ Off (0)                     │
+│ Overlay Detail · Fog of War  │ OverlayLevel, FOWLevel,  │ Low                         │
+│ · Terrain Detail Level       │ TerrainDetailLevel       │                             │
+│ Texture Quality              │ TextureQuality           │ High, unless late-game      │
+│                              │                          │ crashes point at memory     │
+│ GPU Texture Decode           │ —                        │ Leave as set                │
+└──────────────────────────────┴──────────────────────────┴─────────────────────────────┘
+```
+
+Three things only the files can do: `MinimizeGrayTiles = 1` in the graphics file stops the gray tiles that appear while scrolling on weaker GPUs (the official Steam FAQ's fix); `SkipIntroVideo = 1` in `UserSettings.ini` skips the opening movie, as the in-game *Skip Intro* option does; and `FullScreen`, `WindowResX` and `WindowResY` under `[UserSettings]` in the graphics file recover a game that opens at a size the screen cannot show — the DX11 build needs at least 768 pixels of height. For wall-clock time rather than frame rate, Options → Game: **Quick Combat** and **Quick Movement** on.
 
 ---
 
@@ -642,6 +687,10 @@ The project wiki adds guidance on writing a report, a full changelog, a Lua API 
 │ depot folders                                │ #13436                                       │
 │ Early-crash thread fix; NVIDIA, DX9/DX11     │ ProtonDB public data export, 2026-09-01:     │
 │ and audio reports                            │ 196 reports for app 8930                     │
+│ INI files, sections and keys; gray-tile fix; │ PCGamingWiki "Sid Meier's Civilization V";   │
+│ resolution recovery; tessellation cost;      │ Steam FAQ thread for app 8930; CivFanatics   │
+│ SkipIntroVideo; INI reset                    │ 384886, 382624, 381059, 386447, 644343,      │
+│                                              │ 505112, 472949; Steam discussion threads     │
 └──────────────────────────────────────────────┴──────────────────────────────────────────────┘
 ```
 
@@ -653,6 +702,7 @@ The project wiki adds guidance on writing a report, a full changelog, a Lua API 
 - **The `S:` default was read from Proton's source, not observed**; the wizard refuses a wrong path, and `Z:` always works.
 - **The runtime-library step rests on one forum report and the DLL's import table**; it was not reproduced on a clean prefix. It is cheap, and Winetricks skips what is installed.
 - **The window routes were read from Protontricks' and Winetricks' sources**, and the file-manager steps describe KDE's Dolphin; other file managers put checksums and the executable bit elsewhere.
+- **The performance-first values order options by the cost forum benchmarks reported** (2010–2013 threads, Windows); none were measured under Proton, and the numeric levels behind most detail keys are not documented beyond the samples those threads posted.
 - **The popular-mod roster is thread views on the two most recently active pages of the Mods Repository on 2026-09-24**, and each mod's one-line description comes from its title, opening lines or download page, not from testing under Proton.
 - **The English-language requirement is a community FAQ item** (thread 528034, the modpack thread, the German language pack), not an upstream statement; the library-window launch tip is a 2023 modpack-thread report.
 - **§3 was checked against package indexes and upstream documentation, not run** on any of those systems; the Protontricks 1.12.0 floor is what matters.
