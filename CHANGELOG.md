@@ -1,5 +1,11 @@
 # Changelog
 
+## 10.0.0 — 2026-09-24
+
+- feat: no terminal: every step runs through Steam, the Protontricks and Winetricks windows, the wizard and a file manager
+- docs: three named folders replace the shell variables; the fish table, the command appendix and command-only troubleshooting rows are gone
+- docs: §3 keeps its two tables and loses the package blocks; Sources condensed to one table; sections renumbered 1–18
+
 ## 9.0.6 — 2026-09-22
 
 - fix: §14 uses `CIV5VP_SUM`, leaving Step 5's `CIV5_SUM` intact; §9.2 gains a check; §16 lists Step 3's `ls "$CIV5_DOCS"`
