@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.4.0 — 2026-09-24
+
+- feat: tools/ joins the repo (build_print.py, check_guide.py, requirements.txt); docs: §16 cut to paths stated nowhere else, Sources carry one verification date, §8 loses its view counts, Fedora's Protontricks is 1.13.1 per Bodhi, the print HTML leaves the archive
+
 ## 10.3.3 — 2026-09-24
 
 - fix: checked against the 5.4.6 source tree — the installer's full cleanup list, the blocked mods from the modinfo files, the DLC message naming the missing packs, the bug form's required fields; Squads' unverified Ctrl+number binding dropped

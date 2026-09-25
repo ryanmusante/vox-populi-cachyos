@@ -2,11 +2,11 @@
 
 **Civilization V + Vox Populi via Steam and Proton**
 
-Revision 10.3.3 · 2026-09-24 · Vox Populi 5.4.6 (stable) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.
+Revision 10.4.0 · 2026-09-24 · Vox Populi 5.4.6 (stable) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.
 
 No terminal is needed: the work happens in Steam, the Protontricks and Winetricks windows, the installer's wizard and your file manager. Every step that writes to disk ends in a check; the two wizard steps, 6 and 7, are checked by Step 8. `WARNING` marks a common failure, `CRITICAL` a step that decides whether this works at all.
 
-The same guide is also here as `vox-populi-cachyos.pdf` (print-ready, US Letter) and `vox-populi-cachyos-print.html`.
+The same guide is also here as `vox-populi-cachyos.pdf` (print-ready, US Letter), built from this file by `tools/build_print.py`; `tools/check_guide.py` verifies both.
 
 ---
 
@@ -111,7 +111,7 @@ From Step 1 on, other distributions differ in three things — how Steam is inst
 │ Ubuntu 24.04 LTS     │ steam-installer (multiverse) │ multiverse, 1.10.5 — too old;    │
 │                      │                              │ use the Flatpak                  │
 │ Debian 13            │ steam-installer (contrib)    │ none in trixie; use the Flatpak  │
-│ Fedora 44            │ steam (RPM Fusion Nonfree)   │ fedora, 1.14.0 — use it          │
+│ Fedora 44            │ steam (RPM Fusion Nonfree)   │ fedora, 1.13.1 — use it          │
 │ Steam Deck           │ preinstalled                 │ Flatpak, from Discover           │
 └──────────────────────┴──────────────────────────────┴──────────────────────────────────┘
 ```
@@ -349,29 +349,29 @@ Check the CivFanatics "MODS compatible with Vox Populi (VP)" thread first: VP re
 
 ### Popular mods from CivFanatics
 
-Where they live: the Community Patch Project's **Mods Repository** subforum (Civ5 → Creation & Customization → Project & Mod Development → Community Patch Project). Its sticky says every mod there is meant to work with the current VP; ones that stop working move to the **Mods Archive**. The opening post of each thread holds the download — an attachment, a file-host link or a GitHub repository — and its last page holds the compatibility reports for 5.4.6. A mod's page under the site's **Downloads** section, where one exists, can lag the thread by years (Even More Resources: v8 from 2021 there). The most-viewed threads on 2026-09-24:
+Where they live: the Community Patch Project's **Mods Repository** subforum (Civ5 → Creation & Customization → Project & Mod Development → Community Patch Project). Its sticky says every mod there is meant to work with the current VP; ones that stop working move to the **Mods Archive**. The opening post of each thread holds the download — an attachment, a file-host link or a GitHub repository — and its last page holds the compatibility reports for 5.4.6. A mod's page under the site's **Downloads** section, where one exists, can lag the thread by years (Even More Resources: v8 from 2021 there). The most-viewed threads, in that order:
 
 ```
 ┌─────────────────────────────────────────┬───────────────┬────────────────────────────────┐
-│ Mod (thread views)                      │ Author        │ What it is                     │
+│ Mod                                     │ Author        │ What it is                     │
 ├─────────────────────────────────────────┼───────────────┼────────────────────────────────┤
-│ More Wonders for VP (298K)              │ adan_eslavo   │ Extra wonders; continues       │
+│ More Wonders for VP                     │ adan_eslavo   │ Extra wonders; continues       │
 │                                         │               │ Infixo's VP Wonders Expanded   │
-│ Improved City View — VP with EUI (104K) │ Infixo        │ City screen rework; EUI        │
+│ Improved City View — VP with EUI        │ Infixo        │ City screen rework; EUI        │
 │                                         │               │ installs only                  │
-│ Even More Resources for VP (99K)        │ HungryForFood │ 21 resources incl. city-state  │
+│ Even More Resources for VP              │ HungryForFood │ 21 resources incl. city-state  │
 │                                         │               │ luxuries; also on GitHub       │
-│ Hokath's Proposals (85K)                │ hokath        │ Bundle of balance proposals    │
+│ Hokath's Proposals                      │ hokath        │ Bundle of balance proposals    │
 │ Unique City-States, adan_eslavo         │ adan_eslavo   │ Unique traits for city-states  │
-│   expansion (65K)                       │               │                                │
-│ Dolen2's Ethnic Diversity (55K)         │ Dolen2        │ Culture-specific unit art      │
-│ Cultural Components, 5/6 UC (51K)       │ hokath        │ Fifth and sixth unique         │
+│   expansion                             │               │                                │
+│ Dolen2's Ethnic Diversity               │ Dolen2        │ Culture-specific unit art      │
+│ Cultural Components, 5/6 UC             │ hokath        │ Fifth and sixth unique         │
 │                                         │               │ components per civilization    │
-│ Enlightenment Era for VP (46K)          │ hokath        │ An era between Renaissance     │
+│ Enlightenment Era for VP                │ hokath        │ An era between Renaissance     │
 │                                         │               │ and Industrial                 │
-│ Various Gameplay Tweaks (40K)           │ balparmak     │ Naval supply, veterancy, less  │
+│ Various Gameplay Tweaks                 │ balparmak     │ Naval supply, veterancy, less  │
 │                                         │               │ micromanagement                │
-│ Semper Fidelis (31K)                    │ hokath        │ Ideologies expansion pack      │
+│ Semper Fidelis                          │ hokath        │ Ideologies expansion pack      │
 └─────────────────────────────────────────┴───────────────┴────────────────────────────────┘
 ```
 
@@ -590,29 +590,16 @@ The project wiki adds guidance on writing a report, a full changelog, a Lua API 
 
 ## 16. Path reference
 
-`<library>` is the §2 Steam library; the Documents folder is the last row of the §2 table.
+Paths not spelled out elsewhere; `<library>` is the §2 Steam library, `<prefix root>` the first row.
 
 ```
 ┌────────────────────────────┬────────────────────────────────────────────────────────┐
 │ Wine prefix root           │ <library>/steamapps/compatdata/8930/pfx/drive_c        │
 │ Drive mappings             │ <library>/steamapps/compatdata/8930/pfx/dosdevices     │
-│ Mods                       │ Documents folder/MODS                                  │
 │ CP options file            │ Documents folder/MODS/(1) Community Patch/             │
 │                            │ Database Changes/NewCustomModOptions.xml               │
-│ Cache · per-mod user data  │ Documents folder/cache · Documents folder/ModUserData  │
-│ Logs · logging switches    │ Documents folder/Logs · Documents folder/config.ini    │
-│ Saves (single · multi)     │ Documents folder/Saves ·                               │
-│                            │ Documents folder/Saves/multi/auto                      │
-│ EUI tooltip text           │ Documents folder/Text/VPUI_tips_en_us.xml              │
-│ Real game install          │ <library>/steamapps/common/Sid Meier's Civilization V  │
 │ Crash artifacts            │ Game folder/crashlogs, and CvMiniDump_*.dmp beside the │
 │                            │ game executable in the game folder                     │
-│ VP UI · EUI · modpack      │ Game folder/Assets/DLC/VPUI · UI_bc1 · VP_MODPACK      │
-│ Replaced BNW package       │ Game folder/Assets/DLC/Expansion2/Expansion2.Civ5Pkg   │
-│ Added city-state sound XML │ Game folder/Assets/DLC/Expansion2/Sounds/XML/          │
-│                            │ MinorCivSounds_VoxPopuli.xml                           │
-│ Steam library, other       │ §3, second table                                       │
-│ packagings                 │                                                        │
 │ civ5vp-installer data      │ ~/.local/share/civ5vp-installer                        │
 │ Phantom tree (stays empty) │ <prefix root>/Program Files (x86)/Steam/steamapps/     │
 │                            │ common/Sid Meier's Civilization V                      │
@@ -622,6 +609,8 @@ The project wiki adds guidance on writing a report, a full changelog, a Lua API 
 ---
 
 ## 17. Sources
+
+Every row was verified on 2026-09-24 unless it says otherwise.
 
 ```
 ┌──────────────────────────────────────────────┬──────────────────────────────────────────────┐
@@ -637,8 +626,8 @@ The project wiki adds guidance on writing a report, a full changelog, a Lua API 
 │ location and dbghelp.dll dependency          │ docs/minidumps.md                            │
 │ Bug form: required fields, three attachments,│ .github/ISSUE_TEMPLATE/bug_report_v5.yml     │
 │ crashlogs path, autosave rationale; wiki     │ and config.yml; Community-Patch-DLL wiki     │
-│ 5.4.6 stable, asset name, size, sha256       │ GitHub releases + release feed, 2026-08-31;  │
-│                                              │ still the newest release on 2026-09-24       │
+│ 5.4.6 stable, asset name, size, sha256;      │ GitHub releases + release feed (released     │
+│ still the newest release                     │ 2026-08-31)                                  │
 │ Game language must be English                │ CivFanatics thread 528034 FAQ; modpack       │
 │                                              │ thread 685164 OP; (1a) Community Patch –     │
 │                                              │ German Workshop page                         │
@@ -646,14 +635,14 @@ The project wiki adds guidance on writing a report, a full changelog, a Lua API 
 │                                              │ variants, PE import table                    │
 │ Prebuilt modpacks incl. Linux/Proton build;  │ CivFanatics modpack thread 685164 (OP, posts │
 │ MP autosaves; library-window launch tip;     │ #721 and #732); Community-Patch-DLL #13349,  │
-│ open 5.4.x desync; Info Addict; 2026 crash   │ open 2026-09-24; #13344; draft PR #13372     │
+│ open 5.4.x desync; Info Addict; 2026 crash   │ open; #13344 open; draft PR #13372           │
 │ reports                                      │                                              │
 │ Late-game CTD from 32-bit memory; the        │ CivFanatics "Start Here" thread 701813       │
 │ mitigation order; beta vs stable naming      │                                              │
 │ Autosaves; Workshop and DLL conflicts;       │ CivFanatics threads 528034 ("How To          │
 │ minimal-install triage; compatibility list   │ Install") and 542679 ("MODS compatible")     │
 │ Popular mods: views, authors, prefixes;      │ CivFanatics Mods Repository subforum (549),  │
-│ repository and archive rule; Downloads lag   │ pages 1–2, 2026-09-24; stickies 701787 and   │
+│ repository and archive rule; Downloads lag   │ pages 1–2; stickies 701787 and               │
 │                                              │ 689101; Even More Resources page 28019       │
 │ .civ5mod is 7-Zip; the .modinfo folder goes  │ CivFanatics threads 451941, 549219 and       │
 │ into MODS; in-game unpacking unreliable      │ 477763; the (7a) Events Overhaul title       │
@@ -667,7 +656,7 @@ The project wiki adds guidance on writing a report, a full changelog, a Lua API 
 │ Alternative installer: 0.1.6, asset, sha256, │ Alpakinator/civ5vp-installer README,         │
 │ data dir, local-build warning, text-key bug  │ CHANGELOG, v0.1.6 assets; CivFanatics        │
 │                                              │ thread 704249; Community-Patch-DLL #13364    │
-│ MPPatch last release Dec 2023                │ Lymia/MPPatch release feed, 2026-09-24       │
+│ MPPatch last release Dec 2023                │ Lymia/MPPatch release feed                   │
 │ LARGE_ADDRESS_AWARE default; GAME_DRIVE and  │ ValveSoftware/Proton README and proton       │
 │ its 11.0 default; DX9/DX11 launch report     │ script, 9.0 to 11.0; Proton issue #8327      │
 │ Protontricks app shortcut and Launcher,      │ Matoking/protontricks README, setup.cfg,     │
@@ -680,8 +669,9 @@ The project wiki adds guidance on writing a report, a full changelog, a Lua API 
 │ Package versions and repositories            │ archlinux.org package DB; mirror.cachyos.org │
 │ Ubuntu, Debian and Fedora packages, Steam    │ packages.ubuntu.com, Launchpad;              │
 │ setup and default directory; NVIDIA 32-bit   │ packages.debian.org, sources.debian.org;     │
-│ libraries on Debian                          │ Repology; Debian wiki: Steam; RPM Fusion;    │
-│                                              │ Flathub; steam-installer 1.0.0.85 source     │
+│ libraries on Debian                          │ Bodhi (protontricks-1.13.1-3.fc44); Debian   │
+│                                              │ wiki: Steam; RPM Fusion; Flathub;            │
+│                                              │ steam-installer 1.0.0.85 source              │
 │ Steam default dir and ~/.steam/root          │ Arch Wiki: Steam                             │
 │ Steam disk write error on case-mismatched    │ ValveSoftware/steam-for-linux #13406,        │
 │ depot folders                                │ #13436                                       │
@@ -703,9 +693,9 @@ The project wiki adds guidance on writing a report, a full changelog, a Lua API 
 - **The runtime-library step rests on one forum report and the DLL's import table**; it was not reproduced on a clean prefix. It is cheap, and Winetricks skips what is installed.
 - **The window routes were read from Protontricks' and Winetricks' sources**, and the file-manager steps describe KDE's Dolphin; other file managers put checksums and the executable bit elsewhere.
 - **The performance-first values order options by the cost forum benchmarks reported** (2010–2013 threads, Windows); none were measured under Proton, and the numeric levels behind most detail keys are not documented beyond the samples those threads posted.
-- **The popular-mod roster is thread views on the two most recently active pages of the Mods Repository on 2026-09-24**, and each mod's one-line description comes from its title, opening lines or download page, not from testing under Proton.
+- **The popular-mod roster is thread views on the two most recently active pages of the Mods Repository** at verification, and each mod's one-line description comes from its title, opening lines or download page, not from testing under Proton.
 - **The English-language requirement is a community FAQ item** (thread 528034, the modpack thread, the German language pack), not an upstream statement; the library-window launch tip is a 2023 modpack-thread report.
-- **§3 was checked against package indexes and upstream documentation, not run** on any of those systems; the Protontricks 1.12.0 floor is what matters.
+- **§3 was checked against package indexes and upstream documentation, not run** on any of those systems; the Protontricks 1.12.0 floor is what matters. Fedora's figure is the newest Bodhi update found for Fedora 44 (January 2026); a later one may exist.
 - **ProtonDB's page needs JavaScript**, so its public data export (2026-09-01) was read instead; the §7 and §13 items from it are community reports, not tested fixes.
 - **§9 toggles were read from the source file, not exercised.** `ENABLE_ACHIEVEMENTS` is marked "functionality not guaranteed" upstream and changes the savegame format.
 - **Upstream disagrees with itself on where crash dumps land** — the issue form says `crashlogs`, the minidump guide says beside the game executable. Both are covered.
