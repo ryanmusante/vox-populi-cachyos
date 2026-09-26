@@ -6,7 +6,7 @@ Revision 10.4.1 · 2026-09-25 · Vox Populi 5.4.6 (stable) · Protontricks 1.14.
 
 No terminal is needed: the work happens in Steam, the Protontricks and Winetricks windows, the installer's wizard and your file manager. Every step that writes to disk ends in a check; the two wizard steps, 6 and 7, are checked by Step 8. `WARNING` marks a common failure, `CRITICAL` a step that decides whether this works at all.
 
-The same guide is also here as `vox-populi-cachyos.pdf` (print-ready, US Letter), built from this file by `tools/build_print.py`; `tools/check_guide.py` verifies both.
+The same guide is also here as `vox-populi-cachyos.pdf` (print-ready, US Letter).
 
 ---
 
