@@ -6,7 +6,7 @@
 
 ## 10.4.0 — 2026-09-24
 
-docs: §16 cut to paths stated nowhere else, Sources carry one verification date, §8 loses its view counts, Fedora's Protontricks is 1.13.1 per Bodhi, the print HTML leaves the archive
+- docs: §16 cut to paths stated nowhere else, Sources carry one verification date, §8 loses its view counts, Fedora's Protontricks is 1.13.1 per Bodhi, the print HTML leaves the archive
 
 ## 10.3.3 — 2026-09-24
 
