@@ -2,7 +2,7 @@
 
 **Civilization V + Vox Populi via Steam and Proton**
 
-Revision 10.4.0 · 2026-09-24 · Vox Populi 5.4.6 (stable) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.
+Revision 10.4.1 · 2026-09-25 · Vox Populi 5.4.6 (stable) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.
 
 No terminal is needed: the work happens in Steam, the Protontricks and Winetricks windows, the installer's wizard and your file manager. Every step that writes to disk ends in a check; the two wizard steps, 6 and 7, are checked by Step 8. `WARNING` marks a common failure, `CRITICAL` a step that decides whether this works at all.
 
@@ -74,7 +74,7 @@ The Documents default is already correct: it resolves inside the prefix, where t
 │ Language     │ Game language English (Steam → Properties → Language). VP's text       │
 │              │ exists in English only; other languages show missing or stale entries  │
 │ Tooling      │ extra/protontricks 1.14.1-1 with yad (its game list) and zenity (the   │
-│              │ Winetricks windows); it pulls winetricks, wine and cabextract          │
+│              │ Winetricks windows); it pulls winetricks, which pulls cabextract       │
 │ Disk         │ Full re-download of the Windows depots, plus ~105 MB installer         │
 │ Conflicts    │ The mods block, by modinfo: More Luxuries, CSD for VP, Civ IV          │
 │              │ Diplomatic Features (both), Artificial Unintelligence, Bridges and     │
@@ -173,7 +173,7 @@ Install `protontricks`, `yad` and `zenity` from the CachyOS repositories (other 
 
 **Check:** opened again, those two lists show `vcrun2008` and `corefonts` already ticked.
 
-`CvGameCore_Expansion2.dll` (both 5.4.6 variants) imports `MSVCR90.dll` and `MSVCP90.dll`, the Visual C++ 2008 runtime that `vcrun2008` installs; Wine's built-in copies usually suffice, but a report in thread 702075 had VP working only after this step. `corefonts` adds Microsoft's ten core web fonts and needs `cabextract`.
+`CvGameCore_Expansion2.dll` (both 5.4.6 variants) imports `MSVCR90.dll` and `MSVCP90.dll`, the Visual C++ 2008 runtime that `vcrun2008` installs; Wine's built-in copies usually suffice, but a report in thread 702075 had VP working only after this step. `corefonts` adds the eleven Microsoft Core fonts for the Web and needs `cabextract`.
 
 ### Step 5 · Download and verify
 
@@ -516,7 +516,7 @@ Ordered by when the failure appears. **Setup and install:**
 │ Symptom                                │ Cause and fix                                                │
 ├────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
 │ Crash during the first configuring     │ The thread-702075 opening post saw this once; relaunch and   │
-│ game data pass                         │ enter MODS again (§6).                                       │
+│ game data pass                         │ enter MODS again (§6); if it keeps crashing, delete cache.   │
 │ VP absent from the in-game mod list    │ Documents page was changed; mods are outside the prefix.     │
 │                                        │ Re-run with the default Documents path.                      │
 │ Missing textures, broken UI            │ Civ V folder page pointed at a game tree inside the prefix.  │
@@ -551,7 +551,7 @@ Ordered by when the failure appears. **Setup and install:**
 `github.com/Alpakinator/civ5vp-installer` — a single-file native Linux binary (Apache-2.0) that installs VP without Protontricks. It finds the Civ V folders itself (you can correct them), writes only to the game's MODS, DLC and Text folders and its cache, has a modpack mode, and its Uninstall button restores an unmodded game. Proton-only, like §1. Newer and less tested than the Protontricks route; a fallback if the Inno wizard misbehaves.
 
 ```
-civ5vp-installer-linux-x86_64 — v0.1.6 (2026-09-15)
+civ5vp-installer-linux-x86_64 (v0.1.6, 2026-09-15) — 44,735,720 bytes
 sha256  a0b59eb445d23bc9a5206ec0f592a7f81c4cfd40a5f2e0d823737bacbd271baa
 ```
 
@@ -610,7 +610,7 @@ Paths not spelled out elsewhere; `<library>` is the §2 Steam library, `<prefix 
 
 ## 17. Sources
 
-Every row was verified on 2026-09-24 unless it says otherwise.
+Every row was verified on 2026-09-24 unless it says otherwise; package versions, releases and issue states again on 2026-09-25.
 
 ```
 ┌──────────────────────────────────────────────┬──────────────────────────────────────────────┐
