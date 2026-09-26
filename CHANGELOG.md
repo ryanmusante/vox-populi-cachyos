@@ -2,11 +2,11 @@
 
 ## 10.4.1 — 2026-09-25
 
-- fix: no wine package behind Protontricks, corefonts is eleven fonts, civ5vp-installer size stated, a repeating first-pass crash clears cache; check_guide.py fails instead of crashing on a bad table row or an unreadable PDF, both tools gain --help/--version and usage exit 2, the PDF build is byte-reproducible
+- fix: no wine package behind Protontricks, corefonts is eleven fonts, civ5vp-installer size stated, a repeating first-pass crash clears cache
 
 ## 10.4.0 — 2026-09-24
 
-- feat: tools/ joins the repo (build_print.py, check_guide.py, requirements.txt); docs: §16 cut to paths stated nowhere else, Sources carry one verification date, §8 loses its view counts, Fedora's Protontricks is 1.13.1 per Bodhi, the print HTML leaves the archive
+docs: §16 cut to paths stated nowhere else, Sources carry one verification date, §8 loses its view counts, Fedora's Protontricks is 1.13.1 per Bodhi, the print HTML leaves the archive
 
 ## 10.3.3 — 2026-09-24
 
