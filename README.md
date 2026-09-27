@@ -2,7 +2,7 @@
 
 **Civilization V + Vox Populi via Steam and Proton**
 
-Revision 10.4.1 · 2026-09-25 · Vox Populi 5.4.6 (stable) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.
+Revision 10.4.2 · 2026-09-26 · Vox Populi 5.4.6 (stable) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.
 
 No terminal is needed: the work happens in Steam, the Protontricks and Winetricks windows, the installer's wizard and your file manager. Every step that writes to disk ends in a check; the two wizard steps, 6 and 7, are checked by Step 8. `WARNING` marks a common failure, `CRITICAL` a step that decides whether this works at all.
 
@@ -73,9 +73,10 @@ The Documents default is already correct: it resolves inside the prefix, where t
 │              │ proton-cachyos-slr OK. NOT "Steam Linux Runtime" — that is not Proton  │
 │ Language     │ Game language English (Steam → Properties → Language). VP's text       │
 │              │ exists in English only; other languages show missing or stale entries  │
-│ Tooling      │ extra/protontricks 1.14.1-1 with yad (its game list) and zenity (the   │
-│              │ Winetricks windows); it pulls winetricks, which pulls cabextract       │
-│ Disk         │ Full re-download of the Windows depots, plus ~105 MB installer         │
+│ Tooling      │ extra/protontricks 1.14.1-1 with yad (its game list) and zenity (a     │
+│              │ Winetricks dialog tool, already a steam dependency); it pulls          │
+│              │ winetricks, which pulls wine and cabextract                            │
+│ Disk         │ Full re-download of the Windows depots, plus the 110 MB installer      │
 │ Conflicts    │ The mods block, by modinfo: More Luxuries, CSD for VP, Civ IV          │
 │              │ Diplomatic Features (both), Artificial Unintelligence, Bridges and     │
 │              │ Canals, standalone Squads for VP — no Workshop copies of them; and     │
@@ -131,7 +132,7 @@ Where the default library sits — the §2 library unless Civ V lives in a secon
 └────────────────────────────────┴────────────────────────────────────────────────────────┘
 ```
 
-**Debian and Ubuntu** need the i386 architecture enabled and the `multiverse` (Ubuntu) or `contrib` (Debian) component before `steam-installer` is offered; Debian also wants the 32-bit Mesa packages that the Debian wiki's Steam page lists, or NVIDIA's 32-bit driver libraries (`nvidia-driver-libs:i386`) with the proprietary driver. **Fedora** takes Steam from RPM Fusion Nonfree and Protontricks from Fedora itself. Where the table says **Flatpak**, add Flathub, install `com.github.Matoking.protontricks` and restart; on the **Steam Deck**, Desktop Mode's Discover does this, and SteamOS's read-only root rules out anything else. Flatpak Protontricks reaches Steam's own directories plus the standard Downloads, Documents and Desktop folders, and ships the same app shortcut and Launcher entries; a library or installer elsewhere makes it report the folders it cannot reach and how to grant them.
+**Debian and Ubuntu** need the i386 architecture enabled and the `multiverse` (Ubuntu) or `contrib` (Debian) component before `steam-installer` is offered; Debian also wants the 32-bit Mesa packages that the Debian wiki's Steam page lists, or NVIDIA's 32-bit driver libraries (`nvidia-driver-libs:i386`) with the proprietary driver. **Fedora** takes Steam from RPM Fusion Nonfree and Protontricks from Fedora itself. Where the table says **Flatpak**, add Flathub, install `com.github.Matoking.protontricks` and restart; on the **Steam Deck**, Desktop Mode's Discover does this, and SteamOS's read-only root rules out anything else. Flatpak Protontricks reaches Steam's own directories plus the standard Desktop, Documents, Downloads, Music, Pictures and Videos folders, and ships the same app shortcut and Launcher entries; a library or installer elsewhere makes it report the folders it cannot reach and how to grant them.
 
 Then, on any of them: start Steam once and sign in so it creates its directories, confirm in your package manager that Protontricks is 1.12.0 or newer, and continue with Step 1.
 
@@ -169,7 +170,7 @@ This creates the prefix, `compatdata/8930/pfx`, without which Protontricks canno
 
 ### Step 4 · Protontricks and runtime libraries
 
-Install `protontricks`, `yad` and `zenity` from the CachyOS repositories (other distributions: §3). Open **Protontricks** from the application menu and pick **Sid Meier's Civilization V** — it is listed only after Step 3. Winetricks opens for the game's prefix: choose **Select the default wineprefix**, then **Install a Windows DLL or component** → `vcrun2008`, and **Install a font** → `corefonts`. Both download, so this needs network access; Winetricks skips what is already installed, so repeating it is harmless.
+Install `protontricks` and `yad` from the CachyOS repositories; `zenity` is already there as a Steam dependency (other distributions: §3). Open **Protontricks** from the application menu and pick **Sid Meier's Civilization V** — it is listed only after Step 3. Winetricks opens for the game's prefix: choose **Select the default wineprefix**, then **Install a Windows DLL or component** → `vcrun2008`, and **Install a font** → `corefonts`. An error box saying you are using a 64-bit WINEPREFIX is expected — Civ V is 32-bit inside a 64-bit prefix — so close it. Both download, so this needs network access; Winetricks skips what is already installed, so repeating it is harmless.
 
 **Check:** opened again, those two lists show `vcrun2008` and `corefonts` already ticked.
 
@@ -188,7 +189,7 @@ sha256  31679423e55d7f64ba9693d8252d9e29f824fd9f8da043af547470068f98ba8a
 
 ### Step 6 · Run it inside the prefix
 
-Right-click `Vox.Populi.5.4.6.exe` → **Open With → Protontricks Launcher** → **Sid Meier's Civilization V**. The wizard can take a minute to appear and may open behind other windows under Wayland. A warning about a 64-bit WINEPREFIX, if one appears, is expected: Civ V is 32-bit inside a 64-bit prefix.
+Right-click `Vox.Populi.5.4.6.exe` → **Open With → Protontricks Launcher** → **Sid Meier's Civilization V**. The wizard can take a minute to appear and may open behind other windows under Wayland.
 
 ### Step 7 · Work the wizard
 
@@ -202,7 +203,6 @@ Right-click `Vox.Populi.5.4.6.exe` → **Open With → Protontricks Launcher** �
 │ ★ │ Setup Type / Components  │ Choose one variant — table below                     │
 │ ★ │ Select the Civilization  │ Type S:\steamapps\common\Sid Meier's Civilization V  │
 │   │ V folder                 │ or the Z:\ form of the game folder, given below      │
-│   │ Start Menu folder        │ Irrelevant under Proton — Next                       │
 │   │ Ready to Install         │ CHECK "Civilization V path" shows the S:\ or Z:\     │
 │   │                          │ path, not C:\Program Files (x86)\…                   │
 │   │ Installing · Finished    │ Wait, Finish                                         │
@@ -416,7 +416,7 @@ VP cannot be played in multiplayer through the MODS menu; it must be packaged as
 
 **Preferred — a prebuilt modpack.** The CivFanatics modpack thread tracks current releases (5.4.6), including one generated on Linux under Proton. Extract so the modpack folder sits directly under the game folder's `Assets/DLC`, then delete the Documents folder's `cache`. Modpacks also work in single player and are easier to update than a mods-menu install.
 
-**Or build your own:** enable `(5) Modpack Maker for VP` plus every mod to include → start or load a game → **Ctrl-Shift-M** → check `Logs/Lua.log` in the Documents folder for errors → exit → delete `cache` → relaunch and start from Single Player or Multiplayer, never the MODS menu.
+**Or build your own:** enable `(5) Modpack Maker for VP` plus every mod to include → start or load a game → **Ctrl+Shift+M** → check `Logs/Lua.log` in the Documents folder for errors → exit → delete `cache` → relaunch and start from Single Player or Multiplayer, never the MODS menu.
 
 **Or let civ5vp-installer build one** (§14).
 
@@ -481,10 +481,10 @@ Ordered by when the failure appears. **Setup and install:**
 │ Symptom                                │ Cause and fix                                                │
 ├────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
 │ Steam: "disk write error" while it     │ Steam client bug with case-mismatched depot folders          │
-│ downloads the Windows depots (Step 1)  │ (steam-for-linux #13406; the Civ V report is #13436),        │
-│                                        │ closed as completed 2026-07-27. Update Steam and retry;      │
-│                                        │ reporters created the folder the error names, in that        │
-│                                        │ exact case, under steamapps/downloading/8930.                │
+│ downloads the Windows depots (Step 1)  │ (steam-for-linux #13406, closed as completed 2026-07-27; the │
+│                                        │ Civ V reports #13433 and #13436 are its duplicates). Update  │
+│                                        │ Steam and retry; reporters created the folder the error      │
+│                                        │ names, in that exact case, under steamapps/downloading/8930. │
 │ Crashes on NVIDIA                      │ Two May 2026 ProtonDB reports crash on drivers 580.142       │
 │                                        │ and 595.71.05; one reverted the driver. A July report        │
 │                                        │ on 580.105.08 runs. Not a VP fault.                          │
@@ -499,7 +499,7 @@ Ordered by when the failure appears. **Setup and install:**
 │ "command cabextract … returned         │ cabextract trips over a symlink Proton created. Delete       │
 │ status 1"                              │ the symlink the error names, then re-run.                    │
 │ "Cannot find cabextract"               │ Install the cabextract package.                              │
-│ "warning: 64-bit WINEPREFIX"           │ Expected. Civ V is 32-bit. Ignore.                           │
+│ "You are using a 64-bit WINEPREFIX"    │ Expected (Winetricks, Step 4): Civ V is 32-bit. Close it.    │
 │ Wizard never appears                   │ Wayland focus or a broken Proton build. Check other windows, │
 │                                        │ then try Proton Experimental or proton-cachyos-slr.          │
 │ "You don't have all required DLCs"     │ The message names the missing packs. Enable every DLC in     │
@@ -590,19 +590,19 @@ The project wiki adds guidance on writing a report, a full changelog, a Lua API 
 
 ## 16. Path reference
 
-Paths not spelled out elsewhere; `<library>` is the §2 Steam library, `<prefix root>` the first row.
+Paths not spelled out elsewhere; `<library>` is the §2 Steam library, `<C: drive>` the first row.
 
 ```
 ┌────────────────────────────┬────────────────────────────────────────────────────────┐
-│ Wine prefix root           │ <library>/steamapps/compatdata/8930/pfx/drive_c        │
+│ Prefix C: drive            │ <library>/steamapps/compatdata/8930/pfx/drive_c        │
 │ Drive mappings             │ <library>/steamapps/compatdata/8930/pfx/dosdevices     │
 │ CP options file            │ Documents folder/MODS/(1) Community Patch/             │
 │                            │ Database Changes/NewCustomModOptions.xml               │
 │ Crash artifacts            │ Game folder/crashlogs, and CvMiniDump_*.dmp beside the │
 │                            │ game executable in the game folder                     │
 │ civ5vp-installer data      │ ~/.local/share/civ5vp-installer                        │
-│ Phantom tree (stays empty) │ <prefix root>/Program Files (x86)/Steam/steamapps/     │
-│                            │ common/Sid Meier's Civilization V                      │
+│ Phantom tree (must not     │ <C: drive>/Program Files (x86)/Steam/steamapps/        │
+│ exist — Step 8)            │ common/Sid Meier's Civilization V                      │
 └────────────────────────────┴────────────────────────────────────────────────────────┘
 ```
 
@@ -610,13 +610,14 @@ Paths not spelled out elsewhere; `<library>` is the §2 Steam library, `<prefix 
 
 ## 17. Sources
 
-Every row was verified on 2026-09-24 unless it says otherwise; package versions, releases and issue states again on 2026-09-25.
+Every row was verified on 2026-09-24 unless it says otherwise; package versions, releases, issue states and the installer, Protontricks, Winetricks, Proton and Flathub sources again on 2026-09-26.
 
 ```
 ┌──────────────────────────────────────────────┬──────────────────────────────────────────────┐
-│ Installer behavior: two-path wizard, setup   │ LoneGazebo/Community-Patch-DLL —             │
-│ types, DLC gate, cleanup, Uninstallable=no,  │ VPSetupData.iss, scripts/release.py,         │
-│ Expansion2.Civ5Pkg swap, savegame rule       │ Opener.rtf                                   │
+│ Installer behavior: two-path wizard, page    │ LoneGazebo/Community-Patch-DLL —             │
+│ order, setup types, DLC gate, cleanup,       │ VPSetupData.iss, scripts/release.py,         │
+│ Uninstallable=no, Expansion2.Civ5Pkg swap,   │ Opener.rtf; Inno Setup 6.1.0 source          │
+│ savegame rule                                │                                              │
 │ Mod dependencies and blocked mods, EUI       │ the six modinfo files; (1)/(2)/(3a)          │
 │ rules, VPUI/UI_bc1; Squads is QoL; modpack   │ INSTRUCTIONS.txt and MANUAL INSTALL.txt;     │
 │ rules and removal; cleanup list              │ ModpackMaker.lua; VPSetupData.iss            │
@@ -660,13 +661,15 @@ Every row was verified on 2026-09-24 unless it says otherwise; package versions,
 │ LARGE_ADDRESS_AWARE default; GAME_DRIVE and  │ ValveSoftware/Proton README and proton       │
 │ its 11.0 default; DX9/DX11 launch report     │ script, 9.0 to 11.0; Proton issue #8327      │
 │ Protontricks app shortcut and Launcher,      │ Matoking/protontricks README, setup.cfg,     │
-│ prefix warning, Flatpak access message,      │ TROUBLESHOOTING.md, 1.14.1 CHANGELOG.md and  │
-│ 1.12.0 appinfo.vdf floor, not-Proton message │ source; yad/zenity roles from the Arch       │
-│ Flatpak folders and desktop entries          │ optdepends; Flathub manifest (finish-args)   │
+│ Flatpak access message, 1.12.0 appinfo.vdf   │ TROUBLESHOOTING.md, 1.14.1 CHANGELOG.md and  │
+│ floor, not-Proton message; Flatpak folders   │ source; yad/zenity roles from the Arch       │
+│ and desktop entries                          │ optdepends; Flathub manifest (finish-args)   │
 │ Winetricks menus, vcrun2008 and corefonts    │ Winetricks/winetricks src/winetricks         │
-│ contents, installed items pre-ticked         │ (20260125)                                   │
+│ contents, installed items pre-ticked, the    │ (20260125)                                   │
+│ 64-bit prefix warning                        │                                              │
 │ Checksums and Is-executable in Dolphin       │ KDE Dolphin file properties dialog           │
-│ Package versions and repositories            │ archlinux.org package DB; mirror.cachyos.org │
+│ Package versions, dependencies and           │ archlinux.org package DB; mirror.cachyos.org │
+│ repositories                                 │                                              │
 │ Ubuntu, Debian and Fedora packages, Steam    │ packages.ubuntu.com, Launchpad;              │
 │ setup and default directory; NVIDIA 32-bit   │ packages.debian.org, sources.debian.org;     │
 │ libraries on Debian                          │ Bodhi (protontricks-1.13.1-3.fc44); Debian   │
@@ -674,7 +677,7 @@ Every row was verified on 2026-09-24 unless it says otherwise; package versions,
 │                                              │ steam-installer 1.0.0.85 source              │
 │ Steam default dir and ~/.steam/root          │ Arch Wiki: Steam                             │
 │ Steam disk write error on case-mismatched    │ ValveSoftware/steam-for-linux #13406,        │
-│ depot folders                                │ #13436                                       │
+│ depot folders                                │ #13433, #13436                               │
 │ Early-crash thread fix; NVIDIA, DX9/DX11     │ ProtonDB public data export, 2026-09-01:     │
 │ and audio reports                            │ 196 reports for app 8930                     │
 │ INI files, sections and keys; gray-tile fix; │ PCGamingWiki "Sid Meier's Civilization V";   │

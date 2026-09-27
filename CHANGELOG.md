@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.4.2 — 2026-09-26
+
+- fix: winetricks does pull wine, the 64-bit WINEPREFIX box belongs to Step 4, the wizard has no Start Menu page, zenity comes with Steam, Flatpak reaches six user folders, #13433 cited, §16 labels corrected, the PDF matches the README again
+
 ## 10.4.1 — 2026-09-25
 
 - fix: no wine package behind Protontricks, corefonts is eleven fonts, civ5vp-installer size stated, a repeating first-pass crash clears cache
