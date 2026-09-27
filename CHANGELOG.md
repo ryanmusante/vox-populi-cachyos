@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.5.0 — 2026-09-27
+
+- feat: Contents grouped by part; Community Patch options now §8 and Adding other mods §9; §16 lists every location; links to the repository, releases, trackers, installer and forum threads; tables at a uniform 90 columns; §13 rows in the order failures appear; Skip Intro and UserSettings.ini contradictions resolved; (1) Community Patch in §6; build and check tools rewritten
+
 ## 10.4.2 — 2026-09-26
 
 - fix: winetricks does pull wine, the 64-bit WINEPREFIX box belongs to Step 4, the wizard has no Start Menu page, zenity comes with Steam, Flatpak reaches six user folders, #13433 cited, §16 labels corrected, the PDF matches the README again
