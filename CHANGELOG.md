@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.5.1 — 2026-09-27
+
+- fix: prebuilt modpacks' ZMP_MODPACK folder named in §10, §12 and §16; the package manager named for the one install step; §13 shows the wizard's path error before its DLC error; §16 adds the download, DLC and ~/.steam/root locations; logging advice made consistent; tools refuse unsafe output paths, survive broken pipes and unreadable input, honor --root, and check the PDF's dates, page size, fonts and pinned producer
+
 ## 10.5.0 — 2026-09-27
 
 - feat: Contents grouped by part; Community Patch options now §8 and Adding other mods §9; §16 lists every location; links to the repository, releases, trackers, installer and forum threads; tables at a uniform 90 columns; §13 rows in the order failures appear; Skip Intro and UserSettings.ini contradictions resolved; (1) Community Patch in §6; build and check tools rewritten

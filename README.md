@@ -2,9 +2,9 @@
 
 **Civilization V + Vox Populi via Steam and Proton**
 
-Revision 10.5.0 · 2026-09-27 · Vox Populi 5.4.6 (stable) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.
+Revision 10.5.1 · 2026-09-27 · Vox Populi 5.4.6 (stable) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.
 
-No terminal is needed: the work happens in Steam, the Protontricks and Winetricks windows, the installer's wizard and your file manager. Every step that writes to disk ends in a check; the two wizard steps, 6 and 7, are checked by Step 8. **WARNING** marks a common failure, **CRITICAL** a step that decides whether this works at all.
+No terminal is needed: the work happens in Steam, your package manager (Shelly on CachyOS; Octopi on systems installed before CachyOS 26.04), the Protontricks and Winetricks windows, the installer's wizard and your file manager. Every step that writes to disk ends in a check; the two wizard steps, 6 and 7, are checked by Step 8. **WARNING** marks a common failure, **CRITICAL** a step that decides whether this works at all.
 
 Maintained at [github.com/ryanmusante/vox-populi-cachyos](https://github.com/ryanmusante/vox-populi-cachyos); this README and `vox-populi-cachyos.pdf` (print-ready, US Letter) carry the same text.
 
@@ -166,7 +166,9 @@ Where the default library sits — the §2 library unless Civ V lives in a secon
 └────────────────────────────────┴───────────────────────────────────────────────────────┘
 ```
 
-**Debian and Ubuntu** need the i386 architecture enabled and the `multiverse` (Ubuntu) or `contrib` (Debian) component before `steam-installer` is offered; Debian also wants the 32-bit Mesa packages that the Debian wiki's Steam page lists, or NVIDIA's 32-bit driver libraries (`nvidia-driver-libs:i386`) with the proprietary driver. **Fedora** takes Steam from RPM Fusion Nonfree and Protontricks from Fedora itself. Where the table says **Flatpak**, add Flathub, install `com.github.Matoking.protontricks` and restart; on the **Steam Deck**, Desktop Mode's Discover does this, and SteamOS's read-only root rules out anything else. Flatpak Protontricks reaches Steam's own directories plus the standard Desktop, Documents, Downloads, Music, Pictures and Videos folders, and ships the same app shortcut and Launcher entries; a library or installer elsewhere makes it report the folders it cannot reach and how to grant them.
+**Debian and Ubuntu** need the i386 architecture enabled and the `multiverse` (Ubuntu) or `contrib` (Debian) component before `steam-installer` is offered; Debian also wants the 32-bit Mesa packages that the Debian wiki's Steam page lists, or NVIDIA's 32-bit driver libraries (`nvidia-driver-libs:i386`) with the proprietary driver. **Fedora** takes Steam from RPM Fusion Nonfree and Protontricks from Fedora itself.
+
+Where the table says **Flatpak**, add Flathub, install `com.github.Matoking.protontricks` and restart; on the **Steam Deck**, Desktop Mode's Discover does this, and SteamOS's read-only root rules out anything else. Flatpak Protontricks reaches Steam's own directories plus the standard Desktop, Documents, Downloads, Music, Pictures and Videos folders, and ships the same app shortcut and Launcher entries; a library or installer elsewhere makes it report the folders it cannot reach and how to grant them.
 
 Then, on any of them: start Steam once and sign in so it creates its directories, confirm in your package manager that Protontricks is 1.12.0 or newer, and continue with Step 1.
 
@@ -208,7 +210,7 @@ Install `protontricks` and `yad` from the CachyOS repositories; `zenity` is alre
 
 **Check:** opened again, those two lists show `vcrun2008` and `corefonts` already ticked.
 
-`CvGameCore_Expansion2.dll` (both 5.4.6 variants) imports `MSVCR90.dll` and `MSVCP90.dll`, the Visual C++ 2008 runtime that `vcrun2008` installs; Wine's built-in copies usually suffice, but a report in thread 702075 had VP working only after this step. `corefonts` adds the eleven Microsoft Core fonts for the Web and needs `cabextract`.
+`CvGameCore_Expansion2.dll` (both 5.4.6 variants) imports `MSVCR90.dll` and `MSVCP90.dll`, the Visual C++ 2008 runtime that `vcrun2008` installs; Wine's built-in copies usually suffice, but a report in [thread 702075](https://forums.civfanatics.com/threads/702075/) had VP working only after this step. `corefonts` adds the eleven Microsoft Core fonts for the Web and needs `cabextract`.
 
 ### Step 5 · Download and verify
 
@@ -279,7 +281,7 @@ If `<library>/steamapps/compatdata/8930/pfx/drive_c/Program Files (x86)/Steam/st
 
 1. Launch Civ V from Steam.
 2. Main menu → **MODS**; accept the prompt about DLC being disabled and the game restarting.
-3. The first entry into the mods menu runs a "configuring game data" pass of 5–15 minutes — not a hang. Thread 702075's opening post reports it may crash once and work after a relaunch.
+3. The first entry into the MODS menu runs a "configuring game data" pass of 5–15 minutes — not a hang. Thread 702075's opening post reports it may crash once and work after a relaunch.
 4. Enable the VP mods the installer placed in `MODS` — the table below.
 5. Press **NEXT**, never **Back**.
 6. **Single Player → Set Up Game.**
@@ -455,7 +457,7 @@ For multiplayer the mod must be part of the modpack (§10); a mod enabled throug
 
 VP cannot be played in multiplayer through the MODS menu; it must be packaged as a modpack that loads automatically as a DLC.
 
-**Preferred — a prebuilt modpack.** The CivFanatics [modpack thread 685164](https://forums.civfanatics.com/threads/685164/) tracks current releases (5.4.6), including one generated on Linux under Proton. Extract so the modpack folder sits directly under the game folder's `Assets/DLC`, then delete the Documents folder's `cache`. Modpacks also work in single player and are easier to update than a mods-menu install.
+**Preferred — a prebuilt modpack.** The CivFanatics [modpack thread 685164](https://forums.civfanatics.com/threads/685164/) tracks current releases (5.4.6), including one generated on Linux under Proton. Extract so the modpack folder sits directly under the game folder's `Assets/DLC`, then delete the Documents folder's `cache`. Modpacks also work in single player and are easier to update than a MODS-menu install.
 
 **Or build your own:** enable `(5) Modpack Maker for VP` plus every mod to include → start or load a game → **Ctrl+Shift+M** → check `Logs/Lua.log` in the Documents folder for errors (logging on, §15) → exit → delete `cache` → relaunch and start from Single Player or Multiplayer, never the MODS menu.
 
@@ -467,13 +469,13 @@ VP cannot be played in multiplayer through the MODS menu; it must be packaged as
 │ Every player must use byte-identical modpacks                                          │
 │ Every player must delete cache BEFORE EVERY LAUNCH, or the game will most likely crash │
 │   after the first turn                                                                 │
-│ Do not hand-edit Assets/DLC/VP_MODPACK — rebuild instead                               │
+│ Do not hand-edit a modpack folder — rebuild or re-download it instead                  │
 │ Saves do not record which modpack was used; a mismatch crashes                         │
 │ Multiplayer autosaves live in Saves/multi/auto — collect them for desync reports       │
 └────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-Remove a modpack by deleting `Assets/DLC/VP_MODPACK` and `cache`.
+Remove a modpack by deleting its folders under `Assets/DLC` and the Documents folder's `cache`: `VP_MODPACK` for one you built; `ZMP_MODPACK`, `VPUI` and `UI_bc1` for the thread's packs, per its opening post.
 
 An open upstream report, Community-Patch-DLL #13349 (2026-09-05), describes a multiplayer desync on 5.4.x that its reporter suspects lies in pathfinding; check its state before starting a long multiplayer game. MPPatch, which would allow modded multiplayer without modpacks, has had no release since December 2023, and a forum report describes crashes when combined with VP plus EUI. Modpacks remain the supported route.
 
@@ -487,7 +489,7 @@ Then run the newer `Vox.Populi.<version>.exe` exactly as in Steps 6–7. It dele
 
 By the project's versioning rule, saves are compatible when only the third version component changes: 5.4.4 → 5.4.6 keeps them, 5.4.x → 5.5.0 does not.
 
-> **WARNING** — Steam's *Verify integrity of game files* restores the stock `Expansion2.Civ5Pkg`, which VP replaces to fix city-state audio (including the BNW bug where Cape Town uses Almaty's clip). Re-run the VP installer after any verify.
+> **WARNING** — Steam's *Verify integrity of game files* restores the stock `Expansion2.Civ5Pkg`, which VP replaces to fix city-state audio (including the Brave New World bug where Cape Town uses Almaty's clip). Re-run the VP installer after any verify.
 
 ---
 
@@ -504,7 +506,8 @@ By the project's versioning rule, saves are compatible when only the third versi
 │                  │ MODS/(3b) 43 Civs Community Patch · MODS/(4a) Squads for VP         │
 │                  │ MODS/(5) Modpack Maker for VP                                       │
 │                  │ cache · ModUserData · Text/VPUI_tips_en_us.xml                      │
-│ Game folder      │ Assets/DLC/VPUI · Assets/DLC/UI_bc1 · Assets/DLC/VP_MODPACK         │
+│ Game folder      │ Assets/DLC/VPUI · Assets/DLC/UI_bc1                                 │
+│                  │ Assets/DLC/VP_MODPACK or Assets/DLC/ZMP_MODPACK (modpacks, §10)     │
 │                  │ Assets/DLC/Expansion2/Sounds/XML/MinorCivSounds_VoxPopuli.xml       │
 └──────────────────┴─────────────────────────────────────────────────────────────────────┘
 ```
@@ -546,10 +549,10 @@ Ordered by when the failure appears. **Setup and install:**
 │ Wizard never appears               │ Wayland focus or a broken Proton build. Check     │
 │                                    │ other windows, then try Proton Experimental or    │
 │                                    │ proton-cachyos-slr.                               │
-│ "You don't have all required DLCs" │ The message names the missing packs. Enable every │
-│                                    │ DLC in Steam and repeat the Step 2 check.         │
 │ "did not provide the correct path" │ Chosen folder has no Assets\DLC child. Point at   │
 │                                    │ the game root, not Assets or DLC.                 │
+│ "You don't have all required DLCs" │ The message names the missing packs. Enable every │
+│                                    │ DLC in Steam and repeat the Step 2 check.         │
 └────────────────────────────────────┴───────────────────────────────────────────────────┘
 ```
 
@@ -637,7 +640,7 @@ Vox Populi bugs go to the project's tracker, [github.com/LoneGazebo/Community-Pa
 └────────────────────────┴───────────────────────────────────────────────────────────────┘
 ```
 
-Logging is off by default and must be on *before* the problem occurs. Enable it once per installation in the Documents folder's `config.ini`: set `ValidateGameDatabase`, `LoggingEnabled`, `MessageLog`, `AILog`, `AIPerfLog`, `BuilderAILog` and `PlayerAndCityAILogSplit` to `1`. (Upstream's docs name the folder "Civilization V"; it is "Civilization 5".) Collect logs *before* loading a game — most are erased on load. Turn logging back off when you are not chasing a bug; it rewrites a large directory continuously.
+Logging is off by default and must be on *before* the problem occurs. Enable it in the Documents folder's `config.ini`: set `ValidateGameDatabase`, `LoggingEnabled`, `MessageLog`, `AILog`, `AIPerfLog`, `BuilderAILog` and `PlayerAndCityAILogSplit` to `1`. (Upstream's docs name the folder "Civilization V"; it is "Civilization 5".) Collect logs *before* loading a game — most are erased on load. Turn logging back off when you are not chasing a bug; it rewrites a large directory continuously.
 
 Dumps are not guaranteed under Proton: the DLL loads `dbghelp.dll` from the prefix's `System32`, so it depends on Wine's implementation. If none appears after a crash, say so in the report and attach the logs and save.
 
@@ -651,15 +654,20 @@ Every location the guide uses, by folder. `<library>` is the §2 Steam library; 
 
 ```
 ┌────────────────────────────┬───────────────────────────────────────────────────────────┐
-│ Steam library              │ ~/.local/share/Steam by default; other packagings in §3   │
+│ Steam library              │ ~/.local/share/Steam by default, also ~/.steam/root;      │
+│                            │ other packagings in §3                                    │
+│   Depot downloads          │ steamapps/downloading/8930 — disk write error (§13)       │
 │ Game folder                │ <library>/steamapps/common/Sid Meier's Civilization V     │
 │   As the wizard sees it    │ S:\steamapps\common\Sid Meier's Civilization V,           │
 │                            │ or its Z:\ form (Step 7)                                  │
+│   DLC folders              │ Assets/DLC/DLC_01–DLC_07, DLC_Deluxe, Expansion,          │
+│                            │ Expansion2 — all ten required (Step 2)                    │
 │   VP assets                │ Assets/DLC/VPUI · Assets/DLC/UI_bc1 (EUI setups)          │
 │                            │ Assets/DLC/Expansion2/Expansion2.Civ5Pkg                  │
 │                            │ Assets/DLC/Expansion2/Sounds/XML/                         │
 │                            │   MinorCivSounds_VoxPopuli.xml                            │
-│   Modpack                  │ Assets/DLC/VP_MODPACK (§10)                               │
+│   Modpack                  │ Assets/DLC/VP_MODPACK if built;                           │
+│                            │ Assets/DLC/ZMP_MODPACK if prebuilt (§10)                  │
 │   Crash artifacts          │ crashlogs, and CvMiniDump_*.dmp beside the game           │
 │                            │ executable (§15)                                          │
 │ Prefix                     │ <library>/steamapps/compatdata/8930/pfx                   │
@@ -687,7 +695,7 @@ Every location the guide uses, by folder. `<library>` is the §2 Steam library; 
 
 ## 17. Sources
 
-Every row was verified on 2026-09-24; package versions, releases, issue states and the installer, Protontricks and Flathub sources again on 2026-09-27.
+Every row was verified on 2026-09-24; package versions, releases, issue states and the installer, Protontricks and Flathub sources again on 2026-09-27, when the package-manager and modpack-folder facts were added.
 
 ```
 ┌───────────────────────────────────────────┬────────────────────────────────────────────┐
@@ -714,9 +722,10 @@ Every row was verified on 2026-09-24; package versions, releases, issue states a
 │ Game-core DLL imports MSVCR90 and MSVCP90 │ CvGameCore_Expansion2.dll, both 5.4.6      │
 │                                           │ variants, PE import table                  │
 │ Prebuilt modpacks incl. Linux/Proton      │ CivFanatics modpack thread 685164 (OP,     │
-│   build; MP autosaves; library-window     │ posts #721 and #732); Community-Patch-DLL  │
-│   launch tip; open 5.4.x desync; Info     │ #13349, open; #13344 open; draft PR #13372 │
-│   Addict; 2026 crash reports              │                                            │
+│   build, their folder names; MP           │ posts #721 and #732); Community-Patch-DLL  │
+│   autosaves; library-window launch tip;   │ #13349, open; #13344 open; draft PR #13372 │
+│   open 5.4.x desync; Info Addict; 2026    │                                            │
+│   crash reports                           │                                            │
 │ Late-game CTD from 32-bit memory; the     │ CivFanatics "Start Here" thread 701813     │
 │   mitigation order; beta vs stable naming │                                            │
 │ Autosaves; Workshop and DLL conflicts;    │ CivFanatics threads 528034 ("How To        │
@@ -752,7 +761,8 @@ Every row was verified on 2026-09-24; package versions, releases, issue states a
 │   the 64-bit prefix warning               │                                            │
 │ Checksums and Is-executable in Dolphin    │ KDE Dolphin file properties dialog         │
 │ Package versions, dependencies and        │ archlinux.org package DB;                  │
-│   repositories                            │ mirror.cachyos.org                         │
+│   repositories; Shelly replacing Octopi   │ mirror.cachyos.org; CachyOS wiki: GUI      │
+│                                           │ Installer changelog, 26.04                 │
 │ Ubuntu, Debian and Fedora packages, Steam │ packages.ubuntu.com, Launchpad;            │
 │   setup and default directory; NVIDIA     │ packages.debian.org, sources.debian.org;   │
 │   32-bit libraries on Debian              │ Bodhi (protontricks-1.13.1-3.fc44); Debian │
@@ -776,6 +786,7 @@ Every row was verified on 2026-09-24; package versions, releases, issue states a
 ## 18. Limits
 
 - **Thread 702075 page 1 cannot be fetched verbatim** (metadata only), so its opening post is known from indexed excerpts; page 2 was read in full, last on 2026-09-19. Structural facts come from the Vox Populi source tree, hence the different `Assets/DLC` folder name and the avoidable copy step.
+- **The modpack thread's opening post is likewise known from indexed excerpts** (the page returns metadata only), including the prebuilt packs' folder names.
 - **The `S:` default was read from Proton's source, not observed**; the wizard refuses a wrong path, and `Z:` always works.
 - **The runtime-library step rests on one forum report and the DLL's import table**; it was not reproduced on a clean prefix. It is cheap, and Winetricks skips what is installed.
 - **The window routes were read from Protontricks' and Winetricks' sources**, and the file-manager steps describe KDE's Dolphin; other file managers put checksums and the executable bit elsewhere.
