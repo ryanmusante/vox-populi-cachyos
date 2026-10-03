@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.8.0 — 2026-10-02
+
+- feat: tools rebuilt for this layout — build_print.py renders the PDF byte-for-byte from the README; check_guide.py runs 15 checks on README, CHANGELOG and PDF, 16 with --rebuild
+
 ## 10.7.2 — 2026-10-02
 
 - docs: Limits merged by kind (14 to 10 items), two spellings made consistent; PDF tables that span pages repeat their header row and close their border
