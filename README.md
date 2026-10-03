@@ -2,7 +2,7 @@
 
 **Civilization V + Vox Populi via Steam and Proton**
 
-Revision 10.8.0 · 2026-10-02 · Vox Populi 5.4.6 (stable) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.
+Revision 10.9.1 · 2026-10-03 · Vox Populi 5.4.6 (stable) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.
 
 No terminal is needed: the work happens in Steam, your package manager (Shelly on CachyOS; Octopi on systems installed before CachyOS 26.04), the Protontricks and Winetricks windows, the installer's wizard and your file manager.
 
@@ -54,6 +54,8 @@ Maintained at [github.com/ryanmusante/vox-populi-cachyos](https://github.com/rya
 
 ## 1. How it works
 
+**Vox Populi (VP)** is the Community Patch Project's overhaul of Civilization V: Brave New World — a replacement game-core DLL with AI and bug fixes (the Community Patch) plus rebalanced rules and new systems.
+
 **Proton is mandatory.** Vox Populi ships a Windows game-core DLL that the native Aspyr Linux build cannot load.
 
 **The installer is Inno Setup 6** (Installer Version 1.2), a plain Win32 wizard that needs no .NET and renders correctly under Proton.
@@ -96,6 +98,27 @@ The Documents default is already correct: it resolves inside the prefix, where t
 
 **Releases are stable or beta.** Each links a release-notes thread titled *New STABLE Version* or *New BETA Version*; 5.4.6 (2026-08-31) is stable.
 
+### The install at a glance
+
+The "Done when" column repeats each step's check.
+
+```
+┌───┬────────────────────────────┬────────────────────────┬──────────────────────────────┐
+│   │ Step                       │ Where                  │ Done when                    │
+├───┼────────────────────────────┼────────────────────────┼──────────────────────────────┤
+│ ☐ │ 1 Force Proton             │ Steam → Properties     │ CivilizationV_DX11.exe is    │
+│   │                            │                        │ in the game folder           │
+│ ☐ │ 2 Install every DLC        │ Steam → Properties     │ Assets/DLC holds all ten     │
+│ ☐ │ 3 Launch once, then quit   │ Steam library window   │ the Documents folder exists  │
+│ ☐ │ 4 vcrun2008 and corefonts  │ package manager,       │ both ticked when reopened    │
+│   │                            │ Protontricks           │                              │
+│ ☐ │ 5 Download and verify      │ browser, file manager  │ the sha256 matches           │
+│ ☐ │ 6–7 Run the wizard         │ Protontricks Launcher  │ Ready page shows S:\ or Z:\  │
+│ ☐ │ 8 Verify placement         │ file manager           │ Assets/DLC holds VPUI        │
+│ ☐ │ First launch (§6)          │ Civ V → MODS           │ mods enabled, NEXT pressed   │
+└───┴────────────────────────────┴────────────────────────┴──────────────────────────────┘
+```
+
 ---
 
 ## 2. Requirements
@@ -122,7 +145,7 @@ The Documents default is already correct: it resolves inside the prefix, where t
 └──────────────┴─────────────────────────────────────────────────────────────────────────┘
 ```
 
-Every path in this guide sits in one of three folders. Steam → right-click **Sid Meier's Civilization V** → **Properties → Installed Files → Browse** opens the game folder; the library is the folder above `steamapps`, and `compatdata/8930` always sits in the same library as the game. Show hidden files in your file manager — `.local` and `.steam` are hidden.
+The procedure works in three folders. Steam → right-click **Sid Meier's Civilization V** → **Properties → Installed Files → Browse** opens the game folder; the library is the folder above `steamapps`, and `compatdata/8930` always sits in the same library as the game. Show hidden files in your file manager — `.local` and `.steam` are hidden.
 
 ```
 ┌──────────────────┬─────────────────────────────────────────────────────────────────────┐
@@ -136,6 +159,8 @@ Every path in this guide sits in one of three folders. Steam → right-click **S
 │                  │ cache and config.ini of the Windows build                           │
 └──────────────────┴─────────────────────────────────────────────────────────────────────┘
 ```
+
+Bookmark the Documents folder in your file manager: §8, §9 and §10 send you back to it to delete `cache`.
 
 ---
 
@@ -204,9 +229,9 @@ Steam → right-click **Sid Meier's Civilization V** → **Properties → DLC** 
 
 ### Step 3 · Launch once, then quit
 
-Press **Play** in the Steam library window and pick **Play Sid Meier's Civilization V (DirectX 10/11)**, the DX11 build, from Steam's launch options; the game's own launcher was retired in November 2024. Wait for the main menu, then quit. This first launch creates the prefix, `compatdata/8930/pfx`, without which Protontricks cannot see the game, and builds Civ V's Documents folder inside it. A desktop shortcut or the tray icon starts the default DX9 build without asking, and the DX9 executable may start regardless (Proton #8327); neither affects Vox Populi.
+Press **Play** in the Steam library window and pick **Play Sid Meier's Civilization V (DirectX 10/11)**, the DX11 build, from Steam's launch options; the game's own launcher was retired in November 2024. The first start takes longer while Proton builds the prefix; wait for the main menu, then quit. This first launch creates the prefix, `compatdata/8930/pfx`, without which Protontricks cannot see the game, and builds Civ V's Documents folder inside it. A desktop shortcut or the tray icon starts the default DX9 build without asking, and the DX9 executable may start regardless (Proton #8327); neither affects Vox Populi.
 
-**Check:** the Documents folder exists and holds `Logs`, `Saves` and `config.ini` among others.
+**Check:** the Documents folder exists and holds `config.ini`.
 
 ---
 
@@ -221,7 +246,7 @@ Install `protontricks` and `yad` from the CachyOS repositories; `zenity` is alre
 1. Open **Protontricks** from the application menu and pick **Sid Meier's Civilization V** — it is listed only after Step 3.
 2. In the Winetricks window that opens, choose **Select the default wineprefix**.
 3. **Install a Windows DLL or component** → tick `vcrun2008` → **OK**.
-4. **Install a font** → tick `corefonts` → **OK**.
+4. **Install a font** → tick `corefonts` → **OK**, then close Winetricks.
 
 A warning that you are using a 64-bit WINEPREFIX is expected — Winetricks shows it for every 64-bit prefix, and every Proton prefix is one — so close it. Both installs download, so this needs network access; Winetricks skips what is already installed, so repeating the step is harmless.
 
@@ -299,11 +324,11 @@ If `<library>/steamapps/compatdata/8930/pfx/drive_c/Program Files (x86)/Steam/st
 ## 6. First launch
 
 1. Launch Civ V from the Steam library window, as in Step 3.
-2. Main menu → **MODS**; accept the prompt about DLC being disabled and the game restarting.
+2. Main menu → **MODS**; accept the prompt if one appears.
 3. The first entry into the MODS menu runs a "configuring game data" pass of 5–15 minutes — not a hang. Thread 702075's opening post reports it may crash once and work after a relaunch.
 4. Enable the VP mods the installer placed in `MODS` — the table below.
 5. Press **NEXT**, never **Back**.
-6. **Single Player → Set Up Game**.
+6. **Single Player → Set Up Game**. In this menu *Single Player* looks like a heading but is a button.
 
 ```
 ┌────────────────────────────────┬───────────────────────────────────────────────────────┐
@@ -322,7 +347,7 @@ If `<library>/steamapps/compatdata/8930/pfx/drive_c/Program Files (x86)/Steam/st
 
 > **CRITICAL** — Back returns to the main menu and silently deactivates the mod set — the most common "I installed VP and nothing changed" report.
 
-**Check:** the main menu lists active mods in the lower right. EUI working but no new units, luxuries or advanced-setup options means the base game with EUI only — redo from the MODS menu without pressing Back. Trees that look unchanged, or entries with wrong text, mean the game language is not English (§2).
+**Check:** after **NEXT** the menu lists the enabled mods. EUI working but no new units, luxuries or advanced-setup options means the base game with EUI only — redo from the MODS menu without pressing Back. Trees that look unchanged, or entries with wrong text, mean the game language is not English (§2).
 
 ---
 
@@ -571,9 +596,9 @@ VP cannot be played in multiplayer through the MODS menu; it must be packaged as
 
 **Alternative — build your own.**
 
-1. Enable `(5) Modpack Maker for VP` plus every mod to include.
+1. Turn logging on (§15), then enable `(5) Modpack Maker for VP` plus every mod to include.
 2. Start or load a game and press **Ctrl+Shift+M**.
-3. Check `Logs/Lua.log` in the Documents folder for errors (logging on, §15).
+3. Check `Logs/Lua.log` in the Documents folder for errors.
 4. Exit and delete `cache`.
 5. Relaunch and start from Single Player or Multiplayer, never the MODS menu.
 
@@ -821,7 +846,7 @@ Every location the guide uses, by folder. `<library>` is the §2 Steam library; 
 
 ## 17. Sources
 
-Every row was verified on 2026-09-24; versions, releases, issue states and sources were re-checked on 2026-09-27 and 2026-10-02. Rows follow the guide's section order.
+Every row was verified on 2026-09-24; versions, releases, issue states and sources were re-checked on 2026-09-27, 2026-10-02 and 2026-10-03. Rows follow the guide's section order.
 
 ```
 ┌──────┬──────────────────────────────────────┬──────────────────────────────────────────┐
@@ -879,6 +904,9 @@ Every row was verified on 2026-09-24; versions, releases, issue states and sourc
 │      │   first pass may crash once;         │ the last two                             │
 │      │   runtime-library report; Debian     │                                          │
 │      │   Steam path                         │                                          │
+│ §6   │ Mods menu: the mod list after NEXT,  │ CivFanatics threads 528034 and 627879    │
+│      │   Single Player as a link, Back      │                                          │
+│      │   drops the mod set                  │                                          │
 │ §7   │ Autosaves; Workshop and DLL          │ CivFanatics threads 528034 ("How To      │
 │      │   conflicts; minimal-install triage; │ Install") and 542679 ("MODS compatible", │
 │      │   compatibility list and its 2022    │ in the archive)                          │

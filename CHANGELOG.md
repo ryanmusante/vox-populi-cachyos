@@ -1,5 +1,17 @@
 # Changelog
 
+## 10.9.1 — 2026-10-03
+
+- fix: §6 checks the mod list after NEXT, drops an unverified prompt description and marks Single Player as a button; Step 3 checks only config.ini; §2 no longer claims three folders hold every path
+
+## 10.9.0 — 2026-10-03
+
+- feat: §1 defines VP and adds a tickable install checklist; Step 3, Step 4 and §10 tightened for practice; the PDF gains section headers, linked references, printed link targets and distinct callouts
+
+## 10.8.1 — 2026-10-03
+
+- fix: tools exit cleanly on Ctrl-C, an unwritable output and a failed stdout write, list exit codes in --help, run on Python 3.10+ and give child processes no stdin; §17 records the 2026-10-03 re-check
+
 ## 10.8.0 — 2026-10-02
 
 - feat: tools rebuilt for this layout — build_print.py renders the PDF byte-for-byte from the README; check_guide.py runs 15 checks on README, CHANGELOG and PDF, 16 with --rebuild
