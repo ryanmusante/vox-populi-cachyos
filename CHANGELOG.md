@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.7.2 — 2026-10-02
+
+- docs: Limits merged by kind (14 to 10 items), two spellings made consistent; PDF tables that span pages repeat their header row and close their border
+
 ## 10.7.1 — 2026-10-02
 
 - docs: fluff removed and wording tightened throughout; Step 3 says to quit at the main menu; Step 4, the §7 mitigations and the §8 rules become lists; long changelog bullets trimmed

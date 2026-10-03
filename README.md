@@ -2,7 +2,7 @@
 
 **Civilization V + Vox Populi via Steam and Proton**
 
-Revision 10.7.1 · 2026-10-02 · Vox Populi 5.4.6 (stable) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.
+Revision 10.7.2 · 2026-10-02 · Vox Populi 5.4.6 (stable) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.
 
 No terminal is needed: the work happens in Steam, your package manager (Shelly on CachyOS; Octopi on systems installed before CachyOS 26.04), the Protontricks and Winetricks windows, the installer's wizard and your file manager.
 
@@ -204,7 +204,7 @@ Steam → right-click **Sid Meier's Civilization V** → **Properties → DLC** 
 
 ### Step 3 · Launch once, then quit
 
-Press **Play** in the Steam library window and pick **Play Sid Meier's Civilization V (DirectX 10/11)**, the DX11 build, from Steam's launch options; the game's own launcher was retired in November 2024. Wait for the main menu, then quit. This first launch creates the prefix, `compatdata/8930/pfx`, without which Protontricks cannot see the game, and builds Civ V's Documents tree inside it. A desktop shortcut or the tray icon starts the default DX9 build without asking, and the DX9 executable may start regardless (Proton #8327); neither affects Vox Populi.
+Press **Play** in the Steam library window and pick **Play Sid Meier's Civilization V (DirectX 10/11)**, the DX11 build, from Steam's launch options; the game's own launcher was retired in November 2024. Wait for the main menu, then quit. This first launch creates the prefix, `compatdata/8930/pfx`, without which Protontricks cannot see the game, and builds Civ V's Documents folder inside it. A desktop shortcut or the tray icon starts the default DX9 build without asking, and the DX9 executable may start regardless (Proton #8327); neither affects Vox Populi.
 
 **Check:** the Documents folder exists and holds `Logs`, `Saves` and `config.ini` among others.
 
@@ -286,7 +286,7 @@ The `Z:\` form is the game folder with `Z:` in front and backslashes instead of 
 Z:\home\<your user name>\.local\share\Steam\steamapps\common\Sid Meier's Civilization V
 ```
 
-If the Ready page shows a `C:\Program Files (x86)` path, go back and fix it rather than copy files afterwards. The information page warns that the installer fails if `MODS` has been moved out of the Documents tree; under Proton that only happens if you change the Documents page.
+If the Ready page shows a `C:\Program Files (x86)` path, go back and fix it rather than copy files afterwards. The information page warns that the installer fails if `MODS` has been moved out of the Documents folder; under Proton that only happens if you change the Documents page.
 
 ### Step 8 · Verify placement
 
@@ -421,7 +421,7 @@ A row's `Class` (0 Data … 6 Major) describes what kind of option it is, not ho
 ┌──────────────────────────┬─────────────────────────────────────────────────────────────┐
 │ Option                   │ Effect                                                      │
 ├──────────────────────────┼─────────────────────────────────────────────────────────────┤
-│ ENABLE_ACHIEVEMENTS      │ Steam achievements in modded single-player. Marked          │
+│ ENABLE_ACHIEVEMENTS      │ Steam achievements in modded single player. Marked          │
 │                          │ "FUNCTIONALITY NOT GUARANTEED" and it changes the savegame  │
 │                          │ format — set it before a campaign, not during               │
 │ DIPLO_DEBUG_MODE         │ Reveals the AI's true opinion, approach and Congress        │
@@ -937,16 +937,12 @@ Every row was verified on 2026-09-24; versions, releases, issue states and sourc
 ## 18. Limits
 
 - **Written against 5.4.6.** Wizard page order and setup-type names have been stable but are not guaranteed; the sha256 is for 5.4.6 only.
-- **Thread 702075 page 1 cannot be fetched verbatim** (metadata only), so its opening post is known from indexed excerpts; page 2 was read in full on 2026-09-19. Structural facts come from the Vox Populi source tree.
-- **The modpack thread's opening post is also known only from indexed excerpts**, including the prebuilt packs' folder names.
-- **The English-language requirement is a community FAQ item** (thread 528034, the modpack thread, the German language pack), not an upstream statement. The DX11 choice follows 2K's launcher-removal notice; that the tray icon also starts DX9 is a 2023 modpack-thread report.
+- **Read from source, not exercised:** the `S:` drive default (Proton's script), the Protontricks and Winetricks window routes, and the §8 toggles. The wizard refuses a wrong path and `Z:` always works; `ENABLE_ACHIEVEMENTS` is marked "FUNCTIONALITY NOT GUARANTEED" upstream and changes the savegame format.
+- **Two opening posts are known only from indexed excerpts** — thread 702075's and the modpack thread's, including the prebuilt packs' folder names; both pages return metadata only. Page 2 of thread 702075 was read in full on 2026-09-19, and structural facts come from the Vox Populi source tree.
+- **Community reports, not upstream statements:** the English-language requirement (thread 528034, the modpack thread, the German language pack); the tray icon starting DX9 (a 2023 modpack-thread report — the DX11 choice itself follows 2K's launcher-removal notice); the runtime-library step (one forum report and the DLL's import table, not reproduced on a clean prefix, harmless to apply); and the §7 and §13 items from ProtonDB's public data export (2026-09-01), read because its page needs JavaScript.
 - **§3 was checked against package indexes and upstream documentation, not run** on those systems. Fedora's figure is the newest Bodhi update found for Fedora 44 (January 2026); a later one may exist.
-- **The `S:` default was read from Proton's source, not observed**; the wizard refuses a wrong path, and `Z:` always works.
-- **The runtime-library step rests on one forum report and the DLL's import table**; it was not reproduced on a clean prefix, and applying it is harmless.
-- **The window routes were read from Protontricks' and Winetricks' sources**, and the file-manager steps describe KDE's Dolphin; other file managers put checksums and the executable bit elsewhere.
 - **The performance-first values order options by the cost forum benchmarks reported** (2010–2013 threads, Windows); none were measured under Proton, and the numeric levels behind most detail keys are not documented beyond the samples those threads posted.
-- **ProtonDB's page needs JavaScript**, so its public data export (2026-09-01) was read instead; the §7 and §13 items from it are community reports, not tested fixes.
-- **§8 toggles were read from the source file, not exercised.** `ENABLE_ACHIEVEMENTS` is marked "FUNCTIONALITY NOT GUARANTEED" upstream and changes the savegame format.
 - **The popular-mod roster ranks thread views across all six pages of the Mods Repository** on 2026-10-02, keeping mods with 2026 activity and no reported breakage; versions are the authors' statements, descriptions come from titles and opening posts. None was tested under Proton; a mod's last page is the authority for 5.4.6.
 - **Upstream disagrees with itself on where crash dumps land** — the issue form says `crashlogs`, the minidump guide says beside the game executable. Both are covered.
+- **File-manager steps describe KDE's Dolphin**; other file managers put checksums and the executable bit elsewhere.
 - **Untested paths:** Flatpak and Snap Steam (procedure holds, paths move), the 43-civ variants, MPPatch and civ5vp-installer's local DLL build.
