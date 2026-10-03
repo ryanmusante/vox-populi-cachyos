@@ -1,24 +1,28 @@
 # Changelog
 
+## 10.7.1 — 2026-10-02
+
+- docs: fluff removed and wording tightened throughout; Step 3 says to quit at the main menu; Step 4, the §7 mitigations and the §8 rules become lists; long changelog bullets trimmed
+
 ## 10.7.0 — 2026-10-02
 
-- docs: structure pass — §4–§6 renamed for the install order with step ranges, imperative step titles, explanations ahead of each Check, §7 and §13 split into subsections, a header row on every table (bold in the PDF), Sources in section order with a § column, Limits in section order, one Preferred/Alternative/Fallback pattern in §10 and §12, the modpack build as numbered steps, DX9/DX11 naming and overlong sentences cleaned up
+- docs: structure pass — §4–§6 renamed for the install order, imperative step titles, §7 and §13 subsections, a header row on every table, Sources and Limits in section order
 
 ## 10.6.0 — 2026-10-02
 
-- feat: §9 rebuilt from all six Mods Repository pages — gameplay and interface tables with the authors' stated versions and requirements, custom civs, map scripts, built-in and left-out mods, 542679 marked archived; Step 3 follows the launcher's removal; the wizard's license page, the update's digest check, the modpack folders and the Winetricks warning corrected
+- feat: §9 rebuilt from all six Mods Repository pages — versions, requirements, a left-out list; Step 3 follows the launcher's removal; the license page and the update digest check added
 
 ## 10.5.1 — 2026-09-27
 
-- fix: prebuilt modpacks' ZMP_MODPACK folder named in §10, §12 and §16; the package manager named for the one install step; §13 shows the wizard's path error before its DLC error; §16 adds the download, DLC and ~/.steam/root locations; logging advice made consistent; tools refuse unsafe output paths, survive broken pipes and unreadable input, honor --root, and check the PDF's dates, page size, fonts and pinned producer
+- fix: ZMP_MODPACK named in §10, §12 and §16; §13 puts the wizard's path error before its DLC error; §16 gains three locations; the tools guard output paths and check PDF metadata
 
 ## 10.5.0 — 2026-09-27
 
-- feat: Contents grouped by part; Community Patch options now §8 and Adding other mods §9; §16 lists every location; links to the repository, releases, trackers, installer and forum threads; tables at a uniform 90 columns; §13 rows in the order failures appear; Skip Intro and UserSettings.ini contradictions resolved; (1) Community Patch in §6; build and check tools rewritten
+- feat: Contents grouped by part; options now §8 and mods §9; §16 lists every location; links throughout; tables at 90 columns; §13 in failure order; build and check tools rewritten
 
 ## 10.4.2 — 2026-09-26
 
-- fix: winetricks does pull wine, the 64-bit WINEPREFIX box belongs to Step 4, the wizard has no Start Menu page, zenity comes with Steam, Flatpak reaches six user folders, #13433 cited, §16 labels corrected, the PDF matches the README again
+- fix: winetricks pulls wine, the 64-bit WINEPREFIX warning belongs to Step 4, no Start Menu page, zenity comes with Steam, Flatpak reaches six user folders, the PDF matches the README
 
 ## 10.4.1 — 2026-09-25
 
@@ -30,7 +34,7 @@
 
 ## 10.3.3 — 2026-09-24
 
-- fix: checked against the 5.4.6 source tree — the installer's full cleanup list, the blocked mods from the modinfo files, the DLC message naming the missing packs, the bug form's required fields; Squads' unverified Ctrl+number binding dropped
+- fix: checked against the 5.4.6 source tree — full cleanup list, blocked mods, the DLC message, the bug form's required fields; Squads' unverified Ctrl+number binding dropped
 
 ## 10.3.2 — 2026-09-24
 
