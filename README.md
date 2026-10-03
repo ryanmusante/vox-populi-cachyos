@@ -2,7 +2,7 @@
 
 **Civilization V + Vox Populi via Steam and Proton**
 
-Revision 10.5.1 · 2026-09-27 · Vox Populi 5.4.6 (stable) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.
+Revision 10.6.0 · 2026-10-02 · Vox Populi 5.4.6 (stable) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.
 
 No terminal is needed: the work happens in Steam, your package manager (Shelly on CachyOS; Octopi on systems installed before CachyOS 26.04), the Protontricks and Winetricks windows, the installer's wizard and your file manager. Every step that writes to disk ends in a check; the two wizard steps, 6 and 7, are checked by Step 8. **WARNING** marks a common failure, **CRITICAL** a step that decides whether this works at all.
 
@@ -196,7 +196,7 @@ Steam → right-click **Sid Meier's Civilization V** → **Properties → DLC** 
 
 ### Step 3 · Launch once, reach the main menu, quit
 
-This creates the prefix, `compatdata/8930/pfx`, without which Protontricks cannot see the game, and builds Civ V's Documents tree inside it. Launch from the Steam library window: the modpack thread reports that a desktop shortcut or the tray icon starts the DirectX 9 build without the launcher. When the Firaxis launcher appears, choose DirectX 10/11; the DX9 executable may start regardless (Proton #8327), which does not affect Vox Populi.
+This creates the prefix, `compatdata/8930/pfx`, without which Protontricks cannot see the game, and builds Civ V's Documents tree inside it. Press **Play** in the Steam library window and pick **Play Sid Meier's Civilization V (DirectX 10/11)** from Steam's launch options; the game's own launcher was retired in November 2024. A desktop shortcut or the tray icon starts the default option, DirectX 9, without asking. The DX9 executable may start regardless (Proton #8327), which does not affect Vox Populi.
 
 **Check:** the Documents folder exists and holds `Logs`, `Saves` and `config.ini` among others.
 
@@ -206,7 +206,7 @@ This creates the prefix, `compatdata/8930/pfx`, without which Protontricks canno
 
 ### Step 4 · Protontricks and runtime libraries
 
-Install `protontricks` and `yad` from the CachyOS repositories; `zenity` is already there as a Steam dependency (other distributions: §3). Open **Protontricks** from the application menu and pick **Sid Meier's Civilization V** — it is listed only after Step 3. Winetricks opens for the game's prefix: choose **Select the default wineprefix**, then **Install a Windows DLL or component** → `vcrun2008`, and **Install a font** → `corefonts`. An error box saying you are using a 64-bit WINEPREFIX is expected — Civ V is 32-bit inside a 64-bit prefix — so close it. Both download, so this needs network access; Winetricks skips what is already installed, so repeating it is harmless.
+Install `protontricks` and `yad` from the CachyOS repositories; `zenity` is already there as a Steam dependency (other distributions: §3). Open **Protontricks** from the application menu and pick **Sid Meier's Civilization V** — it is listed only after Step 3. Winetricks opens for the game's prefix: choose **Select the default wineprefix**, then **Install a Windows DLL or component** → `vcrun2008`, and **Install a font** → `corefonts`. A warning that you are using a 64-bit WINEPREFIX is expected — Winetricks shows it for every 64-bit prefix, and every Proton prefix is one — so close it. Both download, so this needs network access; Winetricks skips what is already installed, so repeating it is harmless.
 
 **Check:** opened again, those two lists show `vcrun2008` and `corefonts` already ticked.
 
@@ -214,7 +214,7 @@ Install `protontricks` and `yad` from the CachyOS repositories; `zenity` is alre
 
 ### Step 5 · Download and verify
 
-Releases are the assets at [github.com/LoneGazebo/Community-Patch-DLL/releases](https://github.com/LoneGazebo/Community-Patch-DLL/releases), named `Vox.Populi.<version>.exe`; each asset's digest is shown in the release's asset list, and the release-notes thread title says STABLE or BETA. For 5.4.6:
+The installer is the asset named `Vox.Populi.<version>.exe` on each release at [github.com/LoneGazebo/Community-Patch-DLL/releases](https://github.com/LoneGazebo/Community-Patch-DLL/releases); the release's asset list shows each asset's digest, and the release-notes thread title says STABLE or BETA. For 5.4.6:
 
 ```
 Vox.Populi.5.4.6.exe — 110,481,637 bytes
@@ -235,7 +235,7 @@ The actions in capitals decide the result:
 ┌──────────────────────────────┬─────────────────────────────────────────────────────────┐
 │ Wizard page                  │ Action                                                  │
 ├──────────────────────────────┼─────────────────────────────────────────────────────────┤
-│ License · Information        │ Next                                                    │
+│ License · Information        │ Accept the agreement, then Next on both                 │
 │ Select Destination Location  │ LEAVE UNCHANGED. It must read C:\users\steamuser\       │
 │                              │ Documents\My Games\Sid Meier's Civilization 5           │
 │ Setup Type / Components      │ CHOOSE one setup type — table below                     │
@@ -400,6 +400,8 @@ Delete `cache` after editing, and keep a copy of the file — the installer rewr
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
 │ Any mod that ships its own DLL is incompatible. VP replaces the Civ V DLL entirely,    │
 │   and the Community Patch cannot coexist with another DLL mod.                         │
+│ VP reworks most systems: anything beyond maps, civilizations, art or interface needs   │
+│   a version made for VP.                                                               │
 │ Steam Workshop subscriptions do not reliably land in the right place under Proton.     │
 │   Download from CivFanatics or GitHub and extract manually.                            │
 │ Mods go in the Documents folder's MODS — inside the prefix, beside the VP folders.     │
@@ -409,47 +411,108 @@ Delete `cache` after editing, and keep a copy of the file — the installer rewr
 └────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-Check the CivFanatics thread [MODS compatible with Vox Populi (VP)](https://forums.civfanatics.com/threads/542679/) first: VP reworks most systems, so mods that touch game components are often only partly compatible. Reported working under Proton: Community Events, Improved City View (Gazebo's version), most of WHoward's Pick'N'Mix, and Info Addict (extra patch needed with EUI) — though the modpack maintainer warns that Info Addict is known to crash from memory overflow (§7).
+### Where compatible mods live
 
-### Popular mods from CivFanatics
+The Community Patch Project's [**Mods Repository**](https://forums.civfanatics.com/forums/549/) subforum (Civ5 → Creation & Customization → Project & Mod Development → Community Patch Project) is where mods for VP are posted. Its sticky [*Mod Compatibility with Latest Version*](https://forums.civfanatics.com/threads/701787/) (January 2026) says every mod there is meant to work with the current VP and asks for problem reports, with logs, in the mod's own thread; mods that stop working move to the **Mods Archive**. A thread's opening post holds the download — an attachment, a file-host link or a GitHub repository — and its last pages hold the reports for 5.4.6. A mod's page under the site's **Downloads** section, where one exists, can lag the thread by years, and so can a Steam Workshop copy: Even More Resources' Workshop page carries reports that it fails on VP 3.1.1.
 
-Where they live: the Community Patch Project's [**Mods Repository**](https://forums.civfanatics.com/forums/549/) subforum (Civ5 → Creation & Customization → Project & Mod Development → Community Patch Project). Its sticky says every mod there is meant to work with the current VP; ones that stop working move to the **Mods Archive**. The opening post of each thread holds the download — an attachment, a file-host link or a GitHub repository — and its last page holds the compatibility reports for 5.4.6. A mod's page under the site's **Downloads** section, where one exists, can lag the thread by years (Even More Resources: v8 from 2021 there). The most-viewed threads, in that order:
+The older list [MODS compatible with Vox Populi (VP)](https://forums.civfanatics.com/threads/542679/) now sits in the forum's archive and was last edited in March 2022, before VP 5; treat it as history. Thread 702075 reports Community Events, Improved City View, most of WHoward's Pick'N'Mix and Info Addict (an extra patch with EUI) working under Proton, though the modpack maintainer warns that Info Addict is known to crash from memory overflow (§7).
+
+### Most popular compatible mods
+
+The most viewed mod threads across all six pages of the Mods Repository that show 2026 activity and no reported breakage, most viewed first; notable exclusions follow the tables. Versions are as the authors state them; "thread active 2026" marks a thread with 2026 posts but no stated VP version. Shared mod lists on the forum and on Reddit name the same core — More Wonders, Even More Resources, Unique City-States and, until VP 5 absorbed it, 3/4 UC. Gameplay and content:
 
 ```
-┌───────────────────────────────────────┬───────────────┬────────────────────────────────┐
-│ Mod                                   │ Author        │ What it is                     │
-├───────────────────────────────────────┼───────────────┼────────────────────────────────┤
-│ More Wonders for VP                   │ adan_eslavo   │ Extra wonders; continues       │
-│                                       │               │ Infixo's VP Wonders Expanded   │
-│ Improved City View — VP with EUI      │ Infixo        │ City screen rework; EUI        │
-│                                       │               │ installs only                  │
-│ Even More Resources for VP            │ HungryForFood │ 21 resources incl. city-state  │
-│                                       │               │ luxuries; also on GitHub       │
-│ Hokath's Proposals                    │ hokath        │ Bundle of balance proposals    │
-│ Unique City-States, adan_eslavo       │ adan_eslavo   │ Unique traits for city-states  │
-│   expansion                           │               │                                │
-│ Dolen2's Ethnic Diversity             │ Dolen2        │ Culture-specific unit art      │
-│ Cultural Components, 5/6 UC           │ hokath        │ Fifth and sixth unique         │
-│                                       │               │ components per civilization    │
-│ Enlightenment Era for VP              │ hokath        │ An era between Renaissance and │
-│                                       │               │ Industrial                     │
-│ Various Gameplay Tweaks               │ balparmak     │ Naval supply, veterancy, less  │
-│                                       │               │ micromanagement                │
-│ Semper Fidelis                        │ hokath        │ Ideologies expansion pack      │
-└───────────────────────────────────────┴───────────────┴────────────────────────────────┘
+┌────────────────────────────────────┬────────────────────────┬──────────────────────────┐
+│ Mod and author                     │ What it adds           │ Version, needs, status   │
+├────────────────────────────────────┼────────────────────────┼──────────────────────────┤
+│ More Wonders for VP                │ New world and natural  │ v24.11, VP 5.3.3+; an    │
+│   by adan_eslavo                   │ wonders                │ effects folder goes in   │
+│                                    │                        │ the game folder (below)  │
+│ Community Events                   │ More random events     │ see also msw1's (7a)     │
+│   by Enginseer                     │                        │ VP Events Overhaul,      │
+│                                    │                        │ titled for 5.4.6         │
+│ Even More Resources for VP         │ New bonus, luxury and  │ also on GitHub; skip     │
+│   by HungryForFood                 │ city-state resources   │ the Workshop copy        │
+│ New Beliefs                        │ New religious beliefs  │ thread active 2026       │
+│   by pineappledan,                 │                        │                          │
+│   HungryForFood, Recursive         │                        │                          │
+│ Hokath's Proposals                 │ Bundle of balance      │ thread active 2026       │
+│   by hokath                        │ proposals              │                          │
+│ Unique City-States                 │ Unique traits for      │ v19.3, VP 5.4.x          │
+│   by adan_eslavo                   │ city-states            │                          │
+│ Cultural Components (5/6 UC)       │ 5th and 6th unique     │ v9, VP 5.4; needs JFD's  │
+│   by hokath, gwennog, jarcast2     │ components per         │ Cultural Diversity (1)   │
+│                                    │ cultural group         │ (Core) Utilities         │
+│ Enlightenment Era for VP           │ An era between         │ thread titled 5.3;       │
+│   by hokath                        │ Renaissance and        │ active 2026              │
+│                                    │ Industrial             │                          │
+│ Various Gameplay Tweaks            │ Separate naval supply, │ thread active 2026       │
+│   by balparmak                     │ veterancy, less micro  │                          │
+│ JFD's Sovereignty for VP           │ Governments and        │ v15 (2024): fixes only;  │
+│   by Troll Warlord                 │ reforms                │ thread active 2026       │
+│ Better Lakes for VP                │ Lake rework            │ thread active 2026       │
+│   by InkAxis                       │                        │                          │
+│ Semper Fidelis                     │ Ideologies expansion   │ thread active 2026       │
+│   by hokath                        │ pack                   │                          │
+└────────────────────────────────────┴────────────────────────┴──────────────────────────┘
 ```
 
-Custom civilizations fill the rest of the list (The Goths, Duchy of Brittany, Kingdom of Scotland, Louisiana and more); the sticky *Map of Compatible Civilizations for VP* charts which ones work.
+Interface, art and tools:
 
-Installing one:
+```
+┌────────────────────────────────────┬────────────────────────┬──────────────────────────┐
+│ Mod and author                     │ What it changes        │ Version, needs, status   │
+├────────────────────────────────────┼────────────────────────┼──────────────────────────┤
+│ Improved City View                 │ City screen rework     │ EUI installs only;       │
+│   by Infixo                        │                        │ needs (3a)               │
+│ Dolen2's Ethnic Diversity          │ Culture-specific unit  │ thread active 2026       │
+│   by Dolen2                        │ art                    │                          │
+│ City-States Leaders for VP         │ Leaders for            │ v26, VP 5.3.x; made      │
+│   by adan_eslavo                   │ city-states            │ for Unique City-States   │
+│ Trade Opportunities for VP         │ Trade screen rework    │ v26, VP 5.3.x            │
+│   by adan_eslavo                   │                        │                          │
+│ InGame Editor+ for VP              │ In-game editor for     │ thread active 2026       │
+│   by N.Core                        │ map, cities and units  │                          │
+│ Wonder Planner for VP              │ Planning screen for    │ v20; More Wonders'       │
+│   by adan_eslavo                   │ wonders                │ opening post             │
+│                                    │                        │ recommends it            │
+│ Unit Scaling and Formation         │ Unit model size and    │ thread active 2026       │
+│   for VP, by N.Core                │ formations             │                          │
+└────────────────────────────────────┴────────────────────────┴──────────────────────────┘
+```
 
-1. Download from the opening post. Skip the Steam Workshop copy where one exists — Workshop subscriptions are unreliable under Proton.
+**Custom civilizations** are the repository's largest group. The most viewed are Colonialist Legacies' Inuit, Cambodia, The Goths, G&H's Kingdom of Scotland and MC and LITE's Nubia; the sticky *Map of Compatible Civilizations for VP* charts the rest. Most support JFD's Cultural Diversity, which is how Cultural Components reaches them. **Map scripts** are the safest additions by the rule above; the most viewed active ones are jarcast2's Bigger Huge Maps (for Communitu_79a and Continental Drift) and axatin's Continental Drift Map Script.
+
+Left out despite their views or reputation:
+
+```
+┌────────────────────────────────┬───────────────────────────────────────────────────────┐
+│ Mod                            │ Why it is left out                                    │
+├────────────────────────────────┼───────────────────────────────────────────────────────┤
+│ More Unique Components         │ Integrated into VP 5; do not install it               │
+│   (3/4 UC)                     │                                                       │
+│ Civics and Reforms             │ Reported not working in a shared VP mod pack          │
+│                                │ (August 2025); no thread post since October 2024      │
+│ Pineappledan Tweaks for VP     │ No thread post since April 2024                       │
+│ Promotion Overhaul for VP      │ Current version built for VP 5.2.x, per its author    │
+│ Alternative Component Names    │ Marked outdated by its author                         │
+│ Historical Religions Complete  │ Reported in December 2025 to no longer work with VP   │
+│   (Steam Workshop)             │                                                       │
+│ Maritime Weather+,             │ Crash reports in August 2025; a Maritime Battles      │
+│   Maritime Battles+            │ rebuild was pending                                   │
+└────────────────────────────────┴───────────────────────────────────────────────────────┘
+```
+
+### Installing a mod
+
+1. Download from the opening post. Skip the Steam Workshop copy where one exists — Workshop subscriptions are unreliable under Proton, and the copies are often old.
 2. Extract the archive with your archiver. A `.civ5mod` is a 7-Zip archive under another name; rename it to `.7z` if the archiver refuses it. The game can unpack a `.civ5mod` left in `MODS` when the MODS menu opens, but the forum reports that as hit-or-miss, so extract it yourself.
 3. Move the folder that contains the `.modinfo` file straight into the Documents folder's `MODS`, beside the numbered VP folders — not the archive, not a folder inside a folder. Many mods carry a prefix such as `(7a)` so they sort after VP's own entries.
-4. Delete `cache` and `ModUserData`.
-5. In the MODS menu, enable the VP set first, then the new mod; it lists what it requires — nearly all need (1) and (2), Improved City View needs (3a) — then **NEXT**.
+4. Opening posts give Windows paths. One under `steamapps\common\Sid Meier's Civilization V` means the real game folder (§2), never a `C:\Program Files (x86)` tree inside the prefix (Step 8); More Wonders' effects folder, for one, goes into the game folder's `Assets/DLC/Expansion2/DLC`.
+5. Delete `cache` and `ModUserData`.
+6. In the MODS menu, enable the VP set first, then the new mod; it lists what it requires — nearly all need (1) and (2), Improved City View needs (3a), Cultural Components needs JFD's Cultural Diversity (1) (Core) Utilities — then **NEXT**.
 
-For multiplayer the mod must be part of the modpack (§10); a mod enabled through the menu cannot join a modpack game.
+Add one mod at a time and play a few turns before the next, so a crash points at the last one added (§13). For multiplayer the mod must be part of the modpack (§10); a mod enabled through the menu cannot join a modpack game.
 
 ---
 
@@ -457,7 +520,7 @@ For multiplayer the mod must be part of the modpack (§10); a mod enabled throug
 
 VP cannot be played in multiplayer through the MODS menu; it must be packaged as a modpack that loads automatically as a DLC.
 
-**Preferred — a prebuilt modpack.** The CivFanatics [modpack thread 685164](https://forums.civfanatics.com/threads/685164/) tracks current releases (5.4.6), including one generated on Linux under Proton. Extract so the modpack folder sits directly under the game folder's `Assets/DLC`, then delete the Documents folder's `cache`. Modpacks also work in single player and are easier to update than a MODS-menu install.
+**Preferred — a prebuilt modpack.** The CivFanatics [modpack thread 685164](https://forums.civfanatics.com/threads/685164/) tracks current releases (5.4.6), including one generated on Linux under Proton. Extract so its folders — `ZMP_MODPACK` and any `VPUI` or `UI_bc1` it carries — sit directly under the game folder's `Assets/DLC`, then delete the Documents folder's `cache`. Modpacks also work in single player and are easier to update than a MODS-menu install.
 
 **Or build your own:** enable `(5) Modpack Maker for VP` plus every mod to include → start or load a game → **Ctrl+Shift+M** → check `Logs/Lua.log` in the Documents folder for errors (logging on, §15) → exit → delete `cache` → relaunch and start from Single Player or Multiplayer, never the MODS menu.
 
@@ -485,7 +548,7 @@ An open upstream report, Community-Patch-DLL #13349 (2026-09-05), describes a mu
 
 Back up first: copy `Saves` and `MODS` from the Documents folder to somewhere outside the prefix. Saves live inside the Wine prefix, so a prefix reset destroys them too, and the installer rewrites the mod folders, so any edit under `MODS` is lost.
 
-Then run the newer `Vox.Populi.<version>.exe` exactly as in Steps 6–7. It deletes the old mod folders and `cache` before writing; no manual cleanup.
+Then download the newer `Vox.Populi.<version>.exe`, check it against its own digest on the release page (Step 5) and run it exactly as in Steps 6–7. It deletes the old mod folders and `cache` before writing; no manual cleanup.
 
 By the project's versioning rule, saves are compatible when only the third version component changes: 5.4.4 → 5.4.6 keeps them, 5.4.x → 5.5.0 does not.
 
@@ -541,8 +604,8 @@ Ordered by when the failure appears. **Setup and install:**
 │ Protontricks does not list Civ V   │ Prefix absent. Launch once via Proton (Step 3).   │
 │ "Proton installation could not be  │ Compat tool is a Steam Linux Runtime entry, not   │
 │   found!"                          │ Proton. Re-select a real Proton build (Step 1).   │
-│ "You are using a 64-bit            │ Expected (Winetricks, Step 4): Civ V is 32-bit.   │
-│   WINEPREFIX"                      │ Close it.                                         │
+│ "You are using a 64-bit            │ Expected (Winetricks, Step 4): every Proton       │
+│   WINEPREFIX"                      │ prefix is 64-bit. Close it.                       │
 │ "Cannot find cabextract"           │ Install the cabextract package.                   │
 │ "command cabextract … returned     │ cabextract trips over a symlink Proton created.   │
 │   status 1"                        │ Delete the symlink the error names, then re-run.  │
@@ -666,6 +729,7 @@ Every location the guide uses, by folder. `<library>` is the §2 Steam library; 
 │                            │ Assets/DLC/Expansion2/Expansion2.Civ5Pkg                  │
 │                            │ Assets/DLC/Expansion2/Sounds/XML/                         │
 │                            │   MinorCivSounds_VoxPopuli.xml                            │
+│   Mod extras               │ Assets/DLC/Expansion2/DLC — More Wonders' effects (§9)    │
 │   Modpack                  │ Assets/DLC/VP_MODPACK if built;                           │
 │                            │ Assets/DLC/ZMP_MODPACK if prebuilt (§10)                  │
 │   Crash artifacts          │ crashlogs, and CvMiniDump_*.dmp beside the game           │
@@ -695,7 +759,7 @@ Every location the guide uses, by folder. `<library>` is the §2 Steam library; 
 
 ## 17. Sources
 
-Every row was verified on 2026-09-24; package versions, releases, issue states and the installer, Protontricks and Flathub sources again on 2026-09-27, when the package-manager and modpack-folder facts were added.
+Every row was verified on 2026-09-24; package versions, releases, issue states and the installer, Protontricks and Flathub sources again on 2026-09-27, when the package-manager and modpack-folder facts were added; releases, packages, issue states and the forum again on 2026-10-02, for the mod roster and the launcher change.
 
 ```
 ┌───────────────────────────────────────────┬────────────────────────────────────────────┐
@@ -729,11 +793,20 @@ Every row was verified on 2026-09-24; package versions, releases, issue states a
 │ Late-game CTD from 32-bit memory; the     │ CivFanatics "Start Here" thread 701813     │
 │   mitigation order; beta vs stable naming │                                            │
 │ Autosaves; Workshop and DLL conflicts;    │ CivFanatics threads 528034 ("How To        │
-│   minimal-install triage; compatibility   │ Install") and 542679 ("MODS compatible")   │
-│   list                                    │                                            │
-│ Popular mods: views, authors, prefixes;   │ CivFanatics Mods Repository subforum       │
-│   repository and archive rule; Downloads  │ (549), pages 1–2; stickies 701787 and      │
-│   lag                                     │ 689101; Even More Resources page 28019     │
+│   minimal-install triage; compatibility   │ Install") and 542679 ("MODS compatible",   │
+│   list and its 2022 last edit             │ in the archive)                            │
+│ Popular mods: ranking, authors, stated    │ CivFanatics Mods Repository (549), all six │
+│   versions and requirements; prefixes;    │ pages; stickies 701787 and 689101; opening │
+│   compatibility sticky, archive rule,     │ posts of 653498 (More Wonders), 686269     │
+│   Downloads and Workshop lag; 3/4 UC      │ (Unique City-States) and 701034 (Cultural  │
+│   built in; left-out mods                 │ Components); threads 699519 and 685164;    │
+│                                           │ Even More Resources page 28019 and its     │
+│                                           │ Workshop comments                          │
+│ Community advice on what VP tolerates;    │ Reddit r/civ5 and r/civvoxpopuli threads   │
+│   recurring mod sets                      │                                            │
+│ Community Events lineage and VP fork      │ TechpriestEnginseer/                       │
+│                                           │ Community-Patch-Events-Development;        │
+│                                           │ n-core/VP-Community-Events                 │
 │ .civ5mod is 7-Zip; the .modinfo folder    │ CivFanatics threads 451941, 549219 and     │
 │   goes into MODS; in-game unpacking       │ 477763; the (7a) Events Overhaul title     │
 │   unreliable                              │                                            │
@@ -752,6 +825,8 @@ Every row was verified on 2026-09-24; package versions, releases, issue states a
 │ LARGE_ADDRESS_AWARE default; GAME_DRIVE   │ ValveSoftware/Proton README and proton     │
 │   and its 11.0 default; DX9/DX11 launch   │ script, 9.0 to 11.0; Proton issue #8327    │
 │   report                                  │                                            │
+│ DirectX 10/11 from Steam's launch         │ 2K Support, "Civilization V: Launcher      │
+│   options; shortcuts start DirectX 9      │ Removal" (2024-11-18)                      │
 │ Protontricks app shortcut and Launcher,   │ Matoking/protontricks README, setup.cfg,   │
 │   Flatpak access message, 1.12.0          │ TROUBLESHOOTING.md, 1.14.1 CHANGELOG.md    │
 │   appinfo.vdf floor, not-Proton message;  │ and source; yad/zenity roles from the Arch │
@@ -791,8 +866,8 @@ Every row was verified on 2026-09-24; package versions, releases, issue states a
 - **The runtime-library step rests on one forum report and the DLL's import table**; it was not reproduced on a clean prefix. It is cheap, and Winetricks skips what is installed.
 - **The window routes were read from Protontricks' and Winetricks' sources**, and the file-manager steps describe KDE's Dolphin; other file managers put checksums and the executable bit elsewhere.
 - **The performance-first values order options by the cost forum benchmarks reported** (2010–2013 threads, Windows); none were measured under Proton, and the numeric levels behind most detail keys are not documented beyond the samples those threads posted.
-- **The popular-mod roster is thread views on the two most recently active pages of the Mods Repository** at verification, and each mod's one-line description comes from its title, opening lines or download page, not from testing under Proton.
-- **The English-language requirement is a community FAQ item** (thread 528034, the modpack thread, the German language pack), not an upstream statement; the library-window launch tip is a 2023 modpack-thread report.
+- **The popular-mod roster ranks thread views across all six pages of the Mods Repository** on 2026-10-02 and keeps mods with 2026 activity and no reported breakage; versions are the authors' statements and descriptions come from titles and opening posts. None was tested under Proton; a mod's last page is the authority for 5.4.6.
+- **The English-language requirement is a community FAQ item** (thread 528034, the modpack thread, the German language pack), not an upstream statement. The DirectX 10/11 choice follows 2K's launcher-removal notice; that the tray icon also starts DirectX 9 is a 2023 modpack-thread report.
 - **§3 was checked against package indexes and upstream documentation, not run** on any of those systems; the Protontricks 1.12.0 floor is what matters. Fedora's figure is the newest Bodhi update found for Fedora 44 (January 2026); a later one may exist.
 - **ProtonDB's page needs JavaScript**, so its public data export (2026-09-01) was read instead; the §7 and §13 items from it are community reports, not tested fixes.
 - **§8 toggles were read from the source file, not exercised.** `ENABLE_ACHIEVEMENTS` is marked "FUNCTIONALITY NOT GUARANTEED" upstream and changes the savegame format.

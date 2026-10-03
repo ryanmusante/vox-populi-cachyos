@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.6.0 — 2026-10-02
+
+- feat: §9 rebuilt from all six Mods Repository pages — gameplay and interface tables with the authors' stated versions and requirements, custom civs, map scripts, built-in and left-out mods, 542679 marked archived; Step 3 follows the launcher's removal; the wizard's license page, the update's digest check, the modpack folders and the Winetricks warning corrected
+
 ## 10.5.1 — 2026-09-27
 
 - fix: prebuilt modpacks' ZMP_MODPACK folder named in §10, §12 and §16; the package manager named for the one install step; §13 shows the wizard's path error before its DLC error; §16 adds the download, DLC and ~/.steam/root locations; logging advice made consistent; tools refuse unsafe output paths, survive broken pipes and unreadable input, honor --root, and check the PDF's dates, page size, fonts and pinned producer
