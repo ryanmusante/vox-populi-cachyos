@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.7.0 — 2026-10-02
+
+- docs: structure pass — §4–§6 renamed for the install order with step ranges, imperative step titles, explanations ahead of each Check, §7 and §13 split into subsections, a header row on every table (bold in the PDF), Sources in section order with a § column, Limits in section order, one Preferred/Alternative/Fallback pattern in §10 and §12, the modpack build as numbered steps, DX9/DX11 naming and overlong sentences cleaned up
+
 ## 10.6.0 — 2026-10-02
 
 - feat: §9 rebuilt from all six Mods Repository pages — gameplay and interface tables with the authors' stated versions and requirements, custom civs, map scripts, built-in and left-out mods, 542679 marked archived; Step 3 follows the launcher's removal; the wizard's license page, the update's digest check, the modpack folders and the Winetricks warning corrected
