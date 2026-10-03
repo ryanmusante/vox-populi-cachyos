@@ -2,7 +2,7 @@
 
 **Civilization V + Vox Populi via Steam and Proton**
 
-Revision 10.9.1 · 2026-10-03 · Vox Populi 5.4.6 (stable) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.
+Revision 10.9.3 · 2026-10-03 · Vox Populi 5.4.6 (stable) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.
 
 No terminal is needed: the work happens in Steam, your package manager (Shelly on CachyOS; Octopi on systems installed before CachyOS 26.04), the Protontricks and Winetricks windows, the installer's wizard and your file manager.
 
@@ -60,7 +60,7 @@ Maintained at [github.com/ryanmusante/vox-populi-cachyos](https://github.com/rya
 
 **The installer is Inno Setup 6** (Installer Version 1.2), a plain Win32 wizard that needs no .NET and renders correctly under Proton.
 
-**It asks for two different paths.**
+**It asks for two different paths**; the second one decides the install:
 
 ```
 ┌─────────────────────────┬────────────────────────────┬─────────────────────────────────┐
@@ -137,7 +137,8 @@ The "Done when" column repeats each step's check.
 │ Tooling      │ extra/protontricks 1.14.1-1 with yad (its game list) and zenity (a      │
 │              │ Winetricks dialog tool, already a steam dependency); it pulls           │
 │              │ winetricks, which pulls wine and cabextract                             │
-│ Disk         │ Full re-download of the Windows depots, plus the 110 MB installer       │
+│ Disk         │ Full re-download of the Windows depots (the Steam store asks for 8 GB   │
+│              │ free) plus the 110 MB installer                                         │
 │ Conflicts    │ VP's modinfo files block More Luxuries, CSD for VP, Civ IV Diplomatic   │
 │              │ Features (both), Artificial Unintelligence, Bridges and Canals, and     │
 │              │ standalone Squads for VP; remove them, Workshop copies included. No     │
@@ -594,7 +595,7 @@ VP cannot be played in multiplayer through the MODS menu; it must be packaged as
 
 **Preferred — a prebuilt modpack.** The CivFanatics [modpack thread 685164](https://forums.civfanatics.com/threads/685164/) tracks current releases (5.4.6), including one generated on Linux under Proton. Extract so its folders — `ZMP_MODPACK` and any `VPUI` or `UI_bc1` it carries — sit directly under the game folder's `Assets/DLC`, then delete the Documents folder's `cache`. Modpacks also work in single player and are easier to update than a MODS-menu install.
 
-**Alternative — build your own.**
+**Alternative — build your own** with the Modpack Maker:
 
 1. Turn logging on (§15), then enable `(5) Modpack Maker for VP` plus every mod to include.
 2. Start or load a game and press **Ctrl+Shift+M**.
@@ -871,6 +872,8 @@ Every row was verified on 2026-09-24; versions, releases, issue states and sourc
 │      │   repositories; Shelly replacing     │ mirror.cachyos.org; CachyOS wiki: GUI    │
 │      │   Octopi                             │ Installer changelog, 26.04               │
 │ §2   │ Steam default dir and ~/.steam/root  │ Arch Wiki: Steam                         │
+│ §2   │ Disk space for the Windows build     │ Steam store page, app 8930 (Hard Drive:  │
+│      │                                      │ 8 GB Free)                               │
 │ §3   │ Protontricks app shortcut and        │ Matoking/protontricks README, setup.cfg, │
 │      │   Launcher, Flatpak access message,  │ TROUBLESHOOTING.md, 1.14.1 CHANGELOG.md  │
 │      │   1.12.0 appinfo.vdf floor,          │ and source; yad/zenity roles from the    │

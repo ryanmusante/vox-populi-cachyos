@@ -1,5 +1,13 @@
 # Changelog
 
+## 10.9.3 — 2026-10-03
+
+- docs: each Contents part starts a new page and every page top names that part and its § range, replacing the static title; §1 and §10 lead-ins replace two bold pseudo-headings
+
+## 10.9.2 — 2026-10-03
+
+- docs: §2 Disk gives the Steam store's 8 GB figure for the Windows build, sourced in §17
+
 ## 10.9.1 — 2026-10-03
 
 - fix: §6 checks the mod list after NEXT, drops an unverified prompt description and marks Single Player as a button; Step 3 checks only config.ini; §2 no longer claims three folders hold every path
