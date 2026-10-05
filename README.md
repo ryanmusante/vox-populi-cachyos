@@ -2,7 +2,7 @@
 
 **Civilization V + Vox Populi via Steam and Proton**
 
-Revision 11.2.5 · 2026-10-04 · Vox Populi 5.4.6 (stable) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.
+Revision 11.3.0 · 2026-10-04 · Vox Populi 5.4.6 (stable) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.
 
 No terminal is needed: the work happens in Steam, your package manager (Shelly on CachyOS; Octopi on systems installed before the April 2026 ISO), the Protontricks and Winetricks windows, the installer's wizard and your file manager.
 
@@ -480,96 +480,28 @@ Delete `cache` after editing, and keep a copy of the file — the installer rewr
 
 Mods for VP are posted in the Community Patch Project's [**Mods Repository**](https://forums.civfanatics.com/forums/549/) subforum (Civ5 → Creation & Customization → Project & Mod Development → Community Patch Project). Its sticky [*Mod Compatibility with Latest Version*](https://forums.civfanatics.com/threads/701787/) (January 2026) says every mod there is meant to work with the current VP and asks for problem reports, with logs, in each mod's thread. Mods that stop working move to the **Mods Archive**. A thread's opening post holds the download — an attachment, a file-host link or a GitHub repository — and its last pages hold the reports for 5.4.6. Copies in the site's **Downloads** section and on the Steam Workshop can lag by years: Even More Resources' Workshop page carries reports that it fails on VP 3.1.1.
 
-The older list [MODS compatible with Vox Populi (VP)](https://forums.civfanatics.com/threads/542679/) was last edited in March 2022, before VP 5, and now sits in the forum's archive. Thread 702075 reports Community Events, Improved City View, most of WHoward's Pick'N'Mix and Info Addict (an extra patch with EUI) working under Proton, though the modpack maintainer warns that Info Addict is known to crash from memory overflow (§7).
+The older list [MODS compatible with Vox Populi (VP)](https://forums.civfanatics.com/threads/542679/) was last edited in March 2022, before VP 5, and now sits in the forum's archive.
 
-### Most popular compatible mods
+### Most downloaded VP-only mods
 
-The tables list the most viewed mod threads across all six pages of the Mods Repository that show 2026 activity and no reported breakage, most viewed first. Versions are as the authors state them; "thread active 2026" means 2026 posts but no stated VP version. Players' shared mod lists on the forum and on Reddit name the same core: More Wonders, Even More Resources and Unique City-States.
-
-Gameplay and content:
+The table lists mods made only for Vox Populi that show 2026 activity and no reported breakage, ranked by their CivFanatics download counters on 2026-10-04. Versions are as the authors state them; "thread active 2026" means 2026 posts but no stated VP version. More Unique Components (54,804 downloads) is left out because it is part of VP 5, and Promotion Overhaul for VP (12,048) because its current version targets VP 5.2.x.
 
 ```
 ┌────────────────────────────────────┬────────────────────────┬──────────────────────────┐
-│ Mod and author                     │ What it adds           │ Version, needs, status   │
+│ Mod and author                     │ What it adds           │ Downloads, status        │
 ├────────────────────────────────────┼────────────────────────┼──────────────────────────┤
-│ More Wonders for VP                │ New world and natural  │ v24.11, VP 5.3.3+; an    │
-│   by adan_eslavo                   │ wonders                │ effects folder goes in   │
-│                                    │                        │ the game folder (below)  │
-│ Community Events                   │ More random events     │ see also msw1's (7a)     │
-│   by Enginseer                     │                        │ VP Events Overhaul,      │
-│                                    │                        │ titled for 5.4.6         │
-│ Even More Resources for VP         │ New bonus, luxury and  │ also on GitHub; skip     │
-│   by HungryForFood                 │ city-state resources   │ the Workshop copy        │
-│ New Beliefs                        │ New religious beliefs  │ thread active 2026       │
-│   by pineappledan,                 │                        │                          │
-│   HungryForFood, Recursive         │                        │                          │
-│ Hokath's Proposals                 │ Bundle of balance      │ thread active 2026       │
-│   by hokath                        │ proposals              │                          │
-│ Unique City-States                 │ Unique traits for      │ v19.3, VP 5.4.x          │
+│ City-States Leaders for VP         │ Leaders for            │ 10,175; v26, VP 5.3.x;   │
+│   by adan_eslavo                   │ city-states            │ made for Unique          │
+│                                    │                        │ City-States              │
+│ Unique City-States                 │ Unique traits for      │ 6,664; v19.3, VP 5.4.x   │
 │   by adan_eslavo                   │ city-states            │                          │
-│ Cultural Components (5/6 UC)       │ 5th and 6th unique     │ v9, VP 5.4; needs JFD's  │
-│   by hokath, gwennog, jarcast2     │ components per         │ Cultural Diversity (1)   │
-│                                    │ cultural group         │ (Core) Utilities         │
-│ Enlightenment Era for VP           │ An era between         │ thread titled 5.3;       │
-│   by hokath                        │ Renaissance and        │ active 2026              │
-│                                    │ Industrial             │                          │
-│ Various Gameplay Tweaks            │ Separate naval supply, │ thread active 2026       │
-│   by balparmak                     │ veterancy, less micro  │                          │
-│ JFD's Sovereignty for VP           │ Governments and        │ v15 (2024): fixes only;  │
-│   by Troll Warlord                 │ reforms                │ thread active 2026       │
-│ Better Lakes for VP                │ Lake rework            │ thread active 2026       │
+│ Wonder Planner for VP              │ Planning screen for    │ 5,723; v20               │
+│   by adan_eslavo                   │ wonders                │                          │
+│ Better Lakes for VP                │ Lake rework            │ 5,186; thread active 2026│
 │   by InkAxis                       │                        │                          │
-│ Semper Fidelis                     │ Ideologies expansion   │ thread active 2026       │
-│   by hokath                        │ pack                   │                          │
-└────────────────────────────────────┴────────────────────────┴──────────────────────────┘
-```
-
-Interface, art and tools:
-
-```
-┌────────────────────────────────────┬────────────────────────┬──────────────────────────┐
-│ Mod and author                     │ What it changes        │ Version, needs, status   │
-├────────────────────────────────────┼────────────────────────┼──────────────────────────┤
-│ Improved City View                 │ City screen rework     │ EUI installs only;       │
-│   by Infixo                        │                        │ needs (3a)               │
-│ Dolen2's Ethnic Diversity          │ Culture-specific unit  │ thread active 2026       │
-│   by Dolen2                        │ art                    │                          │
-│ City-States Leaders for VP         │ Leaders for            │ v26, VP 5.3.x; made      │
-│   by adan_eslavo                   │ city-states            │ for Unique City-States   │
-│ Trade Opportunities for VP         │ Trade screen rework    │ v26, VP 5.3.x            │
-│   by adan_eslavo                   │                        │                          │
-│ InGame Editor+ for VP              │ In-game editor for     │ thread active 2026       │
-│   by N.Core                        │ map, cities and units  │                          │
-│ Wonder Planner for VP              │ Planning screen for    │ v20; More Wonders'       │
-│   by adan_eslavo                   │ wonders                │ opening post             │
-│                                    │                        │ recommends it            │
-│ Unit Scaling and Formation for VP  │ Unit model size and    │ thread active 2026       │
+│ Unit Scaling and Formation for VP  │ Unit model size and    │ 3,291; thread active 2026│
 │   by N.Core                        │ formations             │                          │
 └────────────────────────────────────┴────────────────────────┴──────────────────────────┘
-```
-
-**Custom civilizations** are the repository's largest group. The most viewed are Colonialist Legacies' Inuit, Cambodia, The Goths, G&H's Kingdom of Scotland, and MC and LITE's Nubia; the sticky *Map of Compatible Civilizations for VP* charts the rest. Most support JFD's Cultural Diversity, which is how Cultural Components reaches them.
-
-**Map scripts** are the safest additions by the rules above; the most viewed active ones are jarcast2's Bigger Huge Maps (for Communitu_79a and Continental Drift) and axatin's Continental Drift Map Script.
-
-Left out despite their popularity:
-
-```
-┌────────────────────────────────┬───────────────────────────────────────────────────────┐
-│ Mod                            │ Why it is left out                                    │
-├────────────────────────────────┼───────────────────────────────────────────────────────┤
-│ More Unique Components         │ Integrated into VP 5; do not install it               │
-│   (3/4 UC)                     │                                                       │
-│ Civics and Reforms             │ Reported not working in a shared VP mod list          │
-│                                │ (August 2025); no thread post since October 2024      │
-│ Pineappledan Tweaks for VP     │ No thread post since April 2024                       │
-│ Promotion Overhaul for VP      │ Current version built for VP 5.2.x, per its author    │
-│ Alternative Component Names    │ Marked outdated by its author                         │
-│ Historical Religions Complete  │ Reported in December 2025 to no longer work with VP   │
-│   (Steam Workshop)             │                                                       │
-│ Maritime Weather+,             │ Crash reports in August 2025; a Maritime Battles      │
-│   Maritime Battles+            │ rebuild was pending                                   │
-└────────────────────────────────┴───────────────────────────────────────────────────────┘
 ```
 
 ### Installing a mod
@@ -577,9 +509,9 @@ Left out despite their popularity:
 1. Download from the opening post, not the Steam Workshop (see the rules above).
 2. Extract the archive. A `.civ5mod` is a 7-Zip archive under another name; rename it to `.7z` if your archiver refuses it. The game can unpack a `.civ5mod` left in `MODS` when the MODS menu opens, but the forum reports that as hit-or-miss, so extract it yourself.
 3. Move the folder that contains the `.modinfo` file straight into the Documents folder's `MODS`, beside the numbered VP folders — not the archive, not a folder inside a folder. Many mods carry a prefix such as `(7a)` so they sort after VP's own entries.
-4. Opening posts give Windows paths. One under `steamapps\common\Sid Meier's Civilization V` means the real game folder (§2), never a `C:\Program Files (x86)` tree inside the prefix (Step 8); More Wonders' effects folder, for one, goes into the game folder's `Assets/DLC/Expansion2/DLC`.
+4. Opening posts give Windows paths. One under `steamapps\common\Sid Meier's Civilization V` means the real game folder (§2), never a `C:\Program Files (x86)` tree inside the prefix (Step 8).
 5. Delete `cache` and `ModUserData`.
-6. In the MODS menu, enable the VP set first, then the new mod, then press **NEXT**. The mod lists what it requires: nearly all need (1) and (2), Improved City View needs (3a) and Cultural Components needs JFD's Cultural Diversity (1) (Core) Utilities.
+6. In the MODS menu, enable the VP set first, then the new mod, then press **NEXT**. The mod lists what it requires: nearly all need (1) and (2).
 
 Add one mod at a time and play a few turns before the next, so a crash points at the last one added (§13). For multiplayer the mod must be part of the modpack (§10); a mod enabled through the menu cannot join a modpack game.
 
@@ -811,5 +743,5 @@ The table lists every location the guide uses, by folder. `<library>` is the §2
 - **Written against 5.4.6.** Wizard pages and setup-type names have been stable but are not guaranteed; the sha256 is for 5.4.6 only.
 - **Read from source, not exercised:** the `S:` drive default, the Protontricks and Winetricks window routes and the §8 toggles; `ENABLE_ACHIEVEMENTS` is marked "FUNCTIONALITY NOT GUARANTEED" upstream.
 - **Community reports, not upstream statements:** the English-language requirement, the runtime-library step in Step 4, the ProtonDB fixes in §7 and §13, and the 2010–2013 Windows benchmarks behind §7's performance values.
-- **The mod roster is a 2026-10-02 snapshot**; none was tested under Proton, and a mod's last forum page is the authority for 5.4.6.
+- **The mod list is a 2026-10-04 snapshot** of CivFanatics download counters; none was tested under Proton, and a mod's last forum page is the authority for 5.4.6.
 - **Untested:** the §3 distributions (checked against package listings only), file managers other than KDE's Dolphin, Flatpak and Snap Steam, the 43-civ variants, MPPatch and civ5vp-installer's local DLL build.
