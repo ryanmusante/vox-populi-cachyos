@@ -2,10 +2,10 @@ Changelog
 =========
 
 
-11.3.0 - 2026-10-04
+11.4.0 - 2026-10-04
 -------------------
 
-- feat: 11.0.0-11.3.0 ReportLab PDF, five diagrams; mods cut to top VP-only
+- feat: 11.0.0-11.4.0 ReportLab PDF with diagrams; eight popular VP mods
 
 
 10.9.3 - 2026-10-03

@@ -2,13 +2,13 @@
 
 **Civilization V + Vox Populi via Steam and Proton**
 
-Revision 11.3.0 · 2026-10-04 · Vox Populi 5.4.6 (stable) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.
+Revision 11.4.0 · 2026-10-04 · Vox Populi 5.4.6 (stable) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.
 
 No terminal is needed: the work happens in Steam, your package manager (Shelly on CachyOS; Octopi on systems installed before the April 2026 ISO), the Protontricks and Winetricks windows, the installer's wizard and your file manager.
 
-Work through §4–§6 in order: Steps 1–3 prepare the game, Steps 4–8 install Vox Populi and §6 is the first launch. Every step that writes to disk ends in a **Check**; Step 8 checks the two wizard steps, 6 and 7. **WARNING** marks a common failure, **CRITICAL** a step that decides whether this works at all.
+Work through §4–§6 in order: Steps 1–3 prepare the game, Steps 4–8 install Vox Populi and §6 is the first launch. Every step that writes to disk ends in a **Check**. **WARNING** marks a common failure, **CRITICAL** a step that decides whether this works at all.
 
-Maintained at [github.com/ryanmusante/vox-populi-cachyos](https://github.com/ryanmusante/vox-populi-cachyos); this README and `vox-populi-cachyos.pdf` (print-ready US Letter, with diagrams) carry the same text.
+Maintained at [github.com/ryanmusante/vox-populi-cachyos](https://github.com/ryanmusante/vox-populi-cachyos); `vox-populi-cachyos.pdf` carries the same text.
 
 ---
 
@@ -57,7 +57,7 @@ Maintained at [github.com/ryanmusante/vox-populi-cachyos](https://github.com/rya
 
 **Proton is mandatory.** Vox Populi ships a Windows game-core DLL that the native Aspyr Linux build cannot load.
 
-**The installer is Inno Setup 6** (Installer Version 1.2), a plain Win32 wizard that needs no .NET and renders correctly under Proton.
+**The installer is Inno Setup 6**, a plain Win32 wizard that needs no .NET and renders correctly under Proton.
 
 **It asks for two different paths**; the second one decides the install:
 
@@ -91,15 +91,11 @@ The Documents default is already correct: it resolves inside the prefix, where t
 
 **Every DLC must be installed, not merely owned.** The wizard blocks unless `DLC_01`–`DLC_07`, `DLC_Deluxe` (Babylon), `Expansion` (Gods & Kings) and `Expansion2` (Brave New World) all exist — in practice the Complete Edition on Civ V 1.0.3.279.
 
-**It cleans up after itself.** Before writing, it deletes the Documents folder's `cache` and `Text\VPUI_tips_en_us.xml`, the game folder's `VPUI`, `UI_bc1`, `Expansion2.Civ5Pkg` and sound XML, and the current VP mod folders. It also removes every legacy folder name back to the CBP/CBO/CSD era, including `(4) Civ IV Diplomatic Features`, `(5) More Luxuries`, the `(6x)` compatibility files, `(7a) Promotion Icons for VP` and `(7b) UI - Promotion Tree for VP`. Clear nothing by hand, and expect any edit inside a VP mod folder to be lost at the next install or update.
+**It cleans up after itself.** Before writing, it deletes `cache`, VP's previous files in both folders and every legacy VP folder name. Clear nothing by hand, and expect any edit inside a VP mod folder to be lost at the next install or update.
 
 **There is no uninstaller entry** (`Uninstallable=no`). Removal is the **Uninstall all** setup type in the same `.exe`.
 
-**Releases are stable or beta.** Each links a release-notes thread titled *New STABLE Version* or *New BETA Version*; 5.4.6 (2026-08-31) is stable.
-
 ### The install at a glance
-
-Each "Done when" entry repeats that step's check.
 
 ```
 ┌───┬────────────────────────────┬────────────────────────┬──────────────────────────────┐
@@ -166,7 +162,7 @@ Bookmark the Documents folder in your file manager: §8, §9 and §10 send you b
 
 ## 3. Other distributions
 
-Other distributions differ from CachyOS in three things — how Steam is installed, where its default library sits and whether their own Protontricks is recent enough; from Step 1 on, the procedure is the same. **Protontricks 1.12.0 is the floor**: older releases cannot read the current Steam client's `appinfo.vdf` and stop with "Invalid file magic number".
+Other distributions differ only in how Steam is installed, where its default library sits and whether their Protontricks is recent enough; from Step 1 on, the procedure is the same. **Protontricks 1.12.0 is the floor**: older releases cannot read the current Steam client's `appinfo.vdf` and stop with "Invalid file magic number".
 
 ```
 ┌──────────────────────┬──────────────────────────────┬──────────────────────────────────┐
@@ -199,7 +195,7 @@ Where the default library sits — the §2 library unless Civ V lives in a secon
 
 **Debian and Ubuntu** need the i386 architecture enabled and the `multiverse` (Ubuntu) or `contrib` (Debian) component before `steam-installer` is offered. Debian also wants the 32-bit Mesa packages that the Debian wiki's Steam page lists, or NVIDIA's 32-bit driver libraries (`nvidia-driver-libs:i386`) with the proprietary driver. **Fedora** takes Steam from RPM Fusion Nonfree and Protontricks from Fedora itself.
 
-Where the table says **Flatpak**, add Flathub, install `com.github.Matoking.protontricks` and restart; on the **Steam Deck**, use Desktop Mode's Discover — SteamOS's root is read-only. Flatpak Protontricks reaches Steam's own directories plus the standard Desktop, Documents, Downloads, Music, Pictures and Videos folders, and ships the same app shortcut and Launcher entries. With a library or installer anywhere else, it names the folders it cannot reach and how to grant access.
+Where the table says **Flatpak**, add Flathub, install `com.github.Matoking.protontricks` and restart; on the **Steam Deck**, use Desktop Mode's Discover — SteamOS's root is read-only. Flatpak Protontricks reaches Steam's directories and the standard home folders and ships the same shortcut and Launcher entries; with a library or installer elsewhere, it names the folders it cannot reach and how to grant access.
 
 Then, on any of them: start Steam once and sign in so it creates its directories, confirm in your package manager that Protontricks is 1.12.0 or newer, and continue with Step 1.
 
@@ -207,15 +203,13 @@ Then, on any of them: start Steam once and sign in so it creates its directories
 
 ## 4. Preparing the game
 
-Steps 1–3 switch Civ V to its Windows build under Proton, make sure every DLC is installed and create the Wine prefix.
-
 ### Step 1 · Force Proton
 
 Steam → right-click **Sid Meier's Civilization V** → **Properties → Compatibility** → tick **Force the use of a specific Steam Play compatibility tool** → Proton Experimental or the newest numbered Proton. Steam swaps the native build for the Windows depots; let it finish. If the download stops with a disk write error, see §13.
 
 > **WARNING** — The same dropdown lists Steam Linux Runtime entries. They are not Proton: no Wine prefix is created, and Protontricks stops with "Proton installation could not be found!".
 
-`proton-cachyos-slr` from the CachyOS repositories also works (install it, restart Steam); despite the name it is a Proton build, not one of those entries.
+`proton-cachyos-slr` from the CachyOS repositories also works (install it, restart Steam); despite its name it is a Proton build.
 
 Proton 11.0 and Experimental map `S:` to the game's Steam library, used in Step 7; on Proton 10.0 or older add the launch option `PROTON_SET_GAME_DRIVE=1 %command%`. If the library root is not writable, `S:` is `steamapps` itself (`S:\common\…`).
 
@@ -237,8 +231,6 @@ Press **Play** in the Steam library window and pick **Play Sid Meier's Civilizat
 
 ## 5. Installing Vox Populi
 
-Steps 4–8 add the runtime libraries, verify the installer, run it inside the prefix and check where it put the files.
-
 ### Step 4 · Install Protontricks and the runtime libraries
 
 Install `protontricks` and `yad` from the CachyOS repositories; `zenity` is already there as a Steam dependency (other distributions: §3). Then:
@@ -250,7 +242,7 @@ Install `protontricks` and `yad` from the CachyOS repositories; `zenity` is alre
 
 Close the 64-bit WINEPREFIX warning: every Proton prefix is 64-bit. Both installs download; repeating the step is harmless.
 
-`vcrun2008` is the Visual C++ 2008 runtime the VP game-core DLL imports; Wine's built-in copy usually suffices, but a report in [thread 702075](https://forums.civfanatics.com/threads/702075/) needed it. `corefonts` adds the Microsoft core fonts.
+`vcrun2008` is the Visual C++ 2008 runtime the VP game-core DLL imports; Wine's built-in copy usually suffices, but a report in [thread 702075](https://forums.civfanatics.com/threads/702075/) needed it.
 
 **Check:** opened again, those two lists show `vcrun2008` and `corefonts` already ticked.
 
@@ -364,7 +356,7 @@ If `<library>/steamapps/compatdata/8930/pfx/drive_c/Program Files (x86)/Steam/st
 └────────────────────────┴────────────────────┴──────────────────────────────────────────┘
 ```
 
-Single-player values follow the install thread and the bug-report form; the modpack thread asks for 500 autosaves in multiplayer. The aim is a save from the turn *before* a problem, which needs frequent autosaves that are never rotated away.
+In multiplayer the modpack thread asks for 500 autosaves. The aim is a save from the turn *before* a problem.
 
 ### Crashes
 
@@ -375,7 +367,7 @@ Single-player values follow the install thread and the bug-report form; the modp
 3. Standard or small maps.
 4. A lower in-game resolution — ultrawide and 4K panels are the demanding case.
 
-Proton already helps: `PROTON_FORCE_LARGE_ADDRESS_AWARE` is **on by default**, giving the 32-bit executable a 4 GB address space instead of 2 GB; leave it alone. Upstream tracks the same picture in #13344 (crash, likely out of memory) and the draft fix #13372 (intermittent crashes loading huge maps).
+Proton already helps: `PROTON_FORCE_LARGE_ADDRESS_AWARE` is **on by default**, giving the 32-bit executable a 4 GB address space instead of 2 GB; leave it alone.
 
 **Early, random crashes are a different problem.** ProtonDB reports tie them to thread count. Under Proton the reported fix is the launch option `taskset -c 0-7 %command%` (**Properties → General → Launch Options**), which pins the game to eight threads. One reporter instead raised `MaxSimultaneousThreads` in the Documents folder's `config.ini` (default 8) to the machine's thread count; another found that 24 stopped the game from starting. Reports that edit that key under `~/.local/share/Aspyr` concern the native build; Proton never reads that file.
 
@@ -399,7 +391,7 @@ The game keeps its settings as plain-text `.ini` files in the Documents folder (
 └──────────────────────────┴─────────────────────────────────────────────────────────────┘
 ```
 
-The table pairs each Options → Video setting with its key in `GraphicsSettingsDX11.ini` and a performance-first value. Forum benchmarks single out anti-aliasing and terrain tessellation; the rest are ordinary detail levels.
+The table pairs each Options → Video setting with its key in `GraphicsSettingsDX11.ini` and a performance-first value; forum benchmarks single out anti-aliasing and terrain tessellation.
 
 ```
 ┌──────────────────────────────┬──────────────────────────┬──────────────────────────────┐
@@ -425,7 +417,7 @@ The table pairs each Options → Video setting with its key in `GraphicsSettings
 └──────────────────────────────┴──────────────────────────┴──────────────────────────────┘
 ```
 
-Two fixes exist only in the files. `MinimizeGrayTiles = 1` in the graphics file stops the gray tiles that appear while scrolling on weaker GPUs (the official Steam FAQ's fix). `FullScreen`, `WindowResX` and `WindowResY` under `[UserSettings]` in the graphics file recover a game that opens at a size the screen cannot show; the DX11 build needs at least 768 pixels of height. `SkipIntroVideo = 1` in `UserSettings.ini` is the file form of the in-game *Skip Intro* option; the movie plays while the game loads, so skipping it leaves a black screen rather than saving time. For wall-clock time rather than frame rate, turn on **Quick Combat** and **Quick Movement** under Options → Game.
+Two fixes exist only in the files. `MinimizeGrayTiles = 1` in the graphics file stops the gray tiles that appear while scrolling on weaker GPUs (the official Steam FAQ's fix). `FullScreen`, `WindowResX` and `WindowResY` under `[UserSettings]` in the graphics file recover a game that opens at a size the screen cannot show; the DX11 build needs at least 768 pixels of height. For wall-clock time rather than frame rate, turn on **Quick Combat** and **Quick Movement** under Options → Game.
 
 ---
 
@@ -478,37 +470,43 @@ Delete `cache` after editing, and keep a copy of the file — the installer rewr
 
 ### Where compatible mods live
 
-Mods for VP are posted in the Community Patch Project's [**Mods Repository**](https://forums.civfanatics.com/forums/549/) subforum (Civ5 → Creation & Customization → Project & Mod Development → Community Patch Project). Its sticky [*Mod Compatibility with Latest Version*](https://forums.civfanatics.com/threads/701787/) (January 2026) says every mod there is meant to work with the current VP and asks for problem reports, with logs, in each mod's thread. Mods that stop working move to the **Mods Archive**. A thread's opening post holds the download — an attachment, a file-host link or a GitHub repository — and its last pages hold the reports for 5.4.6. Copies in the site's **Downloads** section and on the Steam Workshop can lag by years: Even More Resources' Workshop page carries reports that it fails on VP 3.1.1.
+Mods for VP are posted in the Community Patch Project's [**Mods Repository**](https://forums.civfanatics.com/forums/549/) subforum. Its sticky [*Mod Compatibility with Latest Version*](https://forums.civfanatics.com/threads/701787/) (January 2026) says every mod there is meant to work with the current VP; mods that stop working move to the **Mods Archive**. A thread's opening post holds the download and its last pages hold the reports for 5.4.6. Copies in the site's **Downloads** section and on the Steam Workshop can lag by years.
 
-The older list [MODS compatible with Vox Populi (VP)](https://forums.civfanatics.com/threads/542679/) was last edited in March 2022, before VP 5, and now sits in the forum's archive.
+### Popular mods for VP
 
-### Most downloaded VP-only mods
-
-The table lists mods made only for Vox Populi that show 2026 activity and no reported breakage, ranked by their CivFanatics download counters on 2026-10-04. Versions are as the authors state them; "thread active 2026" means 2026 posts but no stated VP version. More Unique Components (54,804 downloads) is left out because it is part of VP 5, and Promotion Overhaul for VP (12,048) because its current version targets VP 5.2.x.
+Eight of the most popular mods made for VP, by CivFanatics downloads, thread views and players' shared mod lists; all show 2026 activity and no reported breakage:
 
 ```
 ┌────────────────────────────────────┬────────────────────────┬──────────────────────────┐
-│ Mod and author                     │ What it adds           │ Downloads, status        │
+│ Mod and author                     │ What it adds           │ Version, needs, status   │
 ├────────────────────────────────────┼────────────────────────┼──────────────────────────┤
-│ City-States Leaders for VP         │ Leaders for            │ 10,175; v26, VP 5.3.x;   │
-│   by adan_eslavo                   │ city-states            │ made for Unique          │
-│                                    │                        │ City-States              │
-│ Unique City-States                 │ Unique traits for      │ 6,664; v19.3, VP 5.4.x   │
+│ More Wonders for VP                │ New world and natural  │ v24.11, VP 5.3.3+; an    │
+│   by adan_eslavo                   │ wonders                │ effects folder goes in   │
+│                                    │                        │ the game folder          │
+│ Even More Resources for VP         │ New bonus, luxury and  │ also on GitHub; skip     │
+│   by HungryForFood                 │ city-state resources   │ the Workshop copy        │
+│ Unique City-States                 │ Unique traits for      │ v19.3, VP 5.4.x          │
 │   by adan_eslavo                   │ city-states            │                          │
-│ Wonder Planner for VP              │ Planning screen for    │ 5,723; v20               │
+│ City-States Leaders for VP         │ Leaders for            │ v26, VP 5.3.x; made      │
+│   by adan_eslavo                   │ city-states            │ for Unique City-States   │
+│ Community Events                   │ More random events     │ thread active 2026       │
+│   by Enginseer                     │                        │                          │
+│ Wonder Planner for VP              │ Planning screen for    │ v20                      │
 │   by adan_eslavo                   │ wonders                │                          │
-│ Better Lakes for VP                │ Lake rework            │ 5,186; thread active 2026│
+│ Better Lakes for VP                │ Lake rework            │ thread active 2026       │
 │   by InkAxis                       │                        │                          │
-│ Unit Scaling and Formation for VP  │ Unit model size and    │ 3,291; thread active 2026│
+│ Unit Scaling and Formation for VP  │ Unit model size and    │ thread active 2026       │
 │   by N.Core                        │ formations             │                          │
 └────────────────────────────────────┴────────────────────────┴──────────────────────────┘
 ```
 
+Versions are as the authors state them; "thread active 2026" means 2026 posts but no stated VP version. Do not install More Unique Components: it is part of VP 5.
+
 ### Installing a mod
 
 1. Download from the opening post, not the Steam Workshop (see the rules above).
-2. Extract the archive. A `.civ5mod` is a 7-Zip archive under another name; rename it to `.7z` if your archiver refuses it. The game can unpack a `.civ5mod` left in `MODS` when the MODS menu opens, but the forum reports that as hit-or-miss, so extract it yourself.
-3. Move the folder that contains the `.modinfo` file straight into the Documents folder's `MODS`, beside the numbered VP folders — not the archive, not a folder inside a folder. Many mods carry a prefix such as `(7a)` so they sort after VP's own entries.
+2. Extract the archive. A `.civ5mod` is a 7-Zip archive under another name; rename it to `.7z` if your archiver refuses it, and extract it yourself rather than leaving it in `MODS`.
+3. Move the folder that contains the `.modinfo` file straight into the Documents folder's `MODS`, beside the numbered VP folders — not the archive, not a folder inside a folder.
 4. Opening posts give Windows paths. One under `steamapps\common\Sid Meier's Civilization V` means the real game folder (§2), never a `C:\Program Files (x86)` tree inside the prefix (Step 8).
 5. Delete `cache` and `ModUserData`.
 6. In the MODS menu, enable the VP set first, then the new mod, then press **NEXT**. The mod lists what it requires: nearly all need (1) and (2).
@@ -521,7 +519,7 @@ Add one mod at a time and play a few turns before the next, so a crash points at
 
 VP cannot be played in multiplayer through the MODS menu; it must be packaged as a modpack that loads automatically as a DLC.
 
-**Preferred — a prebuilt modpack.** The CivFanatics [modpack thread 685164](https://forums.civfanatics.com/threads/685164/) tracks current releases (5.4.6), including one generated on Linux under Proton. Extract so its folders — `ZMP_MODPACK` and any `VPUI` or `UI_bc1` it carries — sit directly under the game folder's `Assets/DLC`, then delete the Documents folder's `cache`. Modpacks also work in single player and are easier to update than a MODS-menu install.
+**Preferred — a prebuilt modpack.** The CivFanatics [modpack thread 685164](https://forums.civfanatics.com/threads/685164/) tracks current releases (5.4.6), including one generated on Linux under Proton. Extract so its folders — `ZMP_MODPACK` and any `VPUI` or `UI_bc1` it carries — sit directly under the game folder's `Assets/DLC`, then delete the Documents folder's `cache`.
 
 **Alternative — build your own** with the Modpack Maker:
 
@@ -549,7 +547,7 @@ VP cannot be played in multiplayer through the MODS menu; it must be packaged as
 
 Remove a modpack by deleting its folders under `Assets/DLC` and the Documents folder's `cache`: `VP_MODPACK` for one you built; `ZMP_MODPACK`, `VPUI` and `UI_bc1` for the thread's packs, per its opening post.
 
-**Known issues.** Community-Patch-DLL #13349, open since 2026-09-05, reports a 5.4.x multiplayer desync that its reporter suspects lies in pathfinding; check its state before a long game. MPPatch, which would allow modded multiplayer without modpacks, has had no release since December 2023, and a forum report describes crashes with VP plus EUI.
+**Known issues.** Community-Patch-DLL #13349, open since 2026-09-05, reports a 5.4.x multiplayer desync that its reporter suspects lies in pathfinding; check its state before a long game.
 
 ---
 
@@ -569,7 +567,7 @@ By the project's versioning rule, saves are compatible when only the third versi
 
 **Preferred — Uninstall all.** Re-run the installer, choose **Uninstall all** and point the Civilization V folder page at the same real install; this also restores the stock `Expansion2.Civ5Pkg`.
 
-**Fallback — manual removal.** Delete these, then verify game files in Steam to restore the stock `Expansion2.Civ5Pkg` — verification leaves added files alone, hence the sound XML in the list:
+**Fallback — manual removal.** Delete these, then verify game files in Steam to restore the stock `Expansion2.Civ5Pkg`:
 
 ```
 ┌──────────────────┬─────────────────────────────────────────────────────────────────────┐
@@ -592,18 +590,15 @@ By the project's versioning rule, saves are compatible when only the third versi
 
 ## 13. Troubleshooting
 
-The tables are ordered by when the failure appears.
-
 ### Setup and install
 
 ```
 ┌────────────────────────────────────┬───────────────────────────────────────────────────┐
 │ Symptom                            │ Cause and fix                                     │
 ├────────────────────────────────────┼───────────────────────────────────────────────────┤
-│ Steam: "disk write error" while it │ Steam bug with case-mismatched depot folders      │
-│   downloads the Windows depots     │ (steam-for-linux #13406, fixed 2026-07-27).       │
-│   (Step 1)                         │ Update Steam; else create the folder the error    │
-│                                    │ names, in that exact case, under                  │
+│ Steam: "disk write error" while it │ Steam bug with case-mismatched depot folders,     │
+│   downloads the Windows depots     │ fixed in July 2026. Update Steam; else create the │
+│   (Step 1)                         │ folder the error names, in that exact case, under │
 │                                    │ steamapps/downloading/8930.                       │
 │ "Invalid file magic number"        │ Protontricks older than 1.12.0. Upgrade, or use   │
 │                                    │ the Flatpak (§3).                                 │
@@ -630,8 +625,8 @@ The tables are ordered by when the failure appears.
 ┌────────────────────────────────────┬───────────────────────────────────────────────────┐
 │ Symptom                            │ Cause and fix                                     │
 ├────────────────────────────────────┼───────────────────────────────────────────────────┤
-│ Crash during the first             │ Seen once in thread 702075: relaunch and enter    │
-│   "configuring game data" pass     │ MODS again (§6); if it repeats, delete cache.     │
+│ Crash during the first             │ Relaunch and enter MODS again (§6); if it         │
+│   "configuring game data" pass     │ repeats, delete cache.                            │
 │ VP absent from the in-game mod     │ The Documents page was changed; mods are outside  │
 │   list                             │ the prefix. Re-run with the default path.         │
 │ Missing textures, broken UI        │ The Civ V folder page pointed into the prefix.    │
@@ -660,7 +655,7 @@ The tables are ordered by when the failure appears.
 
 ## 14. Alternative installer
 
-[github.com/Alpakinator/civ5vp-installer](https://github.com/Alpakinator/civ5vp-installer) is a single-file native Linux binary (Apache-2.0) that installs VP without Protontricks — a fallback if the Inno wizard misbehaves, newer and less tested than the Protontricks route. It finds the Civ V folders itself (you can correct them), writes only to the game's MODS, DLC and Text folders and its own `~/.local/share/civ5vp-installer`, has a modpack mode, and its Uninstall button restores an unmodded game. The game itself still runs under Proton (§1).
+[github.com/Alpakinator/civ5vp-installer](https://github.com/Alpakinator/civ5vp-installer) is a single-file native Linux binary that installs VP without Protontricks — a fallback if the Inno wizard misbehaves, newer and less tested than the Protontricks route. It finds the Civ V folders itself, has a modpack mode, and its Uninstall button restores an unmodded game.
 
 ```
 civ5vp-installer-linux-x86_64 (v0.1.6, 2026-09-15) — 44,735,720 bytes
@@ -675,7 +670,7 @@ Verify the digest as in Step 5, mark the file executable (Dolphin: **Properties 
 
 ## 15. Bug reporting
 
-Vox Populi bugs go to the project's tracker, [github.com/LoneGazebo/Community-Patch-DLL/issues](https://github.com/LoneGazebo/Community-Patch-DLL/issues), not the forum; errors in this guide go to [github.com/ryanmusante/vox-populi-cachyos/issues](https://github.com/ryanmusante/vox-populi-cachyos/issues). Upstream's bug form is the only route (blank issues are disabled). It requires the mod version, the installed components — the setup type from Step 7 — and a description, and asks for three attachments:
+Vox Populi bugs go to the project's tracker, [github.com/LoneGazebo/Community-Patch-DLL/issues](https://github.com/LoneGazebo/Community-Patch-DLL/issues), not the forum; errors in this guide go to [github.com/ryanmusante/vox-populi-cachyos/issues](https://github.com/ryanmusante/vox-populi-cachyos/issues). The bug form requires the mod version, the installed components — the setup type from Step 7 — and a description, and asks for three attachments:
 
 ```
 ┌────────────────────────┬───────────────────────────────────────────────────────────────┐
@@ -693,13 +688,13 @@ Vox Populi bugs go to the project's tracker, [github.com/LoneGazebo/Community-Pa
 
 Logging is off by default and must be on *before* the problem occurs: in the Documents folder's `config.ini`, set `ValidateGameDatabase`, `LoggingEnabled`, `MessageLog`, `AILog`, `AIPerfLog`, `BuilderAILog` and `PlayerAndCityAILogSplit` to `1`. Collect logs *before* loading a game — most are erased on load — and turn logging off afterwards.
 
-Dumps are not guaranteed under Proton: the DLL loads `dbghelp.dll` from the prefix's `System32`, so it depends on Wine's implementation. If none appears after a crash, say so in the report and attach the logs and save.
+Dumps are not guaranteed under Proton; if none appears after a crash, say so in the report and attach the logs and save.
 
 ---
 
 ## 16. Path reference
 
-The table lists every location the guide uses, by folder. `<library>` is the §2 Steam library; indented rows sit inside the row above.
+`<library>` is the §2 Steam library; indented rows sit inside the row above.
 
 ```
 ┌────────────────────────────┬───────────────────────────────────────────────────────────┐
@@ -710,29 +705,12 @@ The table lists every location the guide uses, by folder. `<library>` is the §2
 │ Game folder                │ <library>/steamapps/common/Sid Meier's Civilization V     │
 │   As the wizard sees it    │ S:\steamapps\common\Sid Meier's Civilization V,           │
 │                            │ or its Z:\ form (Step 7)                                  │
-│   DLC folders              │ Assets/DLC/DLC_01–DLC_07, DLC_Deluxe, Expansion,          │
-│                            │ Expansion2 — all ten required (Step 2)                    │
-│   VP assets                │ Assets/DLC/VPUI · Assets/DLC/UI_bc1 (EUI setups) ·        │
-│                            │ Assets/DLC/Expansion2/Expansion2.Civ5Pkg ·                │
-│                            │ Assets/DLC/Expansion2/Sounds/XML/                         │
-│                            │   MinorCivSounds_VoxPopuli.xml                            │
-│   Modpack                  │ Assets/DLC/VP_MODPACK if built;                           │
-│                            │ Assets/DLC/ZMP_MODPACK if prebuilt (§10)                  │
 │ Prefix                     │ <library>/steamapps/compatdata/8930/pfx                   │
-│   C: drive                 │ pfx/drive_c                                               │
-│   Phantom tree (Step 8)    │ drive_c/Program Files (x86)/Steam/steamapps/common/       │
-│                            │ Sid Meier's Civilization V — must not exist               │
-│ Documents folder           │ drive_c/users/steamuser/Documents/My Games/               │
+│ Documents folder           │ pfx/drive_c/users/steamuser/Documents/My Games/           │
 │                            │ Sid Meier's Civilization 5                                │
 │   Mods                     │ MODS — the numbered VP folders and any added mod (§6, §9) │
-│   Options file             │ MODS/(1) Community Patch/Database Changes/                │
-│                            │ NewCustomModOptions.xml (§8)                              │
 │   Caches                   │ cache · ModUserData — delete after any mod change (§9)    │
 │   Saves                    │ Saves · Saves/multi/auto for multiplayer autosaves (§10)  │
-│   Logs                     │ Logs — most files only with logging on (§15)              │
-│   Settings                 │ config.ini · UserSettings.ini ·                           │
-│                            │ GraphicsSettingsDX11.ini · GraphicsSettingsDX9.ini (§7)   │
-│ civ5vp-installer data      │ ~/.local/share/civ5vp-installer (§14)                     │
 └────────────────────────────┴───────────────────────────────────────────────────────────┘
 ```
 
@@ -740,8 +718,8 @@ The table lists every location the guide uses, by folder. `<library>` is the §2
 
 ## 17. Limits
 
-- **Written against 5.4.6.** Wizard pages and setup-type names have been stable but are not guaranteed; the sha256 is for 5.4.6 only.
+- **Written against 5.4.6**; the sha256 is for 5.4.6 only.
 - **Read from source, not exercised:** the `S:` drive default, the Protontricks and Winetricks window routes and the §8 toggles; `ENABLE_ACHIEVEMENTS` is marked "FUNCTIONALITY NOT GUARANTEED" upstream.
 - **Community reports, not upstream statements:** the English-language requirement, the runtime-library step in Step 4, the ProtonDB fixes in §7 and §13, and the 2010–2013 Windows benchmarks behind §7's performance values.
-- **The mod list is a 2026-10-04 snapshot** of CivFanatics download counters; none was tested under Proton, and a mod's last forum page is the authority for 5.4.6.
-- **Untested:** the §3 distributions (checked against package listings only), file managers other than KDE's Dolphin, Flatpak and Snap Steam, the 43-civ variants, MPPatch and civ5vp-installer's local DLL build.
+- **The mod list is a 2026-10-04 snapshot**; none was tested under Proton, and a mod's last forum page is the authority for 5.4.6.
+- **Untested:** the §3 distributions (checked against package listings only), file managers other than KDE's Dolphin, Flatpak and Snap Steam, the 43-civ variants and civ5vp-installer's local DLL build.
