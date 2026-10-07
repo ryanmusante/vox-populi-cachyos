@@ -2,7 +2,7 @@
 
 **Civilization V + Vox Populi via Steam and Proton**
 
-Revision 11.4.0 · 2026-10-04 · Vox Populi 5.4.6 (stable) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.
+Revision 11.6.1 · 2026-10-07 · Vox Populi 5.4.6 (stable) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.
 
 No terminal is needed: the work happens in Steam, your package manager (Shelly on CachyOS; Octopi on systems installed before the April 2026 ISO), the Protontricks and Winetricks windows, the installer's wizard and your file manager.
 
@@ -162,7 +162,7 @@ Bookmark the Documents folder in your file manager: §8, §9 and §10 send you b
 
 ## 3. Other distributions
 
-Other distributions differ only in how Steam is installed, where its default library sits and whether their Protontricks is recent enough; from Step 1 on, the procedure is the same. **Protontricks 1.12.0 is the floor**: older releases cannot read the current Steam client's `appinfo.vdf` and stop with "Invalid file magic number".
+The differences are how Steam is installed, where its default library sits and whether the packaged Protontricks is recent enough; from Step 1 on, the procedure is the same. **Protontricks 1.12.0 is the floor**: older releases cannot read the current Steam client's `appinfo.vdf` and stop with "Invalid file magic number".
 
 ```
 ┌──────────────────────┬──────────────────────────────┬──────────────────────────────────┐
@@ -586,6 +586,26 @@ By the project's versioning rule, saves are compatible when only the third versi
 
 **Last resort — prefix reset.** Delete `<library>/steamapps/compatdata/8930`; this also destroys the saves inside the prefix, so back them up first (§11).
 
+What each operation touches:
+
+```
+┌──────────────────────────────┬──────────────────────────┬────────────┬─────────┬───────┐
+│ Operation                    │ Game folder Assets/DLC   │ MODS       │ cache   │ Saves │
+├──────────────────────────────┼──────────────────────────┼────────────┼─────────┼───────┤
+│ Install or update            │ VPUI, UI_bc1 written;    │ VP folders │ Deleted │ Kept  │
+│   (Step 7, §11)              │ Expansion2.Civ5Pkg       │ rewritten  │         │       │
+│                              │ replaced                 │            │         │       │
+│ Steam: Verify integrity      │ Stock Expansion2.Civ5Pkg │ Kept       │ Kept    │ Kept  │
+│   (§11)                      │ restored; VPUI, UI_bc1   │            │         │       │
+│                              │ kept                     │            │         │       │
+│ Uninstall all (§12)          │ VP files removed; stock  │ VP folders │ Deleted │ Kept  │
+│                              │ Expansion2.Civ5Pkg       │ removed    │         │       │
+│                              │ restored                 │            │         │       │
+│ Prefix reset (§12)           │ Kept: the game folder is │ Gone       │ Gone    │ Gone  │
+│                              │ outside the prefix       │            │         │       │
+└──────────────────────────────┴──────────────────────────┴────────────┴─────────┴───────┘
+```
+
 ---
 
 ## 13. Troubleshooting
@@ -694,7 +714,7 @@ Dumps are not guaranteed under Proton; if none appears after a crash, say so in 
 
 ## 16. Path reference
 
-`<library>` is the §2 Steam library; indented rows sit inside the row above.
+`<library>` is the §2 Steam library; indented rows sit inside the row above:
 
 ```
 ┌────────────────────────────┬───────────────────────────────────────────────────────────┐
