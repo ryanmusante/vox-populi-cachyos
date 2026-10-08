@@ -1,10 +1,10 @@
 Changelog
 =========
 
-11.6.1 - 2026-10-07
+11.6.2 - 2026-10-08
 -------------------
 
-- feat: 11.0.0-11.6.1 ReportLab PDF, six figures, VP mod list, hardened tools
+- feat: 11.0.0-11.6.2 ReportLab PDF, six figures, VP mod list, hardened tools
 
 10.9.3 - 2026-10-03
 -------------------

@@ -2,7 +2,7 @@
 
 **Civilization V + Vox Populi via Steam and Proton**
 
-Revision 11.6.1 · 2026-10-07 · Vox Populi 5.4.6 (stable) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.
+Revision 11.6.2 · 2026-10-08 · Vox Populi 5.4.6 (stable) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.
 
 No terminal is needed: the work happens in Steam, your package manager (Shelly on CachyOS; Octopi on systems installed before the April 2026 ISO), the Protontricks and Winetricks windows, the installer's wizard and your file manager.
 
@@ -173,7 +173,7 @@ The differences are how Steam is installed, where its default library sits and w
 │ Ubuntu 24.04 LTS     │ steam-installer (multiverse) │ multiverse, 1.10.5 — too old;    │
 │                      │                              │ use the Flatpak                  │
 │ Debian 13            │ steam-installer (contrib)    │ none in trixie; use the Flatpak  │
-│ Fedora 44            │ steam (RPM Fusion Nonfree)   │ fedora, 1.13.1 — use it          │
+│ Fedora 44            │ steam (RPM Fusion Nonfree)   │ fedora, 1.14.0 — use it          │
 │ Steam Deck           │ preinstalled                 │ Flatpak, from Discover           │
 └──────────────────────┴──────────────────────────────┴──────────────────────────────────┘
 ```
@@ -215,7 +215,7 @@ Proton 11.0 and Experimental map `S:` to the game's Steam library, used in Step 
 
 **Check:** the game folder holds `CivilizationV_DX11.exe` among other `.exe` files. No `.exe` at all, and a `Civ5XP` binary instead, means Steam is still serving the native build.
 
-### Step 2 · Confirm every DLC
+### Step 2 · Install every DLC
 
 Steam → right-click **Sid Meier's Civilization V** → **Properties → DLC** → tick every entry.
 
@@ -616,10 +616,10 @@ What each operation touches:
 ┌────────────────────────────────────┬───────────────────────────────────────────────────┐
 │ Symptom                            │ Cause and fix                                     │
 ├────────────────────────────────────┼───────────────────────────────────────────────────┤
-│ Steam: "disk write error" while it │ Steam bug with case-mismatched depot folders,     │
-│   downloads the Windows depots     │ fixed in July 2026. Update Steam; else create the │
-│   (Step 1)                         │ folder the error names, in that exact case, under │
-│                                    │ steamapps/downloading/8930.                       │
+│ Steam: "disk write error" while it │ Steam bug with mixed-case paths, fixed in the     │
+│   downloads the Windows depots     │ 2026-07-27 client update. Update Steam; else      │
+│   (Step 1)                         │ create the folder the error names, in that exact  │
+│                                    │ case, under steamapps/downloading/8930.           │
 │ "Invalid file magic number"        │ Protontricks older than 1.12.0. Upgrade, or use   │
 │                                    │ the Flatpak (§3).                                 │
 │ Flatpak: "does not appear to have  │ The file or library is outside the Flatpak's      │
