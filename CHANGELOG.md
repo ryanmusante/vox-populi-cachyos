@@ -1,10 +1,10 @@
 Changelog
 =========
 
-11.7.2 - 2026-10-22
+11.8.0 - 2026-10-25
 -------------------
 
-- feat: 11.0.0-11.7.2 ReportLab PDF and tools, six figures, mod list, VP 5.4.8
+- feat: 11.0.0-11.8.0 ReportLab PDF, six figures, mods, VP 5.4.8, memory tips
 
 10.9.3 - 2026-10-03
 -------------------

@@ -2,7 +2,7 @@
 
 **Civilization V + Vox Populi via Steam and Proton**
 
-Revision 11.7.2 · 2026-10-22 · Vox Populi 5.4.8 (stable) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.
+Revision 11.8.0 · 2026-10-25 · Vox Populi 5.4.8 (stable) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.
 
 No terminal is needed on CachyOS: the work happens in Steam, your package manager (Shelly, or Octopi on systems installed before the April 2026 ISO), the Protontricks and Winetricks windows, the installer's wizard, your file manager and a text editor.
 
@@ -348,22 +348,24 @@ In **Options**, set **Turns Between Autosaves** to 1 and **Max Autosaves** to 0 
 
 ### Crashes
 
-**Most late-game crashes are a memory problem, not a Vox Populi bug.** Civ V is 32-bit, and the project attributes them to address-space exhaustion. Mitigations, most important first:
+**Most late-game crashes are a memory problem, not a Vox Populi bug.** The project blames exhaustion of the 32-bit address space: 4 GB under Proton, whose `PROTON_FORCE_LARGE_ADDRESS_AWARE` is **on by default** (leave it), whatever RAM is installed. VP's **Game Crash** message names the case — the crash "happened with the 32-bit address space nearly exhausted"; without that line, look elsewhere and report it (§15). Mitigations, most important first:
 
 1. **Leader Scene Quality** on **Minimum**.
 2. Yield icons off from the Industrial era (in multiplayer, by every player), or avoid zooming far out.
 3. Standard or small maps.
 4. A lower in-game resolution — ultrawide and 4K panels are the demanding case.
-
-Proton already helps: `PROTON_FORCE_LARGE_ADDRESS_AWARE` is **on by default**, giving the 32-bit executable a 4 GB address space instead of 2 GB; leave it alone.
+5. **Strategic View** in the late game.
+6. No memory-heavy mods such as InfoAddict.
+7. **Single Unit Graphics** from Unit Scaling and Formation for VP (§9), set up as its opening post explains.
+8. With EUI, the **Vox Populi (no EUI)** setup type: re-run the installer (Steps 6–8); saves stay compatible.
 
 **Early, random crashes are a different problem.** ProtonDB reports tie them to the thread count; the reported fix is the launch option `taskset -c 0-7 %command%` (**Properties → General → Launch Options**; with Step 1's option, `PROTON_SET_GAME_DRIVE=1 taskset -c 0-7 %command%`), which pins the game to eight threads. Raising `MaxSimultaneousThreads` in the Documents folder's `config.ini` (default 8) to the machine's thread count helped one reporter, but 24 stopped the game from starting for another — set it back to 8 if the game no longer starts.
 
 ### Performance and configuration files
 
-Late-game turn times are AI-bound, not GPU-bound. Treat graphics settings as a memory lever rather than a frame-rate one, and cap the frame rate at the panel's refresh rate with VSync. To save wall-clock time, turn on **Quick Combat** and **Quick Movement** under **Options → Game**.
+Late-game turn times are AI-bound, not GPU-bound: treat graphics settings as a memory lever and cap the frame rate at the panel's refresh rate with VSync. **Quick Combat** and **Quick Movement** (**Options → Game**) save wall-clock time.
 
-The settings are plain-text `.ini` files in the Documents folder; copies under `~/.local/share/Aspyr` serve only the native build. Edit them with the game closed; the in-game menus write the same files, and a deleted file returns to defaults at the next start.
+The settings are plain-text `.ini` files in the Documents folder (copies under `~/.local/share/Aspyr` serve only the native build). Edit them with the game closed; the menus write the same files, and a deleted file returns to defaults.
 
 ```
 ┌──────────────────────────┬─────────────────────────────────────────────────────────────┐
@@ -667,8 +669,8 @@ What each operation touches:
 [github.com/Alpakinator/civ5vp-installer](https://github.com/Alpakinator/civ5vp-installer) is a single-file native Linux binary that installs VP without Protontricks — a fallback if the Inno wizard misbehaves, newer and less tested than the Protontricks route. It finds the Civ V folders itself and has a modpack mode; its **Uninstall** button restores an unmodded game.
 
 ```
-civ5vp-installer-linux-x86_64 (v0.1.7, 2026-10-16) — 47,068,640 bytes
-sha256  2e42744366570a34cfa46ee6ccd3a2862889276f8d6add0905b6a1886bb76880
+civ5vp-installer-linux-x86_64 (v0.1.8, 2026-10-22) — 49,392,208 bytes
+sha256  d7beb4239096d4344f8ef6b37d7de2c4afae26bf036b6d3747ec610a153a8309
 ```
 
 Verify the digest as in Step 5, mark the file executable (Dolphin: **Properties → Permissions → Is executable**) and open it.
@@ -704,7 +706,7 @@ Dumps are not guaranteed under Proton; if none appears after a crash, say so in 
 ## 16. Limits
 
 - **Written against 5.4.8**; the sha256 is for 5.4.8 only.
-- **Read from source, not exercised:** the `S:` drive default, the Protontricks and Winetricks window routes and the §8 toggles.
+- **Read from source, not exercised:** the `S:` drive default, the Protontricks and Winetricks window routes, the §8 toggles and the wording of VP's **Game Crash** message (§7).
 - **Community reports, not upstream statements:** the English-language requirement, the vcrun2008 and corefonts step (Step 4), the ProtonDB fixes (§7, §13) and the 2010–2013 Windows benchmarks behind §7's performance values.
 - **The mod list is a 2026-10-21 snapshot**; none was tested under Proton, and a mod's last forum page is the authority for the current VP.
 - **Untested:** the §3 distributions other than CachyOS (checked against package listings only), Flatpak and Snap Steam, file managers other than KDE's Dolphin, the 43-civ variants and civ5vp-installer's **Compile the DLL myself** option.
