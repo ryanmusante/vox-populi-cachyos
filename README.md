@@ -2,51 +2,13 @@
 
 **Civilization V + Vox Populi via Steam and Proton**
 
-Revision 11.8.0 · 2026-10-25 · Vox Populi 5.4.8 (stable) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.
+Revision 11.8.1 · 2026-11-19 · Vox Populi 5.4.8 (stable) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.
 
 No terminal is needed on CachyOS: the work happens in Steam, your package manager (Shelly, or Octopi on systems installed before the April 2026 ISO), the Protontricks and Winetricks windows, the installer's wizard, your file manager and a text editor.
 
 Work through §4–§6 in order: Steps 1–8, then the first launch with VP (§6). Every step that writes to disk ends in a **Check** (Step 7's is Step 8). **WARNING** marks a common failure, **CRITICAL** a step that decides whether this works at all.
 
 Maintained at [github.com/ryanmusante/vox-populi-cachyos](https://github.com/ryanmusante/vox-populi-cachyos); `vox-populi-cachyos.pdf` carries the same text.
-
----
-
-## Contents
-
-**Before you start**
-
-1. [How it works](#1-how-it-works)
-2. [Requirements](#2-requirements)
-3. [Other distributions](#3-other-distributions)
-
-**Install**
-
-4. [Preparing the game](#4-preparing-the-game)
-5. [Installing Vox Populi](#5-installing-vox-populi)
-6. [First launch with VP](#6-first-launch-with-vp)
-
-**Configure and play**
-
-7. [Settings and stability](#7-settings-and-stability)
-8. [Community Patch options](#8-community-patch-options)
-9. [Adding other mods](#9-adding-other-mods)
-10. [Multiplayer](#10-multiplayer)
-
-**Maintain**
-
-11. [Updating](#11-updating)
-12. [Uninstalling](#12-uninstalling)
-
-**When something fails**
-
-13. [Troubleshooting](#13-troubleshooting)
-14. [Alternative installer](#14-alternative-installer)
-15. [Bug reporting](#15-bug-reporting)
-
-**About this guide**
-
-16. [Limits](#16-limits)
 
 ---
 
@@ -211,7 +173,7 @@ Steam → right-click **Sid Meier's Civilization V** → **Properties → Compat
 
 `proton-cachyos-slr` from the CachyOS repositories also works (install it, then restart Steam); despite its name, it is Proton.
 
-Proton 11.0, Experimental and the 11.0-based `proton-cachyos-slr` map `S:` to the game's Steam library, used in Step 7; on Proton 10.0 or older add `PROTON_SET_GAME_DRIVE=1 %command%` under **Properties → General → Launch Options**. If the library root is not writable or sits on a different filesystem from `steamapps`, `S:` is `steamapps` itself — type `S:\common\…` in Step 7.
+Proton 11.0, Experimental and the 11.0-based `proton-cachyos-slr` map `S:` to the game's Steam library, used in Step 7; on Proton 10.0 or older add `PROTON_SET_GAME_DRIVE=1 %command%` under **Properties → General → Launch Options**, and there `S:` is `steamapps` itself, as it is on 11.0 when the library root is not writable or sits on a different filesystem from `steamapps` — type `S:\common\…` in Step 7.
 
 **Check:** the game folder (§2) holds `CivilizationV_DX11.exe` among other `.exe` files. No `.exe` at all, and a `Civ5XP` binary instead, means Steam is still serving the native build.
 
@@ -655,8 +617,8 @@ What each operation touches:
 │                                    │ first; MaxSimultaneousThreads is riskier (§7).    │
 │ Multiplayer crashes after turn 1   │ A player did not delete cache before launch       │
 │                                    │ (§10).                                            │
-│ Crash to desktop in the late game  │ The 32-bit address space ran out. Apply §7's      │
-│                                    │ crash mitigations in order; keep crashlogs (§15). │
+│ Crash to desktop in the late game  │ If VP's message blames memory, apply §7's         │
+│                                    │ mitigations; else report it with crashlogs (§15). │
 │ Still broken after all of the      │ Minimal install — VP without EUI, no other mods — │
 │   above                            │ then add one layer at a time.                     │
 └────────────────────────────────────┴───────────────────────────────────────────────────┘
@@ -669,8 +631,8 @@ What each operation touches:
 [github.com/Alpakinator/civ5vp-installer](https://github.com/Alpakinator/civ5vp-installer) is a single-file native Linux binary that installs VP without Protontricks — a fallback if the Inno wizard misbehaves, newer and less tested than the Protontricks route. It finds the Civ V folders itself and has a modpack mode; its **Uninstall** button restores an unmodded game.
 
 ```
-civ5vp-installer-linux-x86_64 (v0.1.8, 2026-10-22) — 49,392,208 bytes
-sha256  d7beb4239096d4344f8ef6b37d7de2c4afae26bf036b6d3747ec610a153a8309
+civ5vp-installer-linux-x86_64 (v0.1.11, 2026-11-19) — 49,992,808 bytes
+sha256  d4ea2f2b20ed84afe17717b57e56e32f8d3cc9a711997ad8700e3d8c6694ae1c
 ```
 
 Verify the digest as in Step 5, mark the file executable (Dolphin: **Properties → Permissions → Is executable**) and open it.
