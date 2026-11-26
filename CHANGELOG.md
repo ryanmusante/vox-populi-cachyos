@@ -2,13 +2,13 @@ Changelog
 =========
 
 
-11.9.0 - 2026-11-26
--------------------
+11.10.0 - 2026-11-26
+--------------------
 
-  - feat: 11.0.0-11.9.0 ReportLab PDF, 6 figures, mods, VP 5.5.0, memory tips
-  - fix: 11.9.0 game is Steam's 2026-11-19 build; crashlogs folder per 5.5.0
-  - fix: 11.9.0 Debug.zip, modpack thread, #13349, mod versions, autosaves
-  - docs: 11.9.0 new PDF builder; README and CHANGELOG trimmed
+  - feat: 11.0.0-11.10.0 ReportLab PDF, 6 figures, mods, VP 5.5.0, memory tips
+  - fix: 11.10.0 WoW64 + msimg32.dll route (thread 705335); overlay item
+  - fix: 11.10.0 5.5.0 memory fixes named (buffers, #13496 tactical sim)
+  - docs: 11.10.0 thread 702075 re-read; PDF rebuilt; Figure 5 opens Crashes
 
 
 10.9.3 - 2026-10-03

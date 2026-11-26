@@ -2,7 +2,7 @@
 
 **Civilization V + Vox Populi via Steam and Proton**
 
-Revision 11.9.0 · 2026-11-26 · Vox Populi 5.5.0 (beta) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.
+Revision 11.10.0 · 2026-11-26 · Vox Populi 5.5.0 (beta) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.
 
 No terminal is needed on CachyOS: the work happens in Steam, your package manager (Shelly, or Octopi on systems installed before the April 2026 ISO), the Protontricks and Winetricks windows, the installer's wizard, your file manager and a text editor.
 
@@ -278,7 +278,7 @@ If the Check fails and `<prefix>/drive_c/Program Files (x86)/Steam/steamapps/com
 
 1. Launch Civ V from Steam's Library page, as in Step 3.
 2. Main menu → **MODS**; accept the prompt if one appears.
-3. The first entry into the MODS menu runs a "configuring game data" pass of 5–15 minutes — not a hang; if it crashes, relaunch (§13).
+3. The first entry into MODS runs a "configuring game data" pass of 5–15 minutes — not a hang; if it crashes, relaunch (§13).
 4. Enable the VP mods as the table below says.
 5. Press **NEXT**, never **Back**.
 6. **Single Player → Set Up Game**. In this menu, **Single Player** looks like a heading but is a button.
@@ -307,11 +307,20 @@ If the Check fails and `<prefix>/drive_c/Program Files (x86)/Steam/steamapps/com
 
 ### Autosaves
 
-In **Options**, set **Turns Between Autosaves** to 1 and **Max Autosaves Kept** to 0 (unlimited), as VP's bug form recommends; for multiplayer, set **Max Autosaves Kept** to 500, as the modpack thread asks. The aim is a save from the turn *before* a problem (§15).
+In **Options**, set **Turns Between Autosaves** to 1 and **Max Autosaves Kept** to 0 (unlimited), as VP's bug form recommends; for multiplayer, set **Max Autosaves Kept** to 500, per the modpack thread. The aim: a save from the turn *before* a problem (§15).
 
 ### Crashes
 
-**Most late-game crashes are a memory problem, not a Vox Populi bug.** The project blames exhaustion of the 32-bit address space: 4 GB under Proton, whose `PROTON_FORCE_LARGE_ADDRESS_AWARE` is **on by default** (leave it), whatever RAM is installed. 5.5.0 fixes UI event buffer overflows, behind many of these crashes, but only on the 2026-11-19 game build (§2); the 32-bit limit remains. VP's **Game Crash** message names the case — the crash "happened with the 32-bit address space nearly exhausted"; without that line, look elsewhere and report it (§15). Mitigations, most important first:
+**Most late-game crashes are a memory problem, not a Vox Populi bug.** The project blames exhaustion of the 32-bit address space: 4 GB under Proton, whose `PROTON_FORCE_LARGE_ADDRESS_AWARE` is **on by default** (leave it), whatever RAM is installed. 5.5.0 stops the engine-buffer overflows behind many of these crashes, but only on the 2026-11-19 game build (§2), and keeps the AI's tactical simulation from stranding 80–150 MB of Wine's heap per AI turn on huge maps; the 32-bit limit remains. VP's **Game Crash** message names the case — the crash "happened with the 32-bit address space nearly exhausted"; without that line, look elsewhere and report it (§15).
+
+**WoW64 mode frees the most.** By default Wine's own Linux libraries share the game's 4 GB; `PROTON_USE_WOW64=1` (Proton 11.0, Experimental, `proton-cachyos-slr`) moves them above it — on one turn-282 save under Proton 11.0, free address space rose from about 410 MB to 1.7 GB ([thread 705335](https://forums.civfanatics.com/threads/705335/)). The game then also needs that thread's `msimg32.dll` (no published digest), which reserves the top 64 KB of address space:
+
+1. Extract `msimg32.dll` from the opening post's `msimg32.zip` into the game folder, beside `CivilizationV_DX11.exe`.
+2. Set the launch option `PROTON_USE_WOW64=1 WINEDLLOVERRIDES="msimg32=n,b" %command%` (**Properties → General → Launch Options**). To undo it, clear the option and delete the DLL.
+
+> **WARNING** — Without `msimg32.dll` in the game folder, the WoW64 launch option crashes the game at startup.
+
+Other mitigations, most important first:
 
 1. **Leader Scene Quality** on **Minimum**.
 2. Yield icons off from the Industrial era (in multiplayer, by every player), or avoid zooming far out.
@@ -321,8 +330,9 @@ In **Options**, set **Turns Between Autosaves** to 1 and **Max Autosaves Kept** 
 6. No memory-heavy mods such as InfoAddict.
 7. **Single Unit Graphics** from Unit Scaling and Formation for VP (§9), set up as its opening post explains.
 8. With EUI, the **Vox Populi (no EUI)** setup type: re-run the installer (Steps 6–8); saves stay compatible.
+9. Without WoW64, **Enable the Steam Overlay while in-game** off (**Properties → General**); it takes address space.
 
-**Early, random crashes are a different problem.** ProtonDB reports tie them to the thread count; the reported fix is the launch option `taskset -c 0-7 %command%` (**Properties → General → Launch Options**; with Step 1's option, `PROTON_SET_GAME_DRIVE=1 taskset -c 0-7 %command%`), which pins the game to eight threads. Raising `MaxSimultaneousThreads` in the Documents folder's `config.ini` (default 8) to the machine's thread count helped one reporter, but 24 stopped the game from starting for another — set it back to 8 if the game no longer starts.
+**Early, random crashes are a different problem.** ProtonDB reports tie them to the thread count; the reported fix is the launch option `taskset -c 0-7 %command%` (**Properties → General → Launch Options**), which pins the game to eight threads. Combined with WoW64: `PROTON_USE_WOW64=1 WINEDLLOVERRIDES="msimg32=n,b" taskset -c 0-7 %command%`. Raising `MaxSimultaneousThreads` in the Documents folder's `config.ini` (default 8) to the machine's thread count helped one reporter, but 24 stopped the game from starting for another — set it back to 8 if the game no longer starts.
 
 ### Performance and configuration files
 
@@ -428,7 +438,7 @@ Mods for VP are posted in the Community Patch Project's [**Mods Repository**](ht
 
 ### Popular mods for VP
 
-Eight of the most popular mods made for VP, by CivFanatics downloads, thread views and players' shared mod lists; every thread shows 2026 activity:
+Eight of the most popular mods for VP, by CivFanatics downloads, thread views and shared mod lists; all show 2026 activity:
 
 ```
 ┌────────────────────────────────────┬────────────────────────┬──────────────────────────┐
@@ -464,7 +474,7 @@ Versions are as the authors state them; rows without one have none stated, and n
 3. Move the folder that contains the `.modinfo` file straight into the Documents folder's `MODS`, beside the numbered VP folders — not the archive, not a folder inside a folder.
 4. If the opening post names a Windows path under `steamapps\common\Sid Meier's Civilization V`, use the real game folder (§2), never the phantom `C:\Program Files (x86)` tree inside the prefix (Step 8).
 5. Delete `cache` and `ModUserData` in the Documents folder.
-6. In the MODS menu, enable the VP set first, then the new mod, then press **NEXT**. The mod lists what it requires: nearly all need (1) and (2).
+6. In MODS, enable the VP set, then the new mod, then press **NEXT**. The mod lists its requirements, nearly always (1) and (2).
 
 Add one mod at a time and play a few turns before the next, so a crash points at the last one added (§13). For multiplayer the mod must be part of the modpack (§10); a mod enabled through the menu cannot join a modpack game.
 
@@ -502,7 +512,7 @@ VP cannot be played in multiplayer through the MODS menu; it must be packaged as
 
 To remove a modpack, delete its folders under `Assets/DLC` (`VP_MODPACK` if you built it; `ZMP_MODPACK`, `VPUI` and `UI_bc1` for the thread's packs, per its opening post) and the Documents folder's `cache`. If you also play VP from the MODS menu, re-run the VP installer afterward to restore `VPUI` and `UI_bc1`.
 
-**Known issues.** Host on 5.5.0 or later: older releases' force-resync button targets the executable Steam replaced on 2026-11-19. Community-Patch-DLL [#13349](https://github.com/LoneGazebo/Community-Patch-DLL/issues/13349), still open, reports 5.4.4 desyncs, mostly units out of sync between human players; 5.5.0 fixes several desync sources, so check its state before a long game.
+**Known issues.** Host on 5.5.0 or later: older releases' force-resync button targets the executable Steam replaced on 2026-11-19. Community-Patch-DLL [#13349](https://github.com/LoneGazebo/Community-Patch-DLL/issues/13349), still open, reports 5.4.4 desyncs, mostly units out of sync between humans; 5.5.0 fixes several desync sources; check its state before a long game.
 
 ---
 
@@ -616,6 +626,7 @@ What each operation touches:
 │   no effect                        │ defines (§8).                                     │
 │ Random crashes early in a session  │ Thread count: try the taskset launch option       │
 │                                    │ first; MaxSimultaneousThreads is riskier (§7).    │
+│ Crash at startup with WoW64        │ msimg32.dll or WINEDLLOVERRIDES missing (§7).     │
 │ Multiplayer crashes after turn 1   │ A player did not delete cache before launch       │
 │                                    │ (§10).                                            │
 │ Crash to desktop in the late game  │ If VP's message blames memory, apply §7's         │
@@ -659,7 +670,7 @@ Vox Populi bugs go to the project's tracker, [github.com/LoneGazebo/Community-Pa
 └────────────────────────┴───────────────────────────────────────────────────────────────┘
 ```
 
-Logging is off by default and must be on *before* the problem occurs: in the Documents folder's `config.ini`, set `ValidateGameDatabase`, `LoggingEnabled`, `MessageLog`, `AILog`, `AIPerfLog`, `BuilderAILog` and `PlayerAndCityAILogSplit` to `1`. After the problem, copy the logs out *before* loading any game — most are erased on load — and turn logging off afterward.
+Logging is off by default; turn it on *before* the problem: in the Documents folder's `config.ini`, set `ValidateGameDatabase`, `LoggingEnabled`, `MessageLog`, `AILog`, `AIPerfLog`, `BuilderAILog` and `PlayerAndCityAILogSplit` to `1`. Then copy the logs out *before* loading any game — most are erased on load — and turn logging off.
 
 `crashes.log` records whether a dump was written; under Proton that depends on Wine's `dbghelp.dll`, so a crash can leave no `.dmp` — say so in the report and attach the rest.
 
@@ -668,7 +679,7 @@ Logging is off by default and must be on *before* the problem occurs: in the Doc
 ## 16. Limits
 
 - **Written against 5.5.0**, a beta by its release thread; the sha256 is for 5.5.0 only.
-- **Read from source, not exercised:** the `S:` drive default, the Protontricks and Winetricks window routes, the §8 toggles, the wording of VP's **Game Crash** message (§7) and the `crashlogs` output under Proton (§15).
-- **Community reports, not upstream statements:** the English-language requirement, the vcrun2008 and corefonts step (Step 4), the ProtonDB fixes (§7, §13) and the 2010–2013 Windows benchmarks behind §7's performance values.
-- **The mod list is a 2026-11-26 snapshot**; none was tested under Proton, and a mod's last forum page is the authority for the current VP.
+- **Read from source, not exercised:** the `S:` drive default, the Protontricks and Winetricks routes, the `PROTON_USE_WOW64` switch, the §8 toggles, VP's **Game Crash** wording (§7) and the `crashlogs` output under Proton (§15).
+- **Community reports, not upstream statements:** the English-language requirement, the vcrun2008 and corefonts step (Step 4), the WoW64 route and ProtonDB fixes (§7, §13), and 2010–2013 Windows benchmarks behind §7's performance values.
+- **The mod list is a 2026-11-26 snapshot**, untested under Proton; a mod's last forum page is the authority for the current VP.
 - **Untested:** the §3 distributions other than CachyOS (checked against package listings only), Flatpak and Snap Steam, file managers other than KDE's Dolphin, the 43-civ variants and civ5vp-installer's **Compile the DLL myself** option.
