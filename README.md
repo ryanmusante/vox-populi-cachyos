@@ -2,7 +2,7 @@
 
 **Civilization V + Vox Populi via Steam and Proton**
 
-Revision 11.8.1 · 2026-11-19 · Vox Populi 5.4.8 (stable) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.
+Revision 11.9.0 · 2026-11-26 · Vox Populi 5.5.0 (beta) · Protontricks 1.14.1-1 · Proton 11.0 · CachyOS with native Steam; other distributions in §3.
 
 No terminal is needed on CachyOS: the work happens in Steam, your package manager (Shelly, or Octopi on systems installed before the April 2026 ISO), the Protontricks and Winetricks windows, the installer's wizard, your file manager and a text editor.
 
@@ -81,7 +81,8 @@ The Documents default is already correct: it resolves inside the prefix (the Win
 ┌──────────────┬─────────────────────────────────────────────────────────────────────────┐
 │ Item         │ Requirement                                                             │
 ├──────────────┼─────────────────────────────────────────────────────────────────────────┤
-│ Game         │ Civilization V 1.0.3.279, all expansions and all DLC installed          │
+│ Game         │ Civilization V with all expansions and all DLC installed, updated by    │
+│              │ Steam to its 2026-11-19 build, which VP 5.5.0 targets                   │
 │ Steam        │ Native Steam, the multilib steam package; other packagings: §3          │
 │ Compat tool  │ Proton Experimental or newest numbered Proton (11.0 at this revision);  │
 │              │ proton-cachyos-slr OK. NOT a "Steam Linux Runtime" entry (Step 1)       │
@@ -173,7 +174,7 @@ Steam → right-click **Sid Meier's Civilization V** → **Properties → Compat
 
 `proton-cachyos-slr` from the CachyOS repositories also works (install it, then restart Steam); despite its name, it is Proton.
 
-Proton 11.0, Experimental and the 11.0-based `proton-cachyos-slr` map `S:` to the game's Steam library, used in Step 7; on Proton 10.0 or older add `PROTON_SET_GAME_DRIVE=1 %command%` under **Properties → General → Launch Options**, and there `S:` is `steamapps` itself, as it is on 11.0 when the library root is not writable or sits on a different filesystem from `steamapps` — type `S:\common\…` in Step 7.
+Proton 11.0, Experimental and the 11.0-based `proton-cachyos-slr` map `S:` to the game's Steam library, used in Step 7. On Proton 10.0 or older, add `PROTON_SET_GAME_DRIVE=1 %command%` under **Properties → General → Launch Options**; there `S:` is `steamapps` itself, as it is on 11.0 when the library root is not writable or sits on another filesystem than `steamapps`, so type `S:\common\…` in Step 7.
 
 **Check:** the game folder (§2) holds `CivilizationV_DX11.exe` among other `.exe` files. No `.exe` at all, and a `Civ5XP` binary instead, means Steam is still serving the native build.
 
@@ -210,18 +211,18 @@ Both installs download; repeating the step is harmless.
 
 ### Step 5 · Download and verify
 
-Open [github.com/LoneGazebo/Community-Patch-DLL/releases](https://github.com/LoneGazebo/Community-Patch-DLL/releases) and download `Vox.Populi.<version>.exe` from the newest stable release's assets; the asset list shows each file's digest. Skip `Release_Debug.zip` beside it: game-core DLL builds with symbols, for crash analysis only. For 5.4.8:
+Open [github.com/LoneGazebo/Community-Patch-DLL/releases](https://github.com/LoneGazebo/Community-Patch-DLL/releases) and download `Vox.Populi.<version>.exe` from the assets of the release marked **Latest**; the asset list shows each file's digest. Skip `Debug.zip` beside it: game-core DLL builds with symbols, for crash analysis only. For 5.5.0:
 
 ```
-Vox.Populi.5.4.8.exe — 110,434,971 bytes
-sha256  af311eaf212e6c37f27d20b16e9d3fdc9f1ce73b3e7717bee1906635fbce183a
+Vox.Populi.5.5.0.exe — 109,826,403 bytes
+sha256  ef13c55649ade074480da66a2da7d21a8dc742085e2ebc9fea8420eec6fa5e6e
 ```
 
 **Check:** the digest your file manager computes matches (Dolphin: **Properties → Checksums**). On a mismatch, delete the file and download it again.
 
 ### Step 6 · Run the installer inside the prefix
 
-Right-click `Vox.Populi.5.4.8.exe` → **Open With → Protontricks Launcher** → **Sid Meier's Civilization V**. The wizard can take a minute to appear and may open behind other windows under Wayland.
+Right-click `Vox.Populi.5.5.0.exe` → **Open With → Protontricks Launcher** → **Sid Meier's Civilization V**. The wizard can take a minute to appear and may open behind other windows under Wayland.
 
 ### Step 7 · Complete the wizard
 
@@ -306,11 +307,11 @@ If the Check fails and `<prefix>/drive_c/Program Files (x86)/Steam/steamapps/com
 
 ### Autosaves
 
-In **Options**, set **Turns Between Autosaves** to 1 and **Max Autosaves** to 0 (unlimited), as VP's bug form recommends; for multiplayer, set **Max Autosaves** to 500, as the modpack thread asks. The aim is a save from the turn *before* a problem (§15).
+In **Options**, set **Turns Between Autosaves** to 1 and **Max Autosaves Kept** to 0 (unlimited), as VP's bug form recommends; for multiplayer, set **Max Autosaves Kept** to 500, as the modpack thread asks. The aim is a save from the turn *before* a problem (§15).
 
 ### Crashes
 
-**Most late-game crashes are a memory problem, not a Vox Populi bug.** The project blames exhaustion of the 32-bit address space: 4 GB under Proton, whose `PROTON_FORCE_LARGE_ADDRESS_AWARE` is **on by default** (leave it), whatever RAM is installed. VP's **Game Crash** message names the case — the crash "happened with the 32-bit address space nearly exhausted"; without that line, look elsewhere and report it (§15). Mitigations, most important first:
+**Most late-game crashes are a memory problem, not a Vox Populi bug.** The project blames exhaustion of the 32-bit address space: 4 GB under Proton, whose `PROTON_FORCE_LARGE_ADDRESS_AWARE` is **on by default** (leave it), whatever RAM is installed. 5.5.0 fixes UI event buffer overflows, behind many of these crashes, but only on the 2026-11-19 game build (§2); the 32-bit limit remains. VP's **Game Crash** message names the case — the crash "happened with the 32-bit address space nearly exhausted"; without that line, look elsewhere and report it (§15). Mitigations, most important first:
 
 1. **Leader Scene Quality** on **Minimum**.
 2. Yield icons off from the Industrial era (in multiplayer, by every player), or avoid zooming far out.
@@ -433,13 +434,13 @@ Eight of the most popular mods made for VP, by CivFanatics downloads, thread vie
 ┌────────────────────────────────────┬────────────────────────┬──────────────────────────┐
 │ Mod and author                     │ What it adds           │ Version and notes        │
 ├────────────────────────────────────┼────────────────────────┼──────────────────────────┤
-│ More Wonders for VP                │ New world and natural  │ v24.11, VP 5.3.3+; an    │
+│ More Wonders for VP                │ New world and natural  │ v24.12, VP 5.4.x; an     │
 │   by adan_eslavo                   │ wonders                │ effects folder goes in   │
 │                                    │                        │ the game folder          │
 │ Even More Resources for Vox Populi │ New bonus, luxury and  │ v8; OP links updates,    │
 │   by HungryForFood                 │ city-state resources   │ incl. one for Unique     │
 │                                    │                        │ City-States              │
-│ Unique City-States                 │ Unique traits for      │ v19.3, VP 5.4.x          │
+│ Unique City-States                 │ Unique traits for      │ v19.4, VP 5.4.8          │
 │   by adan_eslavo                   │ city-states            │                          │
 │ City-States Leaders for VP         │ Leaders for            │ v26, VP 5.3.x; made      │
 │   by adan_eslavo                   │ city-states            │ for Unique City-States   │
@@ -454,7 +455,7 @@ Eight of the most popular mods made for VP, by CivFanatics downloads, thread vie
 └────────────────────────────────────┴────────────────────────┴──────────────────────────┘
 ```
 
-Versions are as the authors state them; rows without one have none stated.
+Versions are as the authors state them; rows without one have none stated, and none states 5.5.0 support yet.
 
 ### Installing a mod
 
@@ -473,7 +474,7 @@ Add one mod at a time and play a few turns before the next, so a crash points at
 
 VP cannot be played in multiplayer through the MODS menu; it must be packaged as a modpack, which loads like a DLC.
 
-**Preferred — a prebuilt modpack.** The CivFanatics [modpack thread 685164](https://forums.civfanatics.com/threads/685164/) tracks current releases (5.4.8), including one generated on Linux under Proton. Extract so its folders — `ZMP_MODPACK` and any `VPUI` or `UI_bc1` it carries — sit directly under the game folder's `Assets/DLC`, then delete the Documents folder's `cache`.
+**Preferred — a prebuilt modpack.** The CivFanatics [modpack thread 685164](https://forums.civfanatics.com/threads/685164/) tracks current releases (5.5 at this revision). Extract so its folders — `ZMP_MODPACK` and any `VPUI` or `UI_bc1` it carries — sit directly under the game folder's `Assets/DLC`, then delete the Documents folder's `cache`.
 
 **Alternative — build your own** with the Modpack Maker:
 
@@ -501,7 +502,7 @@ VP cannot be played in multiplayer through the MODS menu; it must be packaged as
 
 To remove a modpack, delete its folders under `Assets/DLC` (`VP_MODPACK` if you built it; `ZMP_MODPACK`, `VPUI` and `UI_bc1` for the thread's packs, per its opening post) and the Documents folder's `cache`. If you also play VP from the MODS menu, re-run the VP installer afterward to restore `VPUI` and `UI_bc1`.
 
-**Known issues.** Community-Patch-DLL [#13349](https://github.com/LoneGazebo/Community-Patch-DLL/issues/13349) reports a 5.4.4 multiplayer desync that its reporter suspects is pathfinding-related; check its state before a long game.
+**Known issues.** Host on 5.5.0 or later: older releases' force-resync button targets the executable Steam replaced on 2026-11-19. Community-Patch-DLL [#13349](https://github.com/LoneGazebo/Community-Patch-DLL/issues/13349), still open, reports 5.4.4 desyncs, mostly units out of sync between human players; 5.5.0 fixes several desync sources, so check its state before a long game.
 
 ---
 
@@ -511,7 +512,7 @@ Back up first: copy the Documents folder's `Saves` and `MODS` out of the prefix.
 
 Then download the newer `Vox.Populi.<version>.exe`, check it against its own digest on the release page (Step 5) and run it exactly as in Steps 6–8. No manual cleanup is needed (§1).
 
-By the project's versioning rule, saves are compatible when only the third version component changes: 5.4.6 → 5.4.8 keeps them, 5.4.x → 5.5.0 does not.
+By the project's versioning rule, saves are compatible when only the third version component changes: a 5.5.x hotfix keeps them, but 5.5.0 cannot load 5.4.x saves. Finish a 5.4.x campaign on 5.4.8, the last stable release, before updating.
 
 > **WARNING** — Steam's **Verify integrity of game files** (**Properties → Installed Files**) restores the stock `Expansion2.Civ5Pkg`, which VP replaces to fix city-state audio. Re-run the VP installer after any verification.
 
@@ -653,22 +654,21 @@ Vox Populi bugs go to the project's tracker, [github.com/LoneGazebo/Community-Pa
 │   before the problem   │ settings in §7                                                │
 │ Logs                   │ Logs in the Documents folder, zipped — useless unless logging │
 │                        │ was already on                                                │
-│ Crash artifacts, when  │ crashlogs in the game folder (crashes.log, .dmp) per the      │
-│   reporting a crash    │ bug form; the project's minidump guide says CvMiniDump_*.dmp  │
-│                        │ beside the game executable — check both                       │
+│ Crash artifacts, when  │ crashlogs in the game folder, zipped whole: CvMiniDump_*.dmp, │
+│   reporting a crash    │ crashes.log, and CvAssert.log once a check has failed         │
 └────────────────────────┴───────────────────────────────────────────────────────────────┘
 ```
 
 Logging is off by default and must be on *before* the problem occurs: in the Documents folder's `config.ini`, set `ValidateGameDatabase`, `LoggingEnabled`, `MessageLog`, `AILog`, `AIPerfLog`, `BuilderAILog` and `PlayerAndCityAILogSplit` to `1`. After the problem, copy the logs out *before* loading any game — most are erased on load — and turn logging off afterward.
 
-Dumps are not guaranteed under Proton; if none appears after a crash, say so in the report and attach the logs and save.
+`crashes.log` records whether a dump was written; under Proton that depends on Wine's `dbghelp.dll`, so a crash can leave no `.dmp` — say so in the report and attach the rest.
 
 ---
 
 ## 16. Limits
 
-- **Written against 5.4.8**; the sha256 is for 5.4.8 only.
-- **Read from source, not exercised:** the `S:` drive default, the Protontricks and Winetricks window routes, the §8 toggles and the wording of VP's **Game Crash** message (§7).
+- **Written against 5.5.0**, a beta by its release thread; the sha256 is for 5.5.0 only.
+- **Read from source, not exercised:** the `S:` drive default, the Protontricks and Winetricks window routes, the §8 toggles, the wording of VP's **Game Crash** message (§7) and the `crashlogs` output under Proton (§15).
 - **Community reports, not upstream statements:** the English-language requirement, the vcrun2008 and corefonts step (Step 4), the ProtonDB fixes (§7, §13) and the 2010–2013 Windows benchmarks behind §7's performance values.
-- **The mod list is a 2026-10-21 snapshot**; none was tested under Proton, and a mod's last forum page is the authority for the current VP.
+- **The mod list is a 2026-11-26 snapshot**; none was tested under Proton, and a mod's last forum page is the authority for the current VP.
 - **Untested:** the §3 distributions other than CachyOS (checked against package listings only), Flatpak and Snap Steam, file managers other than KDE's Dolphin, the 43-civ variants and civ5vp-installer's **Compile the DLL myself** option.

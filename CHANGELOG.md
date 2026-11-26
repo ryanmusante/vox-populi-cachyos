@@ -2,13 +2,13 @@ Changelog
 =========
 
 
-11.8.1 - 2026-11-19
+11.9.0 - 2026-11-26
 -------------------
 
-  - feat: 11.0.0-11.8.0 ReportLab PDF, 6 figures, mods, VP 5.4.8, memory tips
-  - fix: 11.8.1 S: on Proton 10.0 is steamapps; crash cause per VP's message
-  - fix: 11.8.1 the alternative installer pin is v0.1.11, size and sha256
-  - docs: 11.8.1 drop the README's hand-made contents; kernel.org changelog
+  - feat: 11.0.0-11.9.0 ReportLab PDF, 6 figures, mods, VP 5.5.0, memory tips
+  - fix: 11.9.0 game is Steam's 2026-11-19 build; crashlogs folder per 5.5.0
+  - fix: 11.9.0 Debug.zip, modpack thread, #13349, mod versions, autosaves
+  - docs: 11.9.0 new PDF builder; README and CHANGELOG trimmed
 
 
 10.9.3 - 2026-10-03
